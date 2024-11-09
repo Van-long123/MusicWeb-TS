@@ -14,7 +14,8 @@
     "express": "^4.21.1",
     "mongoose": "^8.8.0",
     "mongoose-slug-updater": "^3.3.0",
-    "pug": "^3.0.3"
+    "pug": "^3.0.3",
+    "unidecode": "^1.1.0"
   },
   "devDependencies": {
     "@types/express": "^5.0.0",

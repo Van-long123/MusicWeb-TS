@@ -1,25 +1,25 @@
 extends ../../layouts/default
 block main
-    .banner.my-4
-        .container
-            #carouselExampleIndicators.carousel.slide(data-bs-ride='carousel')
-                ol.carousel-indicators
-                    li.active(data-bs-target='#carouselExampleIndicators' data-bs-slide-to='0')
-                    li(data-bs-target='#carouselExampleIndicators' data-bs-slide-to='1')
-                    li(data-bs-target='#carouselExampleIndicators' data-bs-slide-to='2')
-                .carousel-inner
-                    .carousel-item.active
-                        img.d-block.w-100(src='https://res.cloudinary.com/dm5pbyp9g/image/upload/v1728138921/ix1nysky4gji9gu6eipe.jpg' alt='Banner 1')
-                    .carousel-item
-                        img.d-block.w-100(src='https://res.cloudinary.com/dm5pbyp9g/image/upload/v1728138921/ix1nysky4gji9gu6eipe.jpg' alt='Banner 2')
-                    .carousel-item
-                        img.d-block.w-100(src='https://res.cloudinary.com/dm5pbyp9g/image/upload/v1728138921/ix1nysky4gji9gu6eipe.jpg' alt='Banner 3')
-                a.carousel-control-prev(href='#carouselExampleIndicators' role='button' data-bs-slide='prev')
-                    span.carousel-control-prev-icon(aria-hidden='true')
-                    span.sr-only Previous
-                a.carousel-control-next(href='#carouselExampleIndicators' role='button' data-bs-slide='next')
-                    span.carousel-control-next-icon(aria-hidden='true')
-                    span.sr-only Next
+    //- .banner.my-4
+    //-     .container
+    //-         #carouselExampleIndicators.carousel.slide(data-bs-ride='carousel')
+    //-             ol.carousel-indicators
+    //-                 li.active(data-bs-target='#carouselExampleIndicators' data-bs-slide-to='0')
+    //-                 li(data-bs-target='#carouselExampleIndicators' data-bs-slide-to='1')
+    //-                 li(data-bs-target='#carouselExampleIndicators' data-bs-slide-to='2')
+    //-             .carousel-inner
+    //-                 .carousel-item.active
+    //-                     img.d-block.w-100(src='https://backend.daca.vn/assets/images/cat-doi-noi-sau.jpg' alt='Banner 1')
+    //-                 .carousel-item
+    //-                     img.d-block.w-100(src='https://backend.daca.vn/assets/images/cat-doi-noi-sau.jpg' alt='Banner 2')
+    //-                 .carousel-item
+    //-                     img.d-block.w-100(src='https://backend.daca.vn/assets/images/cat-doi-noi-sau.jpg' alt='Banner 3')
+    //-             a.carousel-control-prev(href='#carouselExampleIndicators' role='button' data-bs-slide='prev')
+    //-                 span.carousel-control-prev-icon(aria-hidden='true')
+    //-                 span.sr-only Previous
+    //-             a.carousel-control-next(href='#carouselExampleIndicators' role='button' data-bs-slide='next')
+    //-                 span.carousel-control-next-icon(aria-hidden='true')
+    //-                 span.sr-only Next
 
 
 
@@ -40,7 +40,7 @@ block main
                     img(src=item.avatar, alt=item.title)
                     div(class="music-text")
                         h5.mb-0 #{item.title}
-                        small #{item.infoSinger.fullName}
+                        small <i class="fa-solid fa-microphone-lines"></i> #{item.infoSinger.fullName}
                 
     .container
       .row
