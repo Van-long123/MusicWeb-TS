@@ -1,0 +1,328 @@
+body {
+    padding-top: 70px;
+}
+/* nav  */
+.navbar {
+    padding: 15px;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+    background-color: #ffffff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.navbar .navbar-brand,
+.navbar .nav-link {
+    color: #333333 !important;
+    font-weight: 500;
+    font-size: 1.1rem;
+}
+
+/* Thay đổi màu biểu tượng trong navbar */
+.navbar .nav-link i,
+.navbar .navbar-brand i {
+    color: #333333 !important;
+    margin-right: 0.5rem;
+}
+
+/* Hiệu ứng khi hover lên các mục trong navbar */
+.navbar .nav-link:hover {
+    color: #007bff !important;
+    text-decoration: none;
+}
+
+/* Đổi màu nền và viền của ô tìm kiếm */
+.navbar .form-control {
+    border: 1px solid #ced4da;
+    border-radius: 20px 0 0 20px;
+    background-color: #f8f9fa;
+}
+
+/* Đổi màu nút tìm kiếm */
+.navbar .btn-outline-primary {
+    border-radius: 0 20px 20px 0;
+}
+
+/* Đặt khoảng cách giữa các mục navbar */
+
+
+.custom-search-width {
+    width: 75%;
+    /* Điều chỉnh % tùy ý để có chiều rộng mong muốn */
+}
+
+.navbar .form-control {
+    border: 1px solid #ced4da;
+    background-color: #f8f9fa;
+    border-radius: 0;
+    /* Loại bỏ bo tròn */
+}
+
+.navbar .btn-outline-primary {
+    border-radius: 10%;
+    /* Loại bỏ bo tròn */
+}
+
+.custom-search-width {
+    width: 60%;
+}
+
+.nav-login {
+    border: 1px solid #007bff;
+}
+
+/* search  */
+/* Đặt chiều rộng tối đa cho form */
+.custom-search-width {
+    max-width: 600px;
+}
+
+/* Style cho input */
+.search-input {
+    width: 100%;
+    padding-right: 2.5rem; /* Đảm bảo không gian cho icon search */
+    border: 1px solid #ced4da;
+    border-radius: 10px !important;
+    background-color: #f8f9fa;
+    transition: border-color 0.3s ease;
+    padding: 0.5rem 1rem;
+}
+
+/* Khi input được chọn */
+
+/* Style cho nút tìm kiếm */
+.btn-search {
+    position: absolute;
+    right: 10px; /* Đặt icon vào trong input */
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: #6c757d;
+    cursor: pointer;
+    font-size: 18px;
+}
+
+/* Hover cho nút tìm kiếm */
+.btn-search:hover {
+    color: #007bff;
+}
+
+/* nav  */
+/* home  */
+.banner img {
+    height: 350px;
+    width: 100% !important;
+    object-fit: cover;
+}
+
+.playlists .card {
+    transition: transform 0.3s ease;
+}
+
+.playlists .card:hover {
+    transform: scale(1.05);
+}
+
+.bxh h5 {
+    margin-bottom: 15px;
+}
+
+.station-section-header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 14px;
+}
+
+.station-section-header-left .title {
+    font-size: 20px;
+    margin-bottom: 0;
+}
+
+.refresh-btn {
+    cursor: pointer;
+    border: 0;
+    align-items: center;
+    padding: 6px 12px;
+    min-height: 32px;
+    border-radius: 22px;
+    border-color: #9b4de0;
+    background-color: #9b4de0;
+    color: #fff;
+    font-size: 13px;
+    line-height: 20px;
+    text-transform: uppercase;
+    font-weight: 500;
+    margin-top: 10px;
+}
+
+
+.music-item {
+    border-radius: 10px;
+    padding: 15px;
+    display: flex;
+    align-items: center;
+}
+
+.music-item img {
+    width: 60px;
+    height: 60px;
+    border-radius: 5px;
+    margin-right: 15px;
+}
+
+
+/* home  */
+/* song  */
+.song-item {
+    display: flex;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    
+}
+
+.song-item .inner-image {
+    width: 135px;
+    aspect-ratio: 1/1;
+    border-radius: 5px;
+    overflow: hidden;
+}
+
+.song-item .inner-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.song-item .inner-content {
+    padding: 10px;
+    flex: 1;
+}
+.song-item .inner-content .inner-title {
+    white-space: pre-wrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    display:   
+   -webkit-box;
+    margin-bottom: 5px;
+  }
+
+.song-item .inner-content .inner-title a:hover {
+    color: #7c00c8;
+    text-decoration: none;
+}
+
+.song-item .inner-content .inner-singer {
+    font-size: 13px;
+    font-weight: 500;
+    color: #282828;
+    margin-bottom: 2px;
+}
+
+.song-item .inner-content .inner-like {
+    font-size: 13px;
+    font-weight: 500;
+    color: #004cd0;
+    margin-bottom: 2px;
+}
+
+.song-item .inner-content .inner-time {
+    font-size: 13px;
+    font-weight: 500;
+    color: #585858;
+}
+.song-item .inner-content .inner-title a {
+    font-size: 14px;
+    font-weight: 700;
+    color: #4d6876;
+}
+.song-item .inner-content .inner-heart {
+  font-size: 13px;
+  font-weight: 500;
+  margin-bottom: 2px;
+  cursor: pointer;
+}
+
+.song-item .inner-content .inner-heart.active {
+  color: #b90000;
+}
+
+.song-item .inner-content .inner-heart.active {
+  font-weight: 900;
+}
+.our-menu h2 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.inner-dir {
+    width: 104px;
+    height: 2.4px;
+    background: #333333;
+    margin: 0 auto;
+    position: relative;
+    
+}
+
+/* Responsive cho màn hình nhỏ hơn 991px */
+@media screen and (max-width: 991px) {
+    .inner-dir {
+        width: 80px; /* Có thể thu nhỏ width nếu cần để phù hợp với màn hình nhỏ */
+    }
+}
+.topics a{
+    text-decoration: none;
+    color: #212529;
+}
+.suggestions a{
+    text-decoration: none;
+    color: #212529;
+}
+.button-main-outline {
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    padding: 8px 24px;
+    min-height: 40px;
+    color: #333333;
+    border: 1px solid #333333;
+    border-radius: 4px;
+    background: transparent;
+    transition: color 0.3s ease, background 0.3s ease;
+    position: relative;
+    overflow: hidden; 
+}
+
+.button-main-outline::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 2px;
+    width: 100%;
+    background-color: #333333;
+    transform: scaleX(0);
+    transition: transform 0.3s ease;
+}
+
+.button-main-outline:hover {
+    color: #fff;
+    text-decoration: none;
+    background: #333333;
+}
+.button-main-outline i{
+    margin-top: 4px;
+}
+.button-main-outline:hover::after {
+    transform: scaleX(1);
+}
+
+/* song  */
