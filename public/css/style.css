@@ -334,7 +334,24 @@ body {
     position: relative;
     /* margin-top: 0; */
 }
+.Footer-social a{
+    text-decoration: none;
+    margin-bottom: 5px;
+    margin-left: 100px;
+    color: black;
+    display: flex;
+    flex-direction: column;
+}
 
+.Footer-social a:hover{
+    color: black;
+    text-decoration: none;
+}
+.Footer-icons a i span{
+    margin-left: 8px;
+    font-size: 15px;
+    color: #939393;
+}
 .Footer-content {
     margin-left: 86px;
     color: #939393;
