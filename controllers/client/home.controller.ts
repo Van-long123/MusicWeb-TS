@@ -10,7 +10,7 @@ export const index=async (req:Request, res:Response) => {
     }).limit(6)
     const songsRandom=await Song.aggregate([
         {$match:{status:'active',deleted:false}},
-        {$sample:{size:12}}
+        {$sample:{size:9}}
     ])
     for (const item of songsRandom) {
         const infoSinger=await Singer.findOne({

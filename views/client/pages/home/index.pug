@@ -29,16 +29,16 @@ block main
                 h3.subtitle Bắt đầu nghe từ một bài hát
                 h3.title Gợi ý dành riêng cho bạn
             .station-section-header-right
-                button.zm-btn.refresh-btn.button(tabindex='0')
+                button.zm-btn.refresh-btn.button
                     i.bi.bi-arrow-clockwise
                     span Làm mới
-        .row
+        .row.boxListRandom
           each item in songsRandom
-            .col-md-3.col-6
+            .col-md-4.col-6
               a(href=`/songs/detail/${item.slug}`) 
                 .music-item
                     img(src=item.avatar, alt=item.title)
-                    div
+                    div(class="music-text")
                         h5.mb-0 #{item.title}
                         small #{item.infoSinger.fullName}
                 
@@ -90,7 +90,7 @@ block main
 
         .row.mt-3.mb-5.d-flex.justify-content-center
             .col-12.text-center
-                a.button-main-outline(href="products/featured") 
+                a.button-main-outline(href=`/songs/like`) 
                     span Xem thêm 
                     i.fa-solid.fa-angle-down
 
@@ -118,6 +118,6 @@ block main
                     div(class="inner-time") <i class="fa-regular fa-clock"></i> Hôm nay
         .row.mt-3.mb-5.d-flex.justify-content-center
             .col-12.text-center
-                a.button-main-outline(href="products/featured") 
+                a.button-main-outline(href=`/songs/listen`) 
                     span Xem thêm 
                     i.fa-solid.fa-angle-down
