@@ -7,7 +7,7 @@ export const index=async (req:Request, res:Response) => {
     const topics= await Topic.find({
         status:'active',
         deleted:false,
-    }).limit(4)
+    }).limit(6)
     const songsRandom=await Song.aggregate([
         {$match:{status:'active',deleted:false}},
         {$sample:{size:12}}

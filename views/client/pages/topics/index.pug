@@ -1,0 +1,19 @@
+extends ../../layouts/default
+block main
+    .container
+      .row
+        .col-12
+            .our-menu.mb-2
+                h2
+                    span CHỦ ĐỀ & THỂ LOẠI
+                .inner-dir
+      .row.topics
+        each topic in topics
+          .col-md-2
+            a(href=`/songs/${topic.slug}`) 
+              .card.playlist-card
+                img.card-img-top(src=topic.avatar, alt=topic.title)
+                .card-body
+                  h5.card-title
+                    | #{topic.title}
+                  p.card-text #{topic.description}

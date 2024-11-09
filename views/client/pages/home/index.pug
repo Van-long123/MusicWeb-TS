@@ -47,12 +47,12 @@ block main
         .col-12
             .our-menu.mb-2
                 h2
-                    span CHỦ ĐỀ
+                    span CHỦ ĐỀ & THỂ LOẠI  
                 .inner-dir
       .row.topics
         each topic in topics
-          .col-md-3
-            a(href="") 
+          .col-md-2
+            a(href=`/songs/${topic.slug}`) 
               .card.playlist-card
                 img.card-img-top(src=topic.avatar, alt=topic.title)
                 .card-body
@@ -62,7 +62,7 @@ block main
         
         .row.mt-3.mb-5
             .col-12.text-center
-                a.button-main-outline(href="products/featured") 
+                a.button-main-outline(href="/topics") 
                     span Xem thêm 
                     i.fa-solid.fa-angle-down
     .container
