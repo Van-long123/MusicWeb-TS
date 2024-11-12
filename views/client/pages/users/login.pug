@@ -1,0 +1,35 @@
+extends ../../layouts/user.pug
+block main 
+    .Login
+        form(action="/user/login" method="POST" id="forml")
+            section.sectionLogin
+                .section-L-left
+                    img(src="/uploads/back1.jpg", image)
+                .section-L-right
+                    .text-info
+                        h1(style="text-align: left; color: #FFC800;") Đăng nhập
+                        p(style="text-align: left;")
+                            b(style="color: black;") Xin chào bạn
+                        p(style="font-weight: lighter; color: black; text-align: left;") Nhập thông tin cá nhân của bạn và bắt đầu tham gia với chúng tôi
+                    .input-type
+                        .input-type-email.form-group.pt-2
+                            i.fa-regular.fa-envelope
+                            input(id="email" type="text" name="email" placeholder="         Tài khoản" value=messages.emailValue ? messages.emailValue[0] : '' )
+                            if(messages.emailError)
+                                lable(id="email-error" class="error invalid-feedback1" for="full_name" style="display:block") #{messages.emailError} 
+                            lable(id="email-error" class="error invalid-feedback1" for="full_name" ) Vui lòng nhập email
+                        p
+                        .input-type-password.form-group.pb-3
+                            i(class="fa-solid fa-lock")
+                            input(id="password" type="password" name="password" placeholder="         Mật khẩu" value="")
+                            if(messages.passwordError)
+                                lable(id="email-error" class="error invalid-feedback1" for="full_name" style="display:block") #{messages.passwordError} 
+                            lable(id="password-error" class="error invalid-feedback1" for="password") Vui lòng nhập mật khẩu 
+                    button(type="submit" button-login) Đăng nhập
+                    p.not-account
+                        a(href="/user/password/forgot") Quên mật khẩu
+                    div
+                        hr.custom-hr
+                        p.text-center.custom-register(style="font-weight: bold") Nếu bạn chưa có tài khoản?
+                            a(href="/user/register") Đăng ký miễn phí
+    

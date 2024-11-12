@@ -31,6 +31,10 @@ export const index=async (req:Request, res:Response) => {
             status:'active',
             deleted:false
         }).select('fullName')
+        //không thể gán lại vì like ban đầu là string[] nên ko thể gán lại Number vào
+        // ts nó là như vậy          
+        // item['like'] = item.like.length; 
+        item['likeCount']= item.like.length; 
         item['infoSinger']=infoSinger
     }
     const songsListen= await Song.find({
@@ -43,6 +47,7 @@ export const index=async (req:Request, res:Response) => {
             status:'active',
             deleted:false
         }).select('fullName')
+        item['likeCount']= item.like.length; 
         item['infoSinger']=infoSinger
     }
     res.render('client/pages/home/index',

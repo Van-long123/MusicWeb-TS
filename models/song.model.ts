@@ -9,8 +9,8 @@ const songSchema=new mongoose.Schema({
     singerId:String,
     topicId:String,
     like:{
-        type:Number,
-        default:0
+        type:[String],
+        default:[]
     },
     listen:{
         type:Number,

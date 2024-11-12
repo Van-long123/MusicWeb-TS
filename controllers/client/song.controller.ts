@@ -39,6 +39,8 @@ export const index=async (req: Request, res: Response)=>{
             status:'active',
             deleted:false
         }).select('fullName')
+        item['likeCount']= item.like.length; 
+
         item['infoSinger']=infoSinger
     }
     res.render('client/pages/songs/index',
@@ -68,3 +70,62 @@ export const random=async (req: Request, res: Response)=>{
         songsRandom:songsRandom
     })
 }
+
+
+export const detail=async (req: Request, res: Response)=>{
+    const slugSong:string=req.params.slugSong;
+    const song=await Song.findOne({
+        slug:slugSong,
+        deleted:false,
+        status:"active"
+    })
+    song['likeCount']= song.like.length; 
+    const singer= await Singer.findOne({
+        _id: song.singerId,
+        status:'active',
+        deleted:false
+    }).select('fullName')
+    const topic=await Topic.findOne({
+        _id: song.topicId,
+        status:'active',
+        deleted:false
+    }).select('title')
+    res.render('client/pages/songs/detail',{
+        title:slugSong,
+        song:song,
+        singer:singer,
+        topic:topic,
+    })
+}
+export const listen=async (req: Request, res: Response)=>{
+    try {
+        const idSong:string=req.params.idSong;
+        const song=await Song.findOne({
+            _id: idSong,
+            deleted:false,
+            status:"active"
+        })
+        const listen=song.listen+1;
+        await Song.updateOne({
+            _id:idSong,
+            deleted:false,
+            status:"active"
+        },
+        {
+            listen:listen
+        })
+        res.json({
+            code:200,
+            message:'Thành công',
+            listen:listen
+        })
+    } catch (error) {
+        res.json({
+            code:400,
+            message:'Lỗi!',
+        })
+    }
+}
+
+
+

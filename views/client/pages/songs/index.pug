@@ -9,7 +9,7 @@ block main
                 .inner-dir
       .row.mt-3
         each item in songs
-          .col-md-3.mb-3
+          .col-xl-3.col-md-6.mb-3
             .playlist-card
               div(class="song-item")
                 div(class="inner-image")
@@ -19,6 +19,6 @@ block main
                     div(class="inner-title")
                         a(href=`/songs/detail/${item.slug}`) #{item.title}
                     div(class="inner-singer") <i class="fa-solid fa-microphone-lines"></i> #{item.infoSinger.fullName}
-                    div(class="inner-like") <i class="fa-solid fa-thumbs-up"></i> #{item.like}
+                    div(class="inner-like") <i class="fa-solid fa-thumbs-up"></i> #{item.likeCount}
                     //- tự làm thời gian tạo
                     div(class="inner-time") <i class="fa-regular fa-clock"></i> Hôm nay

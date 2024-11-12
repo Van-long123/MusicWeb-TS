@@ -10,6 +10,10 @@ const router:Router=Router();
 // router.get('/listen',controller.listen)
 router.get('/random',controller.random)
 router.get('/:slug',controller.index)
+router.get('/detail/:slugSong',controller.detail)
+
+
+router.patch('/listen/:idSong',controller.listen)
 
 
 
