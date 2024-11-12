@@ -45,4 +45,14 @@ export const registerPost=(req:Request, res:Response,next:NextFunction)=>{
     next()
 }
 
+export const forgotPassword=(req:Request, res:Response,next:NextFunction)=>{
+    if(!req.body.email){
+        if(!req.body.email){
+            req.flash('emailError', `Vui lòng nhập email`);
+            res.redirect(`back`);
+            return;//phải thêm return để code ở dưới ko chạy vì js bất động bộ
+        }
+    }
+    next()
 
+}
