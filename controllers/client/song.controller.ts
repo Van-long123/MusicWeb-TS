@@ -20,7 +20,7 @@ export const index=async (req: Request, res: Response)=>{
     }
     else{
         const topic=await Topic.findOne({
-            slug: req.params.slugTopic,
+            slug: req.params.slug,
             status:'active',
             deleted:false,
         })
