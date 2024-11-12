@@ -44,3 +44,5 @@ export const registerPost=(req:Request, res:Response,next:NextFunction)=>{
     }
     next()
 }
+
+

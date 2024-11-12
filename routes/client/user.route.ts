@@ -7,5 +7,8 @@ router.post('/login',validate.loginPost, controller.loginPost);
 
 router.get('/register', controller.register)
 router.post('/register',validate.registerPost, controller.registerPost);
+
+router.get('/logout', controller.logout)
+
 export const userRouter: Router=router
 
