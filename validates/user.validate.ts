@@ -15,7 +15,7 @@ export const loginPost=(req:Request, res:Response,next:NextFunction)=>{
 }
 
 export const registerPost=(req:Request, res:Response,next:NextFunction)=>{
-    if(!req.body.fullname){
+    if(!req.body.fullName){
         req.flash('nameError', `Vui lòng nhập họ tên`);
         res.redirect(`back`);
         return;
@@ -26,17 +26,19 @@ export const registerPost=(req:Request, res:Response,next:NextFunction)=>{
         return;//phải thêm return để code ở dưới ko chạy vì js bất động bộ
     }
     if(!req.body.password){
-        req.flash('error', `Vui lòng nhập mật khẩu`);
+        req.flash('passwordError', `Vui lòng nhập mật khẩu`);
         res.redirect(`back`);
         return;//phải thêm return để code ở dưới ko chạy vì js bất động bộ
     }
     if(!req.body.confirmPassword){
-        req.flash('error', `Vui lòng nhập xác nhận mật khẩu`);
+        req.flash('confirmPassword-error', `Vui lòng nhập xác nhận mật khẩu`);
         res.redirect(`back`);
         return;//phải thêm return để code ở dưới ko chạy vì js bất động bộ
     }
     if(req.body.password!=req.body.confirmPassword){
-        req.flash('error', `Mật khẩu không khớp`);
+        req.flash('emailValue',req.body.email)
+        req.flash('nameValue',req.body.fullName)
+        req.flash('passwordError', `Mật khẩu không khớp`);
         res.redirect(`back`);
         return;//phải thêm return để code ở dưới ko chạy vì js bất động bộ
     }

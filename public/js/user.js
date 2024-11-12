@@ -40,10 +40,10 @@ if(closeAlert){
 }
 // Close alert 
 // register 
-const fullname=document.querySelector('input[name="fullname"]')
-if(fullname){
-    fullname.addEventListener('change',e=>{
-        const nameValue=fullname.value
+const fullName=document.querySelector('input[name="fullName"]')
+if(fullName){
+    fullName.addEventListener('change',e=>{
+        const nameValue=fullName.value
         if(!nameValue){
             document.querySelector('#name-error').style.display='block'
         }
@@ -53,31 +53,9 @@ if(fullname){
     })
 }
 
-const address=document.querySelector('input[name="address"]')
-if(address){
-    address.addEventListener('change',e=>{
-        const addressValue=address.value
-        if(!addressValue){
-            document.querySelector('#address-error').style.display='block'
-        }
-        else{
-            document.querySelector('#address-error').style.display='none'
-        }
-    })
-}
 
-const phone=document.querySelector('input[name="phone"]')
-if(phone){
-    phone.addEventListener('change',e=>{
-        const phoneValue=phone.value
-        if(!phoneValue){
-            document.querySelector('#phone-error').style.display='block'
-        }
-        else{
-            document.querySelector('#phone-error').style.display='none'
-        }
-    })
-}
+
+
 
 const confirmPassword=document.querySelector('input[name="confirmPassword"]')
 if(confirmPassword){
@@ -100,31 +78,14 @@ if(buttonRegister){
         e.preventDefault();
         const email=formRegister.querySelector('input[name="email"]').value
         const password=formRegister.querySelector('input[name="password"]').value
-        const fullname=document.querySelector('input[name="fullname"]').value
-        const address=document.querySelector('input[name="address"]').value
-        const phone=document.querySelector('input[name="phone"]').value
+        const fullName=document.querySelector('input[name="fullName"]').value
         const confirmPassword=document.querySelector('input[name="confirmPassword"]').value
 
-        const phoneRegex = /^[0-9]{10,11}$/;
 
-        if(!fullname){
+
+        if(!fullName){
             checkInfo=false
             document.querySelector('#name-error').style.display='block'
-        }
-        if(!address){
-            checkInfo=false
-            document.querySelector('#address-error').style.display='block'
-        }
-        if(!phone){
-            checkInfo=false
-            document.querySelector('#phone-error').style.display='block'
-        }
-
-// Phương thức .test() là một phương thức có sẵn của đối tượng RegExp
-// Nó được sử dụng để kiểm tra xem một chuỗi có khớp với mẫu biểu thức chính quy (regular expression) hay không.
-        if (!phoneRegex.test(phone)) {
-            checkInfo=false
-            document.querySelector('#phone-error-format').style.display='block'
         }
 
         if(!confirmPassword){
