@@ -12,5 +12,13 @@ router.get('/logout', controller.logout)
 
 router.get('/password/forgot',controller.forgotPassword)
 router.post('/password/forgot',validate.forgotPassword,controller.forgotPasswordPost)
+
+router.get('/password/otp',controller.otpPassword)
+router.post('/password/otp',controller.otpPasswordPost)
+
+
+router.get('/password/reset',controller.reset)
+router.post('/password/reset',validate.resetPasswordPost,controller.resetPost)
+
 export const userRouter: Router=router
 

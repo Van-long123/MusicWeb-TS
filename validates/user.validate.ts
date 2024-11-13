@@ -56,3 +56,24 @@ export const forgotPassword=(req:Request, res:Response,next:NextFunction)=>{
     next()
 
 }
+export const resetPasswordPost=(req:Request, res:Response,next:NextFunction)=>{
+    if(!req.body.password){
+        req.flash('passwordError', `Vui lòng nhập mật khẩu`);
+        res.redirect(`back`);
+        return;//phải thêm return để code ở dưới ko chạy vì js bất động bộ
+    }
+    if(!req.body.confirmPassword){
+        req.flash('confirmError', `Vui lòng nhập xác nhận mật khẩu`);
+        req.flash('passValue',req.body.password)
+        res.redirect(`back`);
+        return;//phải thêm return để code ở dưới ko chạy vì js bất động bộ
+    }
+    if(req.body.password!=req.body.confirmPassword){
+        req.flash('passwordError', `Mật khẩu không khớp`);
+        req.flash('passValue',req.body.password)
+        res.redirect(`back`);
+        return;//phải thêm return để code ở dưới ko chạy vì js bất động bộ
+    }
+    next()
+
+}

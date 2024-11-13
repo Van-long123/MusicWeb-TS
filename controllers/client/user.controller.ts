@@ -4,6 +4,7 @@ import md5 from 'md5'
 import * as generateHelper from '../../helpers/generate'
 import ForgotPassword from "../../models/forgor-password.model"
 import * as sendMailHelper from "../../helpers/sendMail"
+import { console } from "inspector"
 export const login=async (req:Request, res:Response) => {
     res.render('client/pages/users/login',{
         title:"Đăng nhập tài khoản"
@@ -101,4 +102,67 @@ export const forgotPasswordPost=async (req:Request, res:Response) => {
     sendMailHelper.sendMail(email,subject,html)
 
     res.redirect(`/user/password/otp?email=${email}`)
+}
+
+export const otpPassword=async (req:Request, res:Response) => {
+    const email=req.query.email
+    res.render('client/pages/users/otp-password',{
+        title:"Nhập mã OTP",
+        email:email
+    })
+}
+export const otpPasswordPost=async (req:Request, res:Response) => {
+    const {email,otp}=req.body;
+    const existEmail=await ForgotPassword.findOne({
+        email:email
+    })
+    if(!existEmail){
+        req.flash('error', `Email không tồn tại`);
+        res.redirect('back')
+        return;
+    }
+    if(existEmail['otp']!==otp){
+        req.flash('error', `OTP không hợp lệ`);
+        res.redirect('back')
+        return;
+    }
+    const user = await User.findOne({
+        email:email,
+        deleted:false,
+        status:'active'
+    })
+    if(!user){
+        req.flash('emailError', `Email không tồn tại`);
+        req.flash('emailValue', email);
+        res.redirect('back')
+        return;
+    }
+    res.cookie('tokenUser',user['tokenUser'])
+    res.redirect('/user/password/reset');
+}
+export const reset=async (req:Request, res:Response) => {
+    res.render('client/pages/users/reset-password',{
+        title:"Đổi mật khẩu",
+    })
+}
+export const resetPost=async (req:Request, res:Response) => {
+    const password:string = req.body.password
+    const tokenUser:string=req.cookies.tokenUser;
+    const user=await User.findOne({
+        tokenUser:tokenUser,
+        deleted:false,
+        status:'active'
+    })
+    if(!user){
+        req.flash('emailError', `Nhập lại địa chỉ email!`);
+        res.redirect(`/user/password/forgot`);
+        return;
+    }
+    await User.updateOne({
+        tokenUser:tokenUser,
+    },{
+        password:md5(password)
+    })
+    req.flash('success', `Đổi mật khẩu thành công`);
+    res.redirect('back')
 }

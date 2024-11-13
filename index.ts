@@ -6,13 +6,14 @@ import bodyParser = require("body-parser")
 dotenv.config()
 const app:Express= express()
 import session from 'express-session';
+import cookieParser from 'cookie-parser';
 import flash from 'express-flash';
 app.set('view engine', 'pug')
 app.set('views',`${__dirname}/views`)
 app.use(express.static(`${__dirname}/public`))
 databse.connect()
 app.use(bodyParser.urlencoded({ extended: false }))
-
+app.use(cookieParser())
 //flash
 // Cấu hình express-session
 app.use(
