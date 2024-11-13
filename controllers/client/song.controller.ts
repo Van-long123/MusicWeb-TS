@@ -80,6 +80,7 @@ export const detail=async (req: Request, res: Response)=>{
         status:"active"
     })
     song['likeCount']= song.like.length; 
+    
     const singer= await Singer.findOne({
         _id: song.singerId,
         status:'active',
@@ -90,6 +91,11 @@ export const detail=async (req: Request, res: Response)=>{
         status:'active',
         deleted:false
     }).select('title')
+
+
+    song['isLikeSong']=song['like'].some(item=>{
+        return item==res.locals.user.id
+    })
     res.render('client/pages/songs/detail',{
         title:slugSong,
         song:song,
@@ -126,6 +132,56 @@ export const listen=async (req: Request, res: Response)=>{
         })
     }
 }
+export const like=async (req: Request, res: Response)=>{
+    try {
+        const typeLike:string=req.params.typeLike
+        const idSong:string=req.params.idSong
+        const song=await Song.findOne({
+            _id:idSong,
+            deleted:false,
+            status:"active"
+        })
+        if(!song){
+            res.json({
+                code:400,
+                message:"Lỗi!"
+         
+            })
+        }
+        const newLike=typeLike=="like" ? song['like'].length+1 :song['like'].length-1;
 
+        if(typeLike=="like"){
+            await Song.updateOne({
+                _id:idSong,
+                deleted:false,
+                status:"active"
+            },{
+                $push:{like:res.locals.user.id}
+            })
+            // console.log()
+        }
+        else{
+            await Song.updateOne({
+                _id:idSong,
+                deleted:false,
+                status:"active"
+            },{
+                $pull:{like:res.locals.user.id}
+            })
+        }
+        res.json({
+            code:200,
+            message:"Thành công!",
+            like:newLike
+        })
+    } catch (error) {
+        res.json({
+            code:400,
+            message:"Lỗi!"
+     
+        })
+    }
+    
+}
 
 

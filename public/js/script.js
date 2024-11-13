@@ -119,3 +119,31 @@ if(boxSearch){
 
 }
 // Search suggest  
+
+// button like 
+const buttonLike=document.querySelector('[button-like]')
+if(buttonLike){
+    buttonLike.addEventListener('click',e=>{
+        const idSong=buttonLike.getAttribute('button-like')
+        const isActive=buttonLike.classList.contains('active')
+        const typeLike=isActive ? 'dislike' :'like';
+        const link =`/songs/like/${typeLike}/${idSong}`
+        const option={
+            method:"PATCH"
+        }
+        fetch(link,option)
+            .then(res=>res.json())
+            .then(data=>{
+                if(data.code==200){
+                    buttonLike.querySelector('span').innerHTML=`${data.like} thích`
+                    buttonLike.classList.toggle('active')
+                    
+                }
+            })
+    })
+}
+// button like 
+
+// button Favorite 
+
+// button Favorite 
