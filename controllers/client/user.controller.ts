@@ -68,7 +68,7 @@ export const registerPost=async (req:Request, res:Response) => {
 }
 export const logout=(req:Request, res:Response)=>{
     res.clearCookie('tokenUser')
-    res.redirect('/')
+    res.redirect('back')
 }
 
 export const forgotPassword=async (req:Request, res:Response) => {

@@ -2,6 +2,7 @@ import { Request,Response } from "express"
 import Topic from "../../models/topic.model"
 import Singer from "../../models/singer.model"
 import Song from "../../models/song.model"
+import FavoriteSong from "../../models/favorite-song.model"
 export const index=async (req: Request, res: Response)=>{
     const type:String=req.params.slug;
     let find={
@@ -92,10 +93,20 @@ export const detail=async (req: Request, res: Response)=>{
         deleted:false
     }).select('title')
 
+    if(res.locals.user){
+        // if(res.locals.user.id){ sẽ báo lỗi vì user nó undefinded thì trỏ tới id sẽ lỗi 
+        // vì vậy chỉ nên res.locals.user 
+        const isFavoriteSong=await FavoriteSong.findOne({
+            userId:res.locals.user.id,
+            songId:song.id
+        })
+        song['isFavoriteSong']=isFavoriteSong ? true : false
+        song['isLikeSong']=song['like'].some(item=>{
+            return item==res.locals.user.id
+        })
+    }
+    
 
-    song['isLikeSong']=song['like'].some(item=>{
-        return item==res.locals.user.id
-    })
     res.render('client/pages/songs/detail',{
         title:slugSong,
         song:song,
@@ -173,6 +184,59 @@ export const like=async (req: Request, res: Response)=>{
             code:200,
             message:"Thành công!",
             like:newLike
+        })
+    } catch (error) {
+        res.json({
+            code:400,
+            message:"Lỗi!"
+     
+        })
+    }
+    
+}
+
+
+export const favorite=async (req: Request, res: Response)=>{
+    try {
+        const idSong=req.params.idSong
+        const typeFavorite=req.params.typeFavorite
+        const userId=res.locals.user.id
+        switch (typeFavorite) {
+            case 'favorite':
+                const songFavorite=await FavoriteSong.findOne({
+                    songId:idSong,
+                    userId:userId,
+                })
+                if(!songFavorite){
+                    const record=new FavoriteSong({
+                        songId:idSong,
+                        userId:userId,
+                    });
+                    await record.save()
+                }
+                break;
+            case 'unFavorite':
+                const isSongFavorite=await FavoriteSong.findOne({
+                    songId:idSong,
+                    userId:userId,
+                })
+                if(isSongFavorite){
+                    await FavoriteSong.deleteOne({
+                        songId:idSong,
+                        userId:userId,
+                    })
+                }
+                break;
+            default:
+                res.json({
+                    code:400,
+                    message:'Lỗi !'
+                })
+                break;
+        }
+        res.json({
+            code:200,
+            message:"Thành công!",
         })
     } catch (error) {
         res.json({

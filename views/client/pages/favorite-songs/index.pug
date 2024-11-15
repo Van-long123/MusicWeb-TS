@@ -5,23 +5,21 @@ block main
         .col-12
             .our-menu.mb-2
                 h2
-                    span #{title}
+                    span Bài hát yêu thích
                 .inner-dir
       .row.mt-3
-        each item in songs
+        each item in favoriteSongs
           .col-xl-3.col-md-6.mb-3
             .playlist-card
               div(class="song-item")
                 div(class="inner-image")
-                    a(href=`/songs/detail/${item.slug}`)
-                      img(src=item.avatar)
+                    a(href=`/songs/detail/${item.infoSong.slug}`)
+                      img(src=item.infoSong.avatar)
                 div(class="inner-content")
                     div(class="inner-title")
-                        a(href=`/songs/detail/${item.slug}`) #{item.title}
+                        a(href=`/songs/detail/${item.infoSong.slug}`) #{item.infoSong.title}
                     div(class="inner-singer") <i class="fa-solid fa-microphone-lines"></i> #{item.infoSinger.fullName}
-                    if (user)
-                      div( class=(item.like.includes(user.id) ? 'inner-like' : 'inner-inlike'))  <i class="fa-solid fa-thumbs-up"></i> #{item.likeCount} thích
-                    else
-                      div(class="inner-inlike") <i class="fa-solid fa-thumbs-up"></i> #{item.likeCount} thích
+                    div(class="inner-heart active" button-favorite=item.infoSong.id) <i class="fa-solid fa-heart"></i> Yêu thích
+                    div(class="inner-like") <i class="fa-solid fa-thumbs-up"></i> #{item.infoSong.likeCount} thích
                     //- tự làm thời gian tạo
                     div(class="inner-time") <i class="fa-regular fa-clock"></i> Hôm nay

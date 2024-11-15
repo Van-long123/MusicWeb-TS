@@ -14,9 +14,10 @@ html(lang="en")
         link(rel="stylesheet", href="/css/nav.css")
         link(rel="stylesheet", href="/css/style.css")
     body
-    
+        include ../mixins/box-auth.pug
         include ../partials/header
         div(class="main")
+            +box-auth()
             block main
         include ../partials/footer
         aplayer

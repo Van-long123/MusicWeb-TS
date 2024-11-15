@@ -84,7 +84,10 @@ block main
                     div(class="inner-title")
                         a(href=`/songs/detail/${item.slug}`) #{item.title}
                     div(class="inner-singer") <i class="fa-solid fa-microphone-lines"></i> #{item.infoSinger.fullName}
-                    div(class="inner-like") <i class="fa-solid fa-thumbs-up"></i> #{item.likeCount}
+                    if (user)
+                      div( class=(item.like.includes(user.id) ? 'inner-like' : 'inner-inlike'))  <i class="fa-solid fa-thumbs-up"></i> #{item.likeCount} thích
+                    else
+                      div(class="inner-inlike") <i class="fa-solid fa-thumbs-up"></i> #{item.likeCount} thích
                     //- tự làm thời gian tạo
                     div(class="inner-time") <i class="fa-regular fa-clock"></i> Hôm nay
 
@@ -113,7 +116,10 @@ block main
                     div(class="inner-title")
                         a(href=`/songs/detail/${item.slug}`) #{item.title}
                     div(class="inner-singer") <i class="fa-solid fa-microphone-lines"></i> #{item.infoSinger.fullName}
-                    div(class="inner-like") <i class="fa-solid fa-thumbs-up"></i> #{item.likeCount}
+                    if (user)
+                      div( class=(item.like.includes(user.id) ? 'inner-like' : 'inner-inlike'))  <i class="fa-solid fa-thumbs-up"></i> #{item.likeCount} thích
+                    else
+                      div(class="inner-inlike") <i class="fa-solid fa-thumbs-up"></i> #{item.likeCount} thích
                     //- tự làm thời gian tạo
                     div(class="inner-time") <i class="fa-regular fa-clock"></i> Hôm nay
         .row.mb-5.d-flex.justify-content-center

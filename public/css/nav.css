@@ -110,4 +110,57 @@ body {
     color: #007bff;
 }
 
+
+.userprofile-card-item{
+    position: relative;
+    cursor: default;
+    width: 160px;
+    height: 41px;
+    border-radius: 0;
+    border: 0;
+    background-color: transparent;
+}
+.profile-user{
+    display: flex;
+    align-items: center;
+}
+.profile-user img {
+    border-radius: 50%;
+    width: 40px;
+}
+.profile-user a{
+    text-decoration: none;
+    color: #212529;
+
+}
+
+
+.icons-user-board{
+    z-index: 10000;
+    position: absolute;
+    top: 50px;
+    width:170px;
+    border-radius: 5px;
+    background-color: #ffffff;
+    opacity: 0; /* Ẩn phần tử khi không hover */
+    visibility: hidden; /* Ẩn phần tử khi không hover */
+    transition: opacity 0.3s ease, visibility 0s 0.3s;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+.icons-user-board a{
+    text-decoration: none !important;
+    /* border-radius: 5px; */
+    color: #38383D !important;
+    font-size: 15px;
+    display: block;
+    padding: 7px;
+}
+.icons-user-board a:hover{
+    background-color: #ced4da;
+}
+.userprofile-card-item:hover .icons-user-board {
+    opacity: 1; /* Hiển thị phần tử khi hover */
+    visibility: visible; /* Hiển thị phần tử khi hover */
+    transition: opacity 0.3s ease, visibility 0s 0s; /* Khi hover thì phần tử sẽ hiển thị ngay */
+}
 /* nav  */

@@ -65,7 +65,7 @@ if(refreshBtn){
                                     <img src=${song.avatar} alt=${song.title} />
                                     <div class="music-text">
                                         <h5 class="mb-0">${song.title}</h5>
-                                        <small><i class="fa-solid fa-microphone-lines"></i>${song.infoSinger.fullName}</small>
+                                        <small><i class="fa-solid fa-microphone-lines"></i> ${song.infoSinger.fullName}</small>
                                     </div>
                                 </div>
                             </a>
@@ -124,6 +124,12 @@ if(boxSearch){
 const buttonLike=document.querySelector('[button-like]')
 if(buttonLike){
     buttonLike.addEventListener('click',e=>{
+        const confirmationModal=document.querySelector('#confirmationModal')
+        const active=confirmationModal.classList.contains('inactive')
+        if(active){
+            confirmationModal.style.display = "block";
+            return;
+        }
         const idSong=buttonLike.getAttribute('button-like')
         const isActive=buttonLike.classList.contains('active')
         const typeLike=isActive ? 'dislike' :'like';
@@ -145,5 +151,45 @@ if(buttonLike){
 // button like 
 
 // button Favorite 
-
+const buttonFavorite =document.querySelector('[button-favorite]')
+if(buttonFavorite){
+    buttonFavorite.addEventListener('click',e=>{
+        const confirmationModal=document.querySelector('#confirmationModal')
+        const active=confirmationModal.classList.contains('inactive')
+        if(active){
+            confirmationModal.style.display = "block";
+            return;
+        }
+        const idSong=buttonFavorite.getAttribute('button-favorite')
+        const isActive=buttonFavorite.classList.contains('active')
+        const typeFavorite=isActive ? 'unFavorite' :'favorite';
+        const link =`/songs/fovarite/${typeFavorite}/${idSong}`
+        const option={
+            method:"PATCH"
+        }
+        fetch(link,option)
+            .then(res=>{
+                return res.json()
+            })
+            .then(data=>{
+                if(data.code==200){
+                    buttonFavorite.classList.toggle('active');
+                }
+            })
+    })
+}
 // button Favorite 
+
+
+// close auth 
+const closeAlert=document.querySelector('[close-alert]')
+if(closeAlert){
+    closeAlert.addEventListener('click',e=>{
+        const confirmationModal=document.querySelector('#confirmationModal')
+        confirmationModal.style.display = "none";
+    })
+}
+
+
+
+// close auth 
