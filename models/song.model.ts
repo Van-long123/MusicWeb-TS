@@ -7,6 +7,7 @@ const songSchema=new mongoose.Schema({
     description:String,
     status:String,
     singerId:String,
+    position:Number,
     topicId:String,
     like:{
         type:[String],
@@ -27,7 +28,23 @@ const songSchema=new mongoose.Schema({
         type:Boolean,
         default:false
     },
-    deletedAt:Date,
+    createdBy:{
+        account_id:String,
+        createdAt:{
+            type:Date,
+            default:Date.now,
+        }
+    },
+    deleteBy:{
+        account_id:String,
+        deletedAt:Date
+    },
+    updatedBy:[
+        {
+            account_id:String,
+            updatedAt:Date
+        }
+    ]
 },
 {
    timestamps:true

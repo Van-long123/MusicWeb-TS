@@ -5,6 +5,7 @@ const topicSchema=new mongoose.Schema({
     title:String,
     avatar:String,
     description:String,
+    position:Number,
     status:String,
     slug:{
         type :String,
@@ -15,7 +16,23 @@ const topicSchema=new mongoose.Schema({
         type:Boolean,
         default:false
     },
-    deletedAt:Date,
+    createdBy:{
+        account_id:String,
+        createdAt:{
+            type:Date,
+            default:Date.now,
+        }
+    },
+    deleteBy:{
+        account_id:String,
+        deletedAt:Date
+    },
+    updatedBy:[
+        {
+            account_id:String,
+            updatedAt:Date
+        }
+    ]
 },
 {
    timestamps:true

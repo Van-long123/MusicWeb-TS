@@ -1,0 +1,9 @@
+mixin sort()
+    div(sort)
+        select(class="form-control" name="sort" sort-select)
+            option(disabled) --Chọn hành động--
+            option(value="position-desc" ) Vị trí giảm dần
+            option(value="position-asc" ) Vị trí tăng dần
+            option(value="title-asc") Tiêu đề từ A-Z
+            option(value="title-desc") Tiêu đề từ Z-A
+        button(class="btn btn-danger mt-2" sort-clear) Clear
