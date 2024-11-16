@@ -250,8 +250,6 @@ export const detail=async  (req:Request, res:Response) => {
             _id:song.singerId,
             deleted:false 
         }).select('fullName')
-        console.log(singer)
-        console.log(topic)
         res.render('admin/pages/songs/detail',{
             title:"Cập nhật hát mới",
             song:song,

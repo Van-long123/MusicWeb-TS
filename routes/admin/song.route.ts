@@ -1,6 +1,7 @@
 import { Router } from "express";
 import multer from 'multer';
 const upload=multer()
+// THIẾU VALIDATE 
 import * as uploadCloud from '../../middlewares/admin/uploadCloud.middleware';
 // import * as middleware from '../../middlewares/admin/uploadCloud.middleware';
 import * as controller from '../../controllers/admin/song.controller';

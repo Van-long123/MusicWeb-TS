@@ -1,0 +1,29 @@
+extends ../../layouts/default.pug
+block main
+    h1(class="mb-4") Thêm mới nhóm quyền
+    form(
+        action=`${prefixAdmin}/roles/edit/${record.id}`
+        method="POST"
+    )   
+        div(class="form-group")
+            label(for="title") Nhóm quyền
+            input(
+                type="text"
+                class="form-control"
+                id="title"
+                name="title"
+                value=record.title
+                required
+            )
+
+        div(class="form-group")
+            label(for="desc") Mô tả ngắn
+            input(
+                type="text"
+                class="form-control"
+                id="desc"
+                value=record.description
+                name="description"
+            )
+        div(class="form-group")
+            button(class="btn btn-primary" type="submit") Tạo mới
