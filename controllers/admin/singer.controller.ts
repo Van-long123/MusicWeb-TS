@@ -36,13 +36,11 @@ export const index=async  (req:Request, res:Response) => {
     })
     //pagination
     // sort 
-    if(req.query.sortKey&&req.query.sortValue){
-        const sortKey=req.query.sortKey.toLocaleString()
-        sort[sortKey]=req.query.sortValue
-    }
-    else{
-        sort['position']="desc"
-    }
+    // if(req.query.sortKey&&req.query.sortValue){
+    //     const sortKey=req.query.sortKey.toLocaleString()
+    //     sort[sortKey]=req.query.sortValue
+    // }
+    
     // sort 
 
     const singers=await Singer.find(find)
@@ -50,7 +48,7 @@ export const index=async  (req:Request, res:Response) => {
     .limit(objectPagination.limitItems)
     .skip(objectPagination.skip)
     res.render('admin/pages/singers/index',{
-        title:"Quản lý chủ đề",
+        title:"Quản lý ca sĩ",
         singers:singers,
         fillterStatus:fillterStatus,
         keyword:keyword,
@@ -64,22 +62,22 @@ export const changeStatus=async  (req:Request, res:Response) => {
     //     account_id:String,
     //     updatedAt:new Date()
     // }
-    await Topic.updateOne({
+    await Singer.updateOne({
         _id:id
     },{
         status:status
     })
-    req.flash('success', 'Cập nhật trạng thái chủ đề thành công');
+    req.flash('success', 'Cập nhật trạng thái ca sĩ thành công');
     res.redirect('back');
 }
 export const deleteItem=async  (req:Request, res:Response) => {
     const id=req.params.id
-    await Topic.updateOne({
+    await Singer.updateOne({
         _id:id
     },{
         deleted:true
     })
-    req.flash('success','Đã xóa chủ đề thành công')
+    req.flash('success','Đã xóa ca sĩ thành công')
     res.redirect('back')
 }
 
@@ -91,87 +89,60 @@ export const changeMulti=async  (req:Request, res:Response) => {
     // let ids:string[]=req.body.ids.split(',').map((id:string)=>{return id.trim()})
     switch (type) {
         case 'active':
-            await Topic.updateMany({
+            await Singer.updateMany({
                 _id:{$in:ids}
             },{
                 status:'active'
             })
-            req.flash('success', `Cập nhật trạng thái thành công ${ids.length} chủ đề`);
+            req.flash('success', `Cập nhật trạng thái thành công ${ids.length} ca sĩ`);
             break;
         case 'inactive':
-            await Topic.updateMany({
+            await Singer.updateMany({
                 _id:{$in:ids}
             },{
                 status:'inactive'
             })
-            req.flash('success', `Cập nhật trạng thái thành công ${ids.length} chủ đề`);
+            req.flash('success', `Cập nhật trạng thái thành công ${ids.length} ca sĩ`);
             break;
         case 'delete-all':
-            await Topic.updateMany({
+            await Singer.updateMany({
                 _id:{$in:ids}
             },{
                 deleted:true
             })
-            req.flash('success', `Xóa thành công ${ids.length} chủ đề`);
-            break;
-        case 'change-position':
-            for (const item of ids) {
-                let value=item.split('-')
-                const id:string=value[0]
-                const position:string=value[1]
-                await Topic.updateOne({
-                    _id:id
-                },{
-                    position:position
-                })
-            }
-            req.flash('success', `Đổi vị trí thành công ${ids.length} chủ đề`);
+            req.flash('success', `Xóa thành công ${ids.length} ca sĩ`);
             break;
     }
     res.redirect('back')
 }
 export const create=async  (req:Request, res:Response) => {
-    res.render('admin/pages/topics/create',{
-        title:"Thêm chủ đề mới",
+    res.render('admin/pages/singers/create',{
+        title:"Thêm ca sĩ mới",
     })
 }
 export const createPost=async  (req:Request, res:Response) => {
-    if(req.body.position){
-        req.body.position=parseInt(req.body.position)
-    }
-    else{
-        const topicCount=await Topic.countDocuments();
-        req.body.position=topicCount+1
-    }
-    const topic=new Topic(req.body);
-    topic.save()
-    req.flash('success', `Đã thêm thành công chủ đề`);
-    res.redirect(`${systemConfig.prefixAdmin}/topics`);
+    const singer=new Singer(req.body);
+    singer.save()
+    req.flash('success', `Đã thêm thành công ca sĩ`);
+    res.redirect(`${systemConfig.prefixAdmin}/singers`);
 }
 
 export const edit=async  (req:Request, res:Response) => {
     try {
-        const topic=await Topic.findOne({
+        const singer=await Singer.findOne({
             _id:req.params.id
         })
-        res.render('admin/pages/topics/edit',{
-            title:"Thêm chủ đề mới",
-            topic:topic
+        res.render('admin/pages/singers/edit',{
+            title:"Thêm ca sĩ mới",
+            singer:singer
         })
     } catch (error) {
         
     }
 }
 export const editPatch=async  (req:Request, res:Response) => {
-    if(req.body.position){
-        req.body.position=parseInt(req.body.position)
-    }
-    else{
-        const topicCount=await Topic.countDocuments();
-        req.body.position=topicCount+1
-    }
-    await Topic.updateOne({_id:req.params.id},req.body);
-    req.flash('success', `Cập nhật thành công chủ đề`);
+    await Singer.updateOne({_id:req.params.id},req.body);
+    req.flash('success', `Cập nhật thành công ca sĩ`);
     res.redirect(`back`);
 }
 
