@@ -17,6 +17,7 @@ block main
             id="fullname",
             name="fullname",
             value=data.fullname
+            required
             )
         div(class="form-group")
             label(for="email") Email
@@ -26,7 +27,7 @@ block main
             id="email",
             name="email",
             value=data.email
-            
+            required
             )
         div(class="form-group")
             label(for="password") Mật khẩu
@@ -44,7 +45,7 @@ block main
             id="phone",
             name="phone",
             value=data.phone
-            
+            required
             )
                 
         div(class="form-group" upload-image)

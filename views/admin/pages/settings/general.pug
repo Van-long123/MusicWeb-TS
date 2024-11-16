@@ -16,6 +16,7 @@ block main
             class="form-control"
             id="websiteName"
             name="websiteName"
+            required
             value=settingGeneral?settingGeneral.websiteName:""
             )
         div(class="form-group" upload-image)
@@ -25,6 +26,7 @@ block main
             type="file"
             id="logo"
             name="logo"
+            required
             accept="image/*"
             upload-image-input
             )
@@ -36,6 +38,7 @@ block main
             class="form-control"
             id="phone"
             name="phone"
+            required
             value=settingGeneral?settingGeneral.phone:""
             )
         div(class="form-group")
@@ -45,6 +48,7 @@ block main
             class="form-control"
             id="email"
             name="email"
+            required
             value=settingGeneral?settingGeneral.email:""
             )
         div(class="form-group")
@@ -54,6 +58,7 @@ block main
             class="form-control"
             id="address"
             name="address"
+            required
             value=settingGeneral?settingGeneral.address:""
             )
 
@@ -64,6 +69,7 @@ block main
             class="form-control"
             id="copyright"
             name="copyright"
+            required
             value=(settingGeneral?settingGeneral.copyright:"")
             )
 
