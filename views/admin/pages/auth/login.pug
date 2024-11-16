@@ -18,7 +18,7 @@ block main
                     //- // Email input
                     .form-outline.mb-4(data-mdb-input-init)
                         label.form-label(for="form3Example3") Tài khoản
-                        input#form3Example3.form-control.form-control-lg(type="email", placeholder="Nhập tài khoản" name="email")
+                        input#form3Example3.form-control.form-control-lg(type="email", placeholder="Nhập tài khoản" name="email" value=messages.emailValue ? messages.emailValue[0] : '')
 
                     //- // Password input
                     .form-outline.mb-3(data-mdb-input-init)
