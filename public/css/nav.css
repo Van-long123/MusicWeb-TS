@@ -114,7 +114,7 @@ body {
 .userprofile-card-item{
     position: relative;
     cursor: default;
-    width: 160px;
+    width: 200px;
     height: 41px;
     border-radius: 0;
     border: 0;
@@ -123,6 +123,11 @@ body {
 .profile-user{
     display: flex;
     align-items: center;
+}
+.profile-user a {
+    align-items: center;
+
+    display: flex;
 }
 .profile-user img {
     border-radius: 50%;

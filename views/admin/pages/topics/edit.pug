@@ -1,8 +1,8 @@
 extend ../../layouts/default
 block main 
-    h1 Thêm mới sản phẩm
+    h1 Thêm mới chủ đề
     form(
-        action=`${prefixAdmin}/songs/create`,
+        action=`${prefixAdmin}/topics/edit/${topic.id}?_method=PATCH`,
         method="POST"
         enctype="multipart/form-data"
     )
@@ -13,22 +13,8 @@ block main
             class="form-control",
             id="title",
             name="title",
+            value=topic.title
             )
-        div(class="form-group")
-            label(for="title") Chủ đề 
-            select(name="topicId" id="topicId" class="form-control" required)
-                option(value="" disabled selected) -- Chọn chủ đề --
-                each topic in  topics
-                    option(value=topic.id)  #{topic.title}
-        div(class="form-group")
-            label(for="title") Ca sỹ
-            select(name="singerId" id="singerId" class="form-control" required)
-                
-                option(value="" disabled selected) -- Chọn ca sĩ --
-                each singer in singers
-                    option(value=singer.id)  #{singer.fullName}
-        
-        
         div(class="form-group" upload-image)
             label(for="avatar") Ảnh
             input(
@@ -39,27 +25,7 @@ block main
                 accept="image/*"
                 upload-image-input
             )
-            img(id="blah" class="image-prev" src="" upload-image-preview width="300px")
-        div(class="form-group" upload-audio)
-            label(for="audio") File âm thanh
-            input(
-                type="file",
-                class="form-control-file",
-                id="audio",
-                name="audio"
-                accept="audio/*"
-                upload-audio-input
-            )
-            audio(controls upload-audio-play)
-                source(src="") 
-        div(class="form-group")
-            label(for="lyrics") Lời bài hát
-            textarea(
-            class="form-control",
-            id="lyrics",
-            name="lyrics",
-            rows="20"
-            ) 
+            img(id="blah" class="image-prev" src=topic.avatar upload-image-preview width="300px")
         div(class="form-group")
             label(for="desc") Mô tả
             textarea(
@@ -67,7 +33,7 @@ block main
             id="desc",
             name="description",
             rows="5"
-            ) 
+            ) #{topic.description}
         div(class="form-group")
             label(for="position") Vị trí
             input(
@@ -77,6 +43,7 @@ block main
                 name="position",
                 placeholder="Tự động tăng",
                 min="1"
+                value=topic.position
             )
         div(class="form-group form-check form-check-inline")
             input(
@@ -85,7 +52,7 @@ block main
                 id="statusActive",
                 name="status",
                 value="active",
-                checked
+                checked=topic.status=="active" ? true : false 
             )
             label(for="statusActive" class="form-check-label") Hoạt động
         div(class="form-group form-check form-check-inline")
@@ -95,11 +62,12 @@ block main
                 id="statusInActive",
                 name="status",
                 value="inactive"
+                checked=topic.status=="inactive" ? true : false 
             )
             label(for="statusInActive" class="form-check-label") Dừng hoạt động
         div(class="form-group")
             button(
                 class="btn btn-primary"
                 type="submit"
-            ) Tạo mới
+            ) Cập nhật
 

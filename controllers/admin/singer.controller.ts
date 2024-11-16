@@ -5,6 +5,7 @@ import search from '../../helpers/search';
 import pagination from '../../helpers/paginationHelper';
 import * as systemConfig from '../../config/system'
 import Topic from '../../models/topic.model';
+import Singer from '../../models/singer.model';
 export const index=async  (req:Request, res:Response) => {
     let find={
         deleted:false
@@ -28,7 +29,7 @@ export const index=async  (req:Request, res:Response) => {
         ]
     }
     //pagination
-    const countTopics=await Topic.countDocuments(find)
+    const countTopics=await Singer.countDocuments(find)
     const objectPagination=pagination(req.query,countTopics,{
         currentPage:1,
         limitItems:8
@@ -44,13 +45,13 @@ export const index=async  (req:Request, res:Response) => {
     }
     // sort 
 
-    const topics=await Topic.find(find)
+    const singers=await Singer.find(find)
     .sort(sort)
     .limit(objectPagination.limitItems)
     .skip(objectPagination.skip)
-    res.render('admin/pages/topics/index',{
+    res.render('admin/pages/singers/index',{
         title:"Quản lý chủ đề",
-        topics:topics,
+        singers:singers,
         fillterStatus:fillterStatus,
         keyword:keyword,
         pagination:objectPagination

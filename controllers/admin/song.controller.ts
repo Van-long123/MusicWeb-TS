@@ -12,7 +12,6 @@ export const index=async  (req:Request, res:Response) => {
         deleted:false
     }
     let sort={
-
     }
 
     let fillterStatus=fillterStatusHelper(req.query)
@@ -191,7 +190,7 @@ export const edit=async  (req:Request, res:Response) => {
             deleted:false 
         }).select('fullName')
         res.render('admin/pages/songs/edit',{
-            title:"Cập nhật hát mới",
+            title:"Cập nhật bài hát mới",
             song:song,
             topics:topics,
             singers:singers
@@ -251,7 +250,7 @@ export const detail=async  (req:Request, res:Response) => {
             deleted:false 
         }).select('fullName')
         res.render('admin/pages/songs/detail',{
-            title:"Cập nhật hát mới",
+            title:"Chi tiết bài hát",
             song:song,
             topic:topic,
             singer:singer

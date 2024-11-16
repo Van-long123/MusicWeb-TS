@@ -7,7 +7,7 @@ include ../../mixins/alert.pug
 include ../../mixins/sort.pug
 //- include ../../mixins/moment.pug
 block main
-    h1 Trang danh sách chủ đề
+    h1 Trang danh sách ca sĩ
     .card.mb-3
         .card-header Bộ lọc và Tìm kiếm
         .card-body
@@ -20,13 +20,13 @@ block main
                     +search()
 
     .card.mb-3
-        .card-header Danh sách chủ đề
+        .card-header Danh sách ca sĩ
         .card-body
             .row
                 .col-8
-                    +form-change-multi(`${prefixAdmin}/topics/change-multi?_method=PATCH`)
+                    +form-change-multi(`${prefixAdmin}/singers/change-multi?_method=PATCH`)
                 .col-4
-                    a(href=`${prefixAdmin}/topics/create` class="btn btn-outline-success") + Thêm mới
+                    a(href=`${prefixAdmin}/singers/create` class="btn btn-outline-success") + Thêm mới
     .card.mb-3
         .card-header Sắp xếp
             .card-body
@@ -40,23 +40,20 @@ block main
                             input(type="checkbox", name="checkall")
                         th STT
                         th Hình ảnh
-                        th Tiêu đề
-                        th Vị trí
+                        th Họ và tên
                         th Trạng thái
                         th Người tạo
                         th Người cập nhật
                         th Hành động
                 tbody
-                    each item,index in topics
+                    each item,index in singers
                         tr
                             td 
                                 input(type="checkbox", name="id" value=item.id)
                             td #{pagination.limitItems*(pagination.currentPage-1)+(index +1)}
                             td
                                 img(src=`${item.avatar}`, alt=item.title, width="100px", height="auto")
-                            td #{item.title}
-                            td
-                                input(type="number", name="position" value=item.position min=1 style="width:60px")
+                            td #{item.fullName}
                             td 
                                 if(item.status == 'active')
                                     a(
@@ -88,8 +85,8 @@ block main
                                     //- p=moment(updatedBy.updatedAt).format("DD/MM/YYYY HH:mm:ss")
                                     +formatDateTime(updatedBy.updatedAt)
                             td 
-                                a(href=`${prefixAdmin}/topics/detail/${item.id}` class="btn btn-secondary btn-sm") Chi tiết
-                                a(href=`${prefixAdmin}/topics/edit/${item.id}` class="btn btn-warning  btn-sm ml-1") Sửa
+                                a(href=`${prefixAdmin}/singers/detail/${item.id}` class="btn btn-secondary btn-sm") Chi tiết
+                                a(href=`${prefixAdmin}/singers/edit/${item.id}` class="btn btn-warning  btn-sm ml-1") Sửa
                                 button(
                                     class="btn btn-danger btn-sm ml-1"
                                     data-id=item.id
@@ -104,13 +101,13 @@ block main
         action=""
         method="POST"
         id="form-change-status"
-        data-path=`${prefixAdmin}/topics/change-status`
+        data-path=`${prefixAdmin}/singers/change-status`
     ) 
     form(
         action=""
         method="POST"
         id="form-delete-item"
-        data-path=`${prefixAdmin}/topics/delete`
+        data-path=`${prefixAdmin}/singers/delete`
     ) 
-    script(src="/admin/js/topic.js")
+    //- script(src="/admin/js/song.js")
     
