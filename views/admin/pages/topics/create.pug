@@ -1,6 +1,9 @@
 extend ../../layouts/default
+include ../../mixins/alert.pug
 block main 
     h1 Thêm mới chủ đề
+    +alert-success(5000)
+    +alert-error(5000)
     form(
         action=`${prefixAdmin}/topics/create`,
         method="POST"

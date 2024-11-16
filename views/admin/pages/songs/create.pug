@@ -1,6 +1,9 @@
 extend ../../layouts/default
+include ../../mixins/alert.pug
 block main 
     h1 Thêm mới sản phẩm
+    +alert-success(5000)
+    +alert-error(5000)
     form(
         action=`${prefixAdmin}/songs/create`,
         method="POST"
