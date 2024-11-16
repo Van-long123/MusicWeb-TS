@@ -23,9 +23,9 @@ block main
         .card-body
             .row
                 .col-8
-                    +form-change-multi-account(`${prefixAdmin}/users/change-multi?_method=PATCH`)
+                    +form-change-multi-singer(`${prefixAdmin}/accounts/change-multi?_method=PATCH`)
                 .col-4
-                    a(href=`${prefixAdmin}/users/create` class="btn btn-success") +Thêm mới
+                    a(href=`${prefixAdmin}/accounts/create` class="btn btn-success") +Thêm mới
     .card.mb-3
         .card-header Danh sách
             .card-body
@@ -70,8 +70,8 @@ block main
                                         button-change-status
                                         class="badge badge-danger") #{item.status}
                             td 
-                                a(href=`${prefixAdmin}/users/detail/${item.id}` class="btn btn-secondary btn-sm") Chi tiết
-                                a(href=`${prefixAdmin}/users/edit/${item.id}` class="btn btn-warning btn-sm ml-1") Sửa
+                                a(href=`${prefixAdmin}/accounts/detail/${item.id}` class="btn btn-secondary btn-sm") Chi tiết
+                                a(href=`${prefixAdmin}/accounts/edit/${item.id}` class="btn btn-warning btn-sm ml-1") Sửa
                                 button(
                                     class="btn btn-danger btn-sm ml-1"
                                     data-id=item.id
@@ -83,12 +83,12 @@ block main
         action=""
         method="POST"
         id="form-change-status"
-        data-path=`${prefixAdmin}/users/change-status`
+        data-path=`${prefixAdmin}/accounts/change-status`
     ) 
     form(
         action=""
         method="POST"
         id="form-delete-item"
-        data-path=`${prefixAdmin}/users/delete`
+        data-path=`${prefixAdmin}/accounts/delete`
     ) 
-    script(src="/admin/js/account.js")
+    script(src="/admin/js/user.js")

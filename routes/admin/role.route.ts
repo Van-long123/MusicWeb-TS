@@ -11,4 +11,8 @@ router.get('/edit/:id',controller.edit)
 router.post('/edit/:id',validate.editPost,controller.editPost)
 
 router.delete('/delete/:id',controller.deleteItem)
+
+router.get('/permissions',controller.permissions)
+router.patch('/permissions',controller.permissionsPatch)
+
 export const roleRoutes:Router=router

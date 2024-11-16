@@ -126,7 +126,6 @@ body {
 }
 .profile-user a {
     align-items: center;
-
     display: flex;
 }
 .profile-user img {
@@ -134,8 +133,8 @@ body {
     width: 40px;
 }
 .profile-user a{
-    text-decoration: none;
-    color: #212529;
+    text-decoration: none !important;
+    color: #212529 !important;
 
 }
 

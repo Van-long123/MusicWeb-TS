@@ -1,6 +1,8 @@
 extends ../../layouts/default.pug
 block main
     h1(class="mb-4") Thêm mới nhóm quyền
+    +alert-success(5000)
+    +alert-error(5000)
     form(
         action=`${prefixAdmin}/roles/edit/${record.id}`
         method="POST"

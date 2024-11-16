@@ -13,3 +13,61 @@ if(buttonDelete.length > 0){
     })
 }
 //delete-item
+// permission 
+// tạo 1 form để submit gửi dữ liệu sang backend 
+const tablePermissions=document.querySelector('[table-permissions]');
+if(tablePermissions){
+    const buttonSubmit=document.querySelector('[button-submit]');
+    buttonSubmit.addEventListener('click',e=>{
+        let permissions = [];
+        const rows=document.querySelectorAll('[data-name]')
+        rows.forEach(row=>{
+            const name =row.getAttribute('data-name')
+            const inputs=row.querySelectorAll('input')
+            if(name=='id'){
+                inputs.forEach(input=>{
+                    const id=input.value;
+                    permissions.push({
+                        id:id,
+                        permissions:[]
+                    })
+                })
+            }
+            else{
+                inputs.forEach((input,index)=>{
+                    const checked=input.checked
+                    if(checked){
+                        permissions[index].permissions.push(name)
+                    }
+                })
+            }
+        })
+        if(permissions.length>0){
+            const formChangePermissions=document.querySelector('#form-change-permissions')
+            if(formChangePermissions){
+                const inputPermission=formChangePermissions.querySelector('input[name="permissions"')
+                inputPermission.value=JSON.stringify(permissions)
+                formChangePermissions.submit()
+            }
+        }
+    })
+}
+//end permission 
+
+
+// permission default 
+const dataRecords=document.querySelector('[data-records]')
+if(dataRecords){
+    const records=JSON.parse(dataRecords.getAttribute('data-records'))
+    const tablePermissions=document.querySelector('[table-permissions]')
+    records.forEach((record,index)=>{
+        const permissions=record.permissions
+        permissions.forEach((item)=>{
+            const row=tablePermissions.querySelector(`[data-name="${item}"]`)
+            const input=row.querySelectorAll('input')
+            input[index].checked=true
+        })
+    })
+}
+
+//end permission default 

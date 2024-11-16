@@ -7,6 +7,7 @@ import * as systemConfig from '../../config/system'
 import Topic from '../../models/topic.model';
 import Singer from '../../models/singer.model';
 import Account from '../../models/account.model';
+import md5 from 'md5'
 export const index=async  (req:Request, res:Response) => {
     let find={
         deleted:false
@@ -41,8 +42,8 @@ export const index=async  (req:Request, res:Response) => {
     .limit(objectPagination.limitItems)
     .skip(objectPagination.skip)
     res.render('admin/pages/accounts/index',{
-        title:"Quản lý ca sĩ",
-        accounts:accounts,
+        title:"Danh sách tài khoản",
+        records:accounts,
         fillterStatus:fillterStatus,
         keyword:keyword,
         pagination:objectPagination
@@ -55,17 +56,19 @@ export const changeStatus=async  (req:Request, res:Response) => {
     //     account_id:String,
     //     updatedAt:new Date()
     // }
-    await Singer.updateOne({
+    console.log(id)
+    console.log(status)
+    await Account.updateOne({
         _id:id
     },{
         status:status
     })
-    req.flash('success', 'Cập nhật trạng thái ca sĩ thành công');
+    req.flash('success', 'Cập nhật trạng thái tài khoản thành công');
     res.redirect('back');
 }
 export const deleteItem=async  (req:Request, res:Response) => {
     const id=req.params.id
-    await Singer.updateOne({
+    await Account.updateOne({
         _id:id
     },{
         deleted:true
@@ -82,60 +85,90 @@ export const changeMulti=async  (req:Request, res:Response) => {
     // let ids:string[]=req.body.ids.split(',').map((id:string)=>{return id.trim()})
     switch (type) {
         case 'active':
-            await Singer.updateMany({
+            await Account.updateMany({
                 _id:{$in:ids}
             },{
                 status:'active'
             })
-            req.flash('success', `Cập nhật trạng thái thành công ${ids.length} ca sĩ`);
+            req.flash('success', `Cập nhật trạng thái thành công ${ids.length} tài khoản`);
             break;
         case 'inactive':
-            await Singer.updateMany({
+            await Account.updateMany({
                 _id:{$in:ids}
             },{
                 status:'inactive'
             })
-            req.flash('success', `Cập nhật trạng thái thành công ${ids.length} ca sĩ`);
+            req.flash('success', `Cập nhật trạng thái thành công ${ids.length} tài khoản`);
             break;
         case 'delete-all':
-            await Singer.updateMany({
+            await Account.updateMany({
                 _id:{$in:ids}
             },{
                 deleted:true
             })
-            req.flash('success', `Xóa thành công ${ids.length} ca sĩ`);
+            req.flash('success', `Xóa thành công ${ids.length} tài khoản`);
             break;
     }
     res.redirect('back')
 }
 export const create=async  (req:Request, res:Response) => {
-    res.render('admin/pages/singers/create',{
-        title:"Thêm ca sĩ mới",
+    const roles=await Role.find({deleted:false})
+    res.render('admin/pages/accounts/create',{
+        title:"Thêm tài khoản mới",
+        roles:roles
     })
 }
 export const createPost=async  (req:Request, res:Response) => {
-    const singer=new Singer(req.body);
-    singer.save()
-    req.flash('success', `Đã thêm thành công ca sĩ`);
-    res.redirect(`${systemConfig.prefixAdmin}/singers`);
+    const emailExist=await Account.findOne({
+        email:req.body.email,
+        deleted:false 
+    })
+    if(emailExist){
+        req.flash('error', `Email đã tồn tại`);
+        res.redirect(`back`);
+        return;
+    }
+    req.body.password=md5(req.body.password)
+    const account=new Account(req.body);
+    account.save()
+    req.flash('success', `Đã thêm thành công tài khoản`);
+    res.redirect(`${systemConfig.prefixAdmin}/accounts`);
 }
 
 export const edit=async  (req:Request, res:Response) => {
     try {
-        const singer=await Singer.findOne({
+        const account=await Account.findOne({
             _id:req.params.id
         })
-        res.render('admin/pages/singers/edit',{
-            title:"Thêm ca sĩ mới",
-            singer:singer
+        const roles=await Role.find({deleted:false})
+        res.render('admin/pages/accounts/edit',{
+            title:"Thêm tài khoản mới",
+            data:account,
+            roles:roles
         })
     } catch (error) {
         
     }
 }
 export const editPatch=async  (req:Request, res:Response) => {
-    await Singer.updateOne({_id:req.params.id},req.body);
-    req.flash('success', `Cập nhật thành công ca sĩ`);
+    const emailExist=await Account.findOne({
+        _id:{$ne:req.params.id},
+        email:req.body.email,
+        deleted:false 
+    })
+    if(emailExist){
+        req.flash('error', `Email đã tồn tại`);
+        res.redirect(`back`);
+        return;
+    }
+    if(req.body.password){
+        req.body.password=md5(req.body.password)
+    }
+    else{
+        delete req.body.password
+    }
+    await Account.updateOne({_id:req.params.id},req.body);
+    req.flash('success', `Cập nhật thành công tài khoản`);
     res.redirect(`back`);
 }
 
