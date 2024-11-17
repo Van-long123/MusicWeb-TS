@@ -1,95 +1,98 @@
 extend ../../layouts/default
 include ../../mixins/alert.pug
 block main 
-    h1 Thêm mới tài khoản
-    +alert-error(5000) 
-    form(
-        action=`${prefixAdmin}/accounts/create`,
-        method="POST"
-        enctype="multipart/form-data"
-    )
-        div(class="form-group")
-            label(for="fullname") Họ tên
-            input(
-            type="text",
-            class="form-control",
-            id="fullname",
-            name="fullname",
-            required
-            )
-        div(class="form-group")
-            label(for="email") Email
-            input(
-            type="text",
-            class="form-control",
-            id="email",
-            name="email",
-            required
-            )
-        div(class="form-group")
-            label(for="password") Mật khẩu
-            input(
-            type="password",
-            class="form-control",
-            id="password",
-            name="password",
-            required
-            )
-        div(class="form-group")
-            label(for="phone") Số điện thoại
-            input(
-            type="text",
-            class="form-control",
-            id="phone",
-            name="phone",
-            required
-            )
-                
-        div(class="form-group" upload-image)
-            label(for="avatar") Avatar
-            input(
-                type="file",
-                class="form-control-file",
-                id="avatar",
-                name="avatar"
-                accept="image/*"
-                upload-image-input
-            )
-            <img id="blah" class="image-prev" src="" upload-image-preview width="200px"/>
-        
-        div(class="form-group")
-            label(for="role_id") Phân quyền
-            select(
+    if(role.permissions.includes("accounts_create"))
+        h1 Thêm mới tài khoản
+        +alert-error(5000) 
+        form(
+            action=`${prefixAdmin}/accounts/create`,
+            method="POST"
+            enctype="multipart/form-data"
+        )
+            div(class="form-group")
+                label(for="fullname") Họ tên
+                input(
+                type="text",
                 class="form-control",
-                id="role_id",
-                name="role_id",
-            ) 
-                option(disabled) -- Chọn --
-                //- check if else vif lỡ như chưa có ôn nào tạo nhóm quyền thì sao
-                each role in roles
-                    option(value=role.id) #{role.title} 
+                id="fullname",
+                name="fullname",
+                required
+                )
+            div(class="form-group")
+                label(for="email") Email
+                input(
+                type="text",
+                class="form-control",
+                id="email",
+                name="email",
+                required
+                )
+            div(class="form-group")
+                label(for="password") Mật khẩu
+                input(
+                type="password",
+                class="form-control",
+                id="password",
+                name="password",
+                required
+                )
+            div(class="form-group")
+                label(for="phone") Số điện thoại
+                input(
+                type="text",
+                class="form-control",
+                id="phone",
+                name="phone",
+                required
+                )
+                    
+            div(class="form-group" upload-image)
+                label(for="avatar") Avatar
+                input(
+                    type="file",
+                    class="form-control-file",
+                    id="avatar",
+                    name="avatar"
+                    accept="image/*"
+                    upload-image-input
+                )
+                <img id="blah" class="image-prev" src="" upload-image-preview width="200px"/>
+            
+            div(class="form-group")
+                label(for="role_id") Phân quyền
+                select(
+                    class="form-control",
+                    id="role_id",
+                    name="role_id",
+                ) 
+                    option(disabled) -- Chọn --
+                    //- check if else vif lỡ như chưa có ôn nào tạo nhóm quyền thì sao
+                    each role in roles
+                        option(value=role.id) #{role.title} 
 
-        div(class="form-group form-check form-check-inline")
-            input(
-                type="radio",
-                class="form-check-input",
-                id="statusActive",
-                name="status",
-                value="active",
-                checked
-            )
-            label(for="statusActive" class="form-check-label") Hoạt động
-        div(class="form-group form-check form-check-inline")
-            input(
-                type="radio",
-                class="form-check-input",
-                id="statusInActive",
-                name="status",
-                value="inactive"
-            )
-            label(for="statusInActive" class="form-check-label") Dừng hoạt động
-        div(class="form-group")
-            button(
-                class="btn btn-primary"
-                type="submit"
-            ) Tạo mới
+            div(class="form-group form-check form-check-inline")
+                input(
+                    type="radio",
+                    class="form-check-input",
+                    id="statusActive",
+                    name="status",
+                    value="active",
+                    checked
+                )
+                label(for="statusActive" class="form-check-label") Hoạt động
+            div(class="form-group form-check form-check-inline")
+                input(
+                    type="radio",
+                    class="form-check-input",
+                    id="statusInActive",
+                    name="status",
+                    value="inactive"
+                )
+                label(for="statusInActive" class="form-check-label") Dừng hoạt động
+            div(class="form-group")
+                button(
+                    class="btn btn-primary"
+                    type="submit"
+                ) Tạo mới
+    else
+        img(src="/images/5206817.jpg", alt="Unauthorization" style="width:1000px;height:600px")

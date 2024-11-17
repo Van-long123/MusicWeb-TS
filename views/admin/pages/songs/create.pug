@@ -1,109 +1,111 @@
 extend ../../layouts/default
 include ../../mixins/alert.pug
 block main 
-    h1 Thêm mới bài hát
-    +alert-success(5000)
-    +alert-error(5000)
-    form(
-        action=`${prefixAdmin}/songs/create`,
-        method="POST"
-        enctype="multipart/form-data"
-    )
-        div(class="form-group")
-            label(for="title") Tiêu đề
-            input(
-            type="text",
-            class="form-control",
-            id="title",
-            name="title",
-            required
-            )
-        div(class="form-group")
-            label(for="title") Chủ đề 
-            select(name="topicId" id="topicId" class="form-control" required)
-                option(value="" disabled selected) -- Chọn chủ đề --
-                each topic in  topics
-                    option(value=topic.id)  #{topic.title}
-        div(class="form-group")
-            label(for="title") Ca sỹ
-            select(name="singerId" id="singerId" class="form-control" required)
-                
-                option(value="" disabled selected) -- Chọn ca sĩ --
-                each singer in singers
-                    option(value=singer.id)  #{singer.fullName}
-        
-        
-        div(class="form-group" upload-image)
-            label(for="avatar") Ảnh
-            input(
-                type="file",
-                class="form-control-file",
-                id="avatar",
-                name="avatar"
-                accept="image/*"
-                upload-image-input
-            )
-            img(id="blah" class="image-prev" src="" upload-image-preview width="300px")
-        div(class="form-group" upload-audio)
-            label(for="audio") File âm thanh
-            input(
-                type="file",
-                class="form-control-file",
-                id="audio",
-                name="audio"
-                accept="audio/*"
-                upload-audio-input
-            )
-            audio(controls upload-audio-play)
-                source(src="") 
-        div(class="form-group")
-            label(for="lyrics") Lời bài hát
-            textarea(
-            class="form-control",
-            id="lyrics",
-            name="lyrics",
-            rows="20"
-            ) 
-        div(class="form-group")
-            label(for="desc") Mô tả
-            textarea(
-            class="form-control tiny-mce",
-            id="desc",
-            name="description",
-            rows="5"
-            ) 
-        div(class="form-group")
-            label(for="position") Vị trí
-            input(
-                type="number",
+    if(role.permissions.includes("songs_create"))
+        h1 Thêm mới bài hát
+        +alert-success(5000)
+        +alert-error(5000)
+        form(
+            action=`${prefixAdmin}/songs/create`,
+            method="POST"
+            enctype="multipart/form-data"
+        )
+            div(class="form-group")
+                label(for="title") Tiêu đề
+                input(
+                type="text",
                 class="form-control",
-                id="position",
-                name="position",
-                placeholder="Tự động tăng",
-                min="1"
-            )
-        div(class="form-group form-check form-check-inline")
-            input(
-                type="radio",
-                class="form-check-input",
-                id="statusActive",
-                name="status",
-                value="active",
-                checked
-            )
-            label(for="statusActive" class="form-check-label") Hoạt động
-        div(class="form-group form-check form-check-inline")
-            input(
-                type="radio",
-                class="form-check-input",
-                id="statusInActive",
-                name="status",
-                value="inactive"
-            )
-            label(for="statusInActive" class="form-check-label") Dừng hoạt động
-        div(class="form-group")
-            button(
-                class="btn btn-primary"
-                type="submit"
-            ) Tạo mới
-
+                id="title",
+                name="title",
+                required
+                )
+            div(class="form-group")
+                label(for="title") Chủ đề 
+                select(name="topicId" id="topicId" class="form-control" required)
+                    option(value="" disabled selected) -- Chọn chủ đề --
+                    each topic in  topics
+                        option(value=topic.id)  #{topic.title}
+            div(class="form-group")
+                label(for="title") Ca sỹ
+                select(name="singerId" id="singerId" class="form-control" required)
+                    
+                    option(value="" disabled selected) -- Chọn ca sĩ --
+                    each singer in singers
+                        option(value=singer.id)  #{singer.fullName}
+            
+            
+            div(class="form-group" upload-image)
+                label(for="avatar") Ảnh
+                input(
+                    type="file",
+                    class="form-control-file",
+                    id="avatar",
+                    name="avatar"
+                    accept="image/*"
+                    upload-image-input
+                )
+                img(id="blah" class="image-prev" src="" upload-image-preview width="300px")
+            div(class="form-group" upload-audio)
+                label(for="audio") File âm thanh
+                input(
+                    type="file",
+                    class="form-control-file",
+                    id="audio",
+                    name="audio"
+                    accept="audio/*"
+                    upload-audio-input
+                )
+                audio(controls upload-audio-play)
+                    source(src="") 
+            div(class="form-group")
+                label(for="lyrics") Lời bài hát
+                textarea(
+                class="form-control",
+                id="lyrics",
+                name="lyrics",
+                rows="20"
+                ) 
+            div(class="form-group")
+                label(for="desc") Mô tả
+                textarea(
+                class="form-control tiny-mce",
+                id="desc",
+                name="description",
+                rows="5"
+                ) 
+            div(class="form-group")
+                label(for="position") Vị trí
+                input(
+                    type="number",
+                    class="form-control",
+                    id="position",
+                    name="position",
+                    placeholder="Tự động tăng",
+                    min="1"
+                )
+            div(class="form-group form-check form-check-inline")
+                input(
+                    type="radio",
+                    class="form-check-input",
+                    id="statusActive",
+                    name="status",
+                    value="active",
+                    checked
+                )
+                label(for="statusActive" class="form-check-label") Hoạt động
+            div(class="form-group form-check form-check-inline")
+                input(
+                    type="radio",
+                    class="form-check-input",
+                    id="statusInActive",
+                    name="status",
+                    value="inactive"
+                )
+                label(for="statusInActive" class="form-check-label") Dừng hoạt động
+            div(class="form-group")
+                button(
+                    class="btn btn-primary"
+                    type="submit"
+                ) Tạo mới
+    else
+        img(src="/images/5206817.jpg", alt="Unauthorization" style="width:1000px;height:600px")

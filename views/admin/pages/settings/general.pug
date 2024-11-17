@@ -1,80 +1,83 @@
 extend ../../layouts/default
 include ../../mixins/alert.pug
 block main 
-    +alert-success(5000)
-    +alert-error(5000)
-    h1 Cài đặt chung
-    form(
-        action=`${prefixAdmin}/settings/general?_method=PATCH`
-        method="POST"
-        enctype="multipart/form-data"
-    )
-        div(class="form-group")
-            label(for="websiteName") Tên website
-            input(
-            type="text"
-            class="form-control"
-            id="websiteName"
-            name="websiteName"
-            required
-            value=settingGeneral?settingGeneral.websiteName:""
-            )
-        div(class="form-group" upload-image)
-            label(for="logo") Logo
-            br
-            input(
-            type="file"
-            id="logo"
-            name="logo"
-            required
-            accept="image/*"
-            upload-image-input
-            )
-            img(src=settingGeneral?settingGeneral.logo:"", class="image-preview" upload-image-preview)
-        div(class="form-group")
-            label(for="phone") Số điện thoại
-            input(
-            type="text"
-            class="form-control"
-            id="phone"
-            name="phone"
-            required
-            value=settingGeneral?settingGeneral.phone:""
-            )
-        div(class="form-group")
-            label(for="email") Email
-            input(
-            type="email"
-            class="form-control"
-            id="email"
-            name="email"
-            required
-            value=settingGeneral?settingGeneral.email:""
-            )
-        div(class="form-group")
-            label(for="address") Địa chỉ
-            input(
-            type="text"
-            class="form-control"
-            id="address"
-            name="address"
-            required
-            value=settingGeneral?settingGeneral.address:""
-            )
+    if(role.permissions.includes("settings_view"))
+        +alert-success(5000)
+        +alert-error(5000)
+        h1 Cài đặt chung
+        form(
+            action=`${prefixAdmin}/settings/general?_method=PATCH`
+            method="POST"
+            enctype="multipart/form-data"
+        )
+            div(class="form-group")
+                label(for="websiteName") Tên website
+                input(
+                type="text"
+                class="form-control"
+                id="websiteName"
+                name="websiteName"
+                required
+                value=settingGeneral?settingGeneral.websiteName:""
+                )
+            div(class="form-group" upload-image)
+                label(for="logo") Logo
+                br
+                input(
+                type="file"
+                id="logo"
+                name="logo"
+                required
+                accept="image/*"
+                upload-image-input
+                )
+                img(src=settingGeneral?settingGeneral.logo:"", class="image-preview" upload-image-preview)
+            div(class="form-group")
+                label(for="phone") Số điện thoại
+                input(
+                type="text"
+                class="form-control"
+                id="phone"
+                name="phone"
+                required
+                value=settingGeneral?settingGeneral.phone:""
+                )
+            div(class="form-group")
+                label(for="email") Email
+                input(
+                type="email"
+                class="form-control"
+                id="email"
+                name="email"
+                required
+                value=settingGeneral?settingGeneral.email:""
+                )
+            div(class="form-group")
+                label(for="address") Địa chỉ
+                input(
+                type="text"
+                class="form-control"
+                id="address"
+                name="address"
+                required
+                value=settingGeneral?settingGeneral.address:""
+                )
 
-        div(class="form-group")
-            label(for="copyright") Copyright
-            input(
-            type="text"
-            class="form-control"
-            id="copyright"
-            name="copyright"
-            required
-            value=(settingGeneral?settingGeneral.copyright:"")
-            )
+            div(class="form-group")
+                label(for="copyright") Copyright
+                input(
+                type="text"
+                class="form-control"
+                id="copyright"
+                name="copyright"
+                required
+                value=(settingGeneral?settingGeneral.copyright:"")
+                )
 
-        div(class="form-group")
-            button(
-                class="btn btn-primary"
-                type="submit"
-            ) Cập nhật
+            div(class="form-group")
+                button(
+                    class="btn btn-primary"
+                    type="submit"
+                ) Cập nhật
+    else
+        img(src="/images/5206817.jpg", alt="Unauthorization" style="width:1000px;height:600px")

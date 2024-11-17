@@ -1,74 +1,77 @@
 extend ../../layouts/default
 block main 
-    h1 Cập nhật chủ đề
-    form(
-        action=`${prefixAdmin}/topics/edit/${topic.id}?_method=PATCH`,
-        method="POST"
-        enctype="multipart/form-data"
-    )
-        div(class="form-group")
-            label(for="title") Tiêu đề
-            input(
-            type="text",
-            class="form-control",
-            id="title",
-            name="title",
-            value=topic.title,
-            required
-            )
-        div(class="form-group" upload-image)
-            label(for="avatar") Ảnh
-            input(
-                type="file",
-                class="form-control-file",
-                id="avatar",
-                name="avatar"
-                accept="image/*"
-                upload-image-input
-            )
-            img(id="blah" class="image-prev" src=topic.avatar upload-image-preview width="300px")
-        div(class="form-group")
-            label(for="desc") Mô tả
-            textarea(
-            class="form-control",
-            id="desc",
-            name="description",
-            rows="5"
-            ) #{topic.description}
-        div(class="form-group")
-            label(for="position") Vị trí
-            input(
-                type="number",
-                class="form-control",
-                id="position",
-                name="position",
-                placeholder="Tự động tăng",
-                min="1"
-                value=topic.position
-            )
-        div(class="form-group form-check form-check-inline")
-            input(
-                type="radio",
-                class="form-check-input",
-                id="statusActive",
-                name="status",
-                value="active",
-                checked=topic.status=="active" ? true : false 
-            )
-            label(for="statusActive" class="form-check-label") Hoạt động
-        div(class="form-group form-check form-check-inline")
-            input(
-                type="radio",
-                class="form-check-input",
-                id="statusInActive",
-                name="status",
-                value="inactive"
-                checked=topic.status=="inactive" ? true : false 
-            )
-            label(for="statusInActive" class="form-check-label") Dừng hoạt động
-        div(class="form-group")
-            button(
-                class="btn btn-primary"
-                type="submit"
-            ) Cập nhật
+    if(role.permissions.includes("topics_edit"))
 
+        h1 Cập nhật chủ đề
+        form(
+            action=`${prefixAdmin}/topics/edit/${topic.id}?_method=PATCH`,
+            method="POST"
+            enctype="multipart/form-data"
+        )
+            div(class="form-group")
+                label(for="title") Tiêu đề
+                input(
+                type="text",
+                class="form-control",
+                id="title",
+                name="title",
+                value=topic.title,
+                required
+                )
+            div(class="form-group" upload-image)
+                label(for="avatar") Ảnh
+                input(
+                    type="file",
+                    class="form-control-file",
+                    id="avatar",
+                    name="avatar"
+                    accept="image/*"
+                    upload-image-input
+                )
+                img(id="blah" class="image-prev" src=topic.avatar upload-image-preview width="300px")
+            div(class="form-group")
+                label(for="desc") Mô tả
+                textarea(
+                class="form-control",
+                id="desc",
+                name="description",
+                rows="5"
+                ) #{topic.description}
+            div(class="form-group")
+                label(for="position") Vị trí
+                input(
+                    type="number",
+                    class="form-control",
+                    id="position",
+                    name="position",
+                    placeholder="Tự động tăng",
+                    min="1"
+                    value=topic.position
+                )
+            div(class="form-group form-check form-check-inline")
+                input(
+                    type="radio",
+                    class="form-check-input",
+                    id="statusActive",
+                    name="status",
+                    value="active",
+                    checked=topic.status=="active" ? true : false 
+                )
+                label(for="statusActive" class="form-check-label") Hoạt động
+            div(class="form-group form-check form-check-inline")
+                input(
+                    type="radio",
+                    class="form-check-input",
+                    id="statusInActive",
+                    name="status",
+                    value="inactive"
+                    checked=topic.status=="inactive" ? true : false 
+                )
+                label(for="statusInActive" class="form-check-label") Dừng hoạt động
+            div(class="form-group")
+                button(
+                    class="btn btn-primary"
+                    type="submit"
+                ) Cập nhật
+    else
+        img(src="/images/5206817.jpg", alt="Unauthorization" style="width:1000px;height:600px")
