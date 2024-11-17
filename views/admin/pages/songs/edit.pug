@@ -1,6 +1,9 @@
 extend ../../layouts/default
+include ../../mixins/alert.pug
 block main 
     h1 Cập nhật bài hát
+    +alert-success(5000)
+    +alert-error(5000)
     form(
         action=`${prefixAdmin}/songs/edit/${song.id}?_method=PATCH`,
         method="POST"

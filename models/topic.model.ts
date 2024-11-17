@@ -23,7 +23,7 @@ const topicSchema=new mongoose.Schema({
             default:Date.now,
         }
     },
-    deleteBy:{
+    deletedBy:{
         account_id:String,
         deletedAt:Date
     },
@@ -33,9 +33,6 @@ const topicSchema=new mongoose.Schema({
             updatedAt:Date
         }
     ]
-},
-{
-   timestamps:true
 })
 const Topic=mongoose.model('Topic',topicSchema,'topics')
 export default Topic

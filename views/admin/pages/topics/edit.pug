@@ -1,6 +1,6 @@
 extend ../../layouts/default
 block main 
-    h1 Thêm mới chủ đề
+    h1 Cập nhật chủ đề
     form(
         action=`${prefixAdmin}/topics/edit/${topic.id}?_method=PATCH`,
         method="POST"
@@ -30,7 +30,7 @@ block main
         div(class="form-group")
             label(for="desc") Mô tả
             textarea(
-            class="form-control tiny-mce",
+            class="form-control",
             id="desc",
             name="description",
             rows="5"

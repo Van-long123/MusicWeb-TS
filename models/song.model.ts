@@ -35,7 +35,7 @@ const songSchema=new mongoose.Schema({
             default:Date.now,
         }
     },
-    deleteBy:{
+    deletedBy:{
         account_id:String,
         deletedAt:Date
     },
@@ -45,9 +45,6 @@ const songSchema=new mongoose.Schema({
             updatedAt:Date
         }
     ]
-},
-{
-   timestamps:true
 })
 const Song=mongoose.model('Song',songSchema,'songs')
 export default Song

@@ -1,6 +1,6 @@
 extend ../../layouts/default
 block main 
-    h1 Thêm mới sản phẩm
+    h1 Cập nhật ca sĩ
     form(
         action=`${prefixAdmin}/singers/edit/${singer.id}?_method=PATCH`,
         method="POST"
@@ -51,5 +51,5 @@ block main
             button(
                 class="btn btn-primary"
                 type="submit"
-            ) Tạo mới
+            ) Cập nhật
 

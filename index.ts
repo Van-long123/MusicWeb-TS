@@ -5,7 +5,7 @@ import clientRoutes from "./routes/client/index.route"
 import adminRoutes from './routes/admin/index.route'
 import * as databse from './config/database'
 import bodyParser = require("body-parser")
-
+import moment from 'moment'
 dotenv.config()
 const app:Express= express()
 import session from 'express-session';
@@ -34,7 +34,7 @@ app.use(flash());
 //flash
 app.use(methodOverride('_method'))
 
-
+app.locals.moment=moment
 app.locals.prefixAdmin=systemConfig.prefixAdmin;
 clientRoutes(app)
 adminRoutes(app)

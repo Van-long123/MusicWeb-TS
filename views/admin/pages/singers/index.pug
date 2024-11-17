@@ -5,7 +5,7 @@ include ../../mixins/pagination
 include ../../mixins/form-change-multi.pug
 include ../../mixins/alert.pug
 include ../../mixins/sort.pug
-//- include ../../mixins/moment.pug
+include ../../mixins/moment.pug
 block main
     h1 Trang danh sách ca sĩ
     .card.mb-3
@@ -71,19 +71,15 @@ block main
                                         class="badge badge-danger") #{item.status}
                                 
                             td 
-                                p phạm văn long
-                                //- if(item.createdBy.createdAt)
-                                    //- p=moment(item.createdBy.createdAt).format("DD/MM/YYYY HH:mm:ss")
+                                p #{item.fullName}
+                                if(item.createdBy)
                                     +formatDateTime(item.createdBy.createdAt)
-                                    //- //- p #{item.createdBy.createdAt}
-                                    //- //- p #{moment(item.createdBy.createdAt).format("DD/MM/YYYY hh:mm:ss")}
-                                    //- p #{moment(item.createdBy.createdAt).format("DD/MM/YYYY HH:mm:ss")}
                             td 
-                                //- - let updatedBy=item.updatedBy.slice(-1)[0]
-                                //- if(updatedBy)
-                                    p #{updatedBy.accountFullName}
-                                    //- p=moment(updatedBy.updatedAt).format("DD/MM/YYYY HH:mm:ss")
-                                    +formatDateTime(updatedBy.updatedAt)
+                                if(item.updatedBy)
+                                    - let updatedBy=item.updatedBy.slice(-1)[0]
+                                    if(updatedBy)
+                                        p #{updatedBy.accountFullName}
+                                        +formatDateTime(updatedBy.updatedAt)
                             td 
                                 a(href=`${prefixAdmin}/singers/edit/${item.id}` class="btn btn-warning  btn-sm ml-1") Sửa
                                 button(

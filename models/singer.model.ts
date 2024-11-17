@@ -14,10 +14,23 @@ const singerSchema=new mongoose.Schema({
         type:Boolean,
         default:false
     },
-    deletedAt:Date,
-},
-{
-   timestamps:true
+    createdBy:{
+        account_id:String,
+        createdAt:{
+            type:Date,
+            default:Date.now,
+        }
+    },
+    deleteBy:{
+        account_id:String,
+        deletedAt:Date
+    },
+    updatedBy:[
+        {
+            account_id:String,
+            updatedAt:Date
+        }
+    ]
 })
 const Singer=mongoose.model('Singer',singerSchema,'singers')
 export default Singer   

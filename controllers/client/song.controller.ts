@@ -30,7 +30,7 @@ export const index=async (req: Request, res: Response)=>{
             return ;
         }
         find['topicId']=topic.id
-        title=topic.slug
+        title=topic.title
     }
     const songs= await Song.find(find).sort(sort).select('avatar title slug singerId like')
     

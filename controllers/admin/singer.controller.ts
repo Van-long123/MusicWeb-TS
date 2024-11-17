@@ -6,6 +6,7 @@ import pagination from '../../helpers/paginationHelper';
 import * as systemConfig from '../../config/system'
 import Topic from '../../models/topic.model';
 import Singer from '../../models/singer.model';
+import Account from '../../models/account.model';
 export const index=async  (req:Request, res:Response) => {
     let find={
         deleted:false
@@ -47,6 +48,25 @@ export const index=async  (req:Request, res:Response) => {
     .sort(sort)
     .limit(objectPagination.limitItems)
     .skip(objectPagination.skip)
+
+    for (const singer of singers) {
+        const user=await Account.findOne({
+            _id:singer.createdBy.account_id
+        })
+        if(user) {
+            singer['fullName']=user.fullname
+        }
+        const updateBy=singer.updatedBy[singer.updatedBy.length-1]
+        if(updateBy) {
+            const user =await Account.findOne({
+                _id:updateBy.account_id
+            })
+            if(user) {
+                updateBy['accountFullName']=user.fullname
+            }
+        }
+    }
+
     res.render('admin/pages/singers/index',{
         title:"Quản lý ca sĩ",
         singers:singers,
@@ -72,10 +92,14 @@ export const changeStatus=async  (req:Request, res:Response) => {
 }
 export const deleteItem=async  (req:Request, res:Response) => {
     const id=req.params.id
+    const deletedBy={
+        account_id:res.locals.user.id,
+        deletedAt:new Date()
+    };
     await Singer.updateOne({
         _id:id
     },{
-        deleted:true
+        deleted:true,deletedBy:deletedBy
     })
     req.flash('success','Đã xóa ca sĩ thành công')
     res.redirect('back')
@@ -121,6 +145,11 @@ export const create=async  (req:Request, res:Response) => {
     })
 }
 export const createPost=async  (req:Request, res:Response) => {
+    
+    const createdBy={
+        account_id:res.locals.user.id,
+    }
+    req.body.createdBy=createdBy
     const singer=new Singer(req.body);
     singer.save()
     req.flash('success', `Đã thêm thành công ca sĩ`);
@@ -141,7 +170,11 @@ export const edit=async  (req:Request, res:Response) => {
     }
 }
 export const editPatch=async  (req:Request, res:Response) => {
-    await Singer.updateOne({_id:req.params.id},req.body);
+    const updatedBy={
+        account_id:res.locals.user.id,
+        updatedAt:new Date()
+    }
+    await Singer.updateOne({_id:req.params.id},{...req.body,$push:{updatedBy:updatedBy}});
     req.flash('success', `Cập nhật thành công ca sĩ`);
     res.redirect(`back`);
 }

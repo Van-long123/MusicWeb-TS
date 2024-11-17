@@ -7,6 +7,7 @@ import mongoose from 'mongoose';
 import Topic from '../../models/topic.model';
 import Singer from '../../models/singer.model';
 import * as systemConfig from '../../config/system'
+import Account from '../../models/account.model';
 export const index=async  (req:Request, res:Response) => {
     let find={
         deleted:false
@@ -49,6 +50,25 @@ export const index=async  (req:Request, res:Response) => {
     .sort(sort)
     .limit(objectPagination.limitItems)
     .skip(objectPagination.skip)
+
+    for (const song of songs) {
+        const user=await Account.findOne({
+            _id:song.createdBy.account_id
+        })
+        if(user) {
+            song['fullName']=user.fullname
+        }
+        const updateBy=song.updatedBy[song.updatedBy.length-1]
+        if(updateBy) {
+            const user =await Account.findOne({
+                _id:updateBy.account_id
+            })
+            if(user) {
+                updateBy['accountFullName']=user.fullname
+            }
+        }
+    }
+
     res.render('admin/pages/songs/index',{
         title:"Quản lý bài hát",
         songs:songs,
@@ -74,14 +94,14 @@ export const changeStatus=async  (req:Request, res:Response) => {
 }
 export const deleteItem=async  (req:Request, res:Response) => {
     const id=req.params.idSong
-    // const deletedBy={
-    //     account_id:res.locals.user.id,
-    //     deletedAt:new Date()
-    // }
+    const deletedBy={
+        account_id:res.locals.user.id,
+        deletedAt:new Date()
+    };
     await Song.updateOne({
         _id:id
     },{
-        deleted:true
+        deleted:true,deletedBy:deletedBy
     })
     req.flash('success','Đã xóa bài hát thành công')
     res.redirect('back')
@@ -172,6 +192,10 @@ export const createPost=async  (req:Request, res:Response) => {
         avatar: avatar,
         audio: audio
     }
+    const createdBy={
+        account_id:res.locals.user.id,
+    }
+    dataSong['createdBy']=createdBy
     const song=new Song(dataSong)
     await song.save();
     req.flash('success', `Đã thêm thành công bài hát`);
@@ -225,9 +249,14 @@ export const editPost=async  (req:Request, res:Response) => {
         if(req.body.audio){
             dataSong['audio']=req.body.audio[0]
         }
+
+        const updatedBy={
+            account_id:res.locals.user.id,
+            updatedAt:new Date()
+        }
         await Song.updateOne({
             _id:id
-        },dataSong);
+        },{...dataSong,$push:{updatedBy:updatedBy}});
         req.flash('success', `Cập nhật thành công bài hát`);
         res.redirect(`back`)
     } catch (error) {

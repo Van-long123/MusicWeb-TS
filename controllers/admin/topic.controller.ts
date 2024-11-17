@@ -5,6 +5,7 @@ import search from '../../helpers/search';
 import pagination from '../../helpers/paginationHelper';
 import * as systemConfig from '../../config/system'
 import Topic from '../../models/topic.model';
+import Account from '../../models/account.model';
 export const index=async  (req:Request, res:Response) => {
     let find={
         deleted:false
@@ -48,6 +49,25 @@ export const index=async  (req:Request, res:Response) => {
     .sort(sort)
     .limit(objectPagination.limitItems)
     .skip(objectPagination.skip)
+
+    for (const topic of topics) {
+        const user=await Account.findOne({
+            _id:topic.createdBy.account_id
+        })
+        if(user) {
+            topic['fullName']=user.fullname
+        }
+        const updateBy=topic.updatedBy[topic.updatedBy.length-1]
+        if(updateBy) {
+            const user =await Account.findOne({
+                _id:updateBy.account_id
+            })
+            if(user) {
+                updateBy['accountFullName']=user.fullname
+            }
+        }
+    }
+
     res.render('admin/pages/topics/index',{
         title:"Quản lý chủ đề",
         topics:topics,
@@ -73,11 +93,16 @@ export const changeStatus=async  (req:Request, res:Response) => {
 }
 export const deleteItem=async  (req:Request, res:Response) => {
     const id=req.params.id
+    const deletedBy={
+        account_id:res.locals.user.id,
+        deletedAt:new Date()
+    };
     await Topic.updateOne({
         _id:id
     },{
-        deleted:true
+        deleted:true,deletedBy:deletedBy
     })
+    
     req.flash('success','Đã xóa chủ đề thành công')
     res.redirect('back')
 }
@@ -142,6 +167,10 @@ export const createPost=async  (req:Request, res:Response) => {
         const topicCount=await Topic.countDocuments();
         req.body.position=topicCount+1
     }
+    const createdBy={
+        account_id:res.locals.user.id,
+    }
+    req.body.createdBy=createdBy
     const topic=new Topic(req.body);
     topic.save()
     req.flash('success', `Đã thêm thành công chủ đề`);
@@ -154,7 +183,7 @@ export const edit=async  (req:Request, res:Response) => {
             _id:req.params.id
         })
         res.render('admin/pages/topics/edit',{
-            title:"Thêm chủ đề mới",
+            title:"Cập nhật chủ đề",
             topic:topic
         })
     } catch (error) {
@@ -169,7 +198,12 @@ export const editPatch=async  (req:Request, res:Response) => {
         const topicCount=await Topic.countDocuments();
         req.body.position=topicCount+1
     }
-    await Topic.updateOne({_id:req.params.id},req.body);
+    const updatedBy={
+        account_id:res.locals.user.id,
+        updatedAt:new Date()
+    }
+
+    await Topic.updateOne({_id:req.params.id},{...req.body,$push:{updatedBy:updatedBy}});
     req.flash('success', `Cập nhật thành công chủ đề`);
     res.redirect(`back`);
 }

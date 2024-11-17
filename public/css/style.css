@@ -273,7 +273,10 @@ html {
   text-decoration: none;
   color: #212529;
 }
-
+.topics .card-img-top{
+  width: 194.39px;
+  height:194.39px;
+}
 .suggestions a {
   text-decoration: none;
   color: #212529;
