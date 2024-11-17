@@ -8,6 +8,7 @@ import {accountRouter} from './account.route'
 import {userRouter} from './user.route'
 import {settingRouter} from './setting.route'
 import {authRouter} from './auth.route'
+import {myAccountRouter} from './my-account.route'
 import * as authMiddleware from '../../middlewares/admin/auth.middleware'
 const adminRoutes=(app:Express)=>{
     const PATH_ADMIN='/admin'
@@ -19,6 +20,7 @@ const adminRoutes=(app:Express)=>{
     app.use(PATH_ADMIN+'/accounts',authMiddleware.requireAuth,accountRouter)
     app.use(PATH_ADMIN+'/users',authMiddleware.requireAuth,userRouter)
     app.use(PATH_ADMIN+'/settings',authMiddleware.requireAuth,settingRouter)
+    app.use(PATH_ADMIN+'/my-account',authMiddleware.requireAuth,myAccountRouter)
     app.use(PATH_ADMIN+'/auth',authRouter)
 }
 export default adminRoutes;

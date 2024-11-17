@@ -3,9 +3,12 @@ nav
     a.nav-link(href=`${prefixAdmin}/products-category`) Categories
     div(class="my-account")
         div(class="text-right")
-            a(
-                href=`${prefixAdmin}/my-account`
-                style="margin-right: 10px;"
-            ) Phạm Văn Long
-            a.profile(href=`${prefixAdmin}/my-account`)
-                img(src)
+            li.nav-item.userprofile-card-item
+                    .profile-user
+                        a(href=`${prefixAdmin}/my-account`)
+                            if(!user.avatar && user.avatar.length==0)
+                                img(src="https://stc-id.nixcdn.com/v11/images/avatar_default_2020.png", alt="")
+                            else
+                                img(src=user.avatar, alt="")
+                            span(class="ms-2") #{user.fullname}
+                            //- i(class="fa-solid fa-caret-down ms-3")
