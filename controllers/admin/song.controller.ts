@@ -9,10 +9,10 @@ import Singer from '../../models/singer.model';
 import * as systemConfig from '../../config/system'
 import Account from '../../models/account.model';
 export const index=async  (req:Request, res:Response) => {
-    const permissions=res.locals.role.permissions
-    if(!permissions.includes("songs_view")){
-        return;
-    }
+    // const permissions=res.locals.role.permissions
+    // if(!permissions.includes("songs_view")){
+    //     return;
+    // }
     let find={
         deleted:false
     }

@@ -8,10 +8,10 @@ import Topic from '../../models/topic.model';
 import Singer from '../../models/singer.model';
 import Account from '../../models/account.model';
 export const index=async  (req:Request, res:Response) => {
-    const permissions=res.locals.role.permissions
-    if(!permissions.includes("singers_view")){
-        return;
-    }
+    // const permissions=res.locals.role.permissions
+    // if(!permissions.includes("singers_view")){
+    //     return;
+    // }
     let find={
         deleted:false
     }

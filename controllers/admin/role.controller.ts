@@ -2,10 +2,10 @@ import {Request,Response} from 'express';
 import Role from '../../models/role.model';
 import * as systemConfig from '../../config/system'
 export const index=async  (req:Request, res:Response) => {
-    const permissions=res.locals.role.permissions
-    if(!permissions.includes("roles_view")){
-        return;
-    }
+    // const permissions=res.locals.role.permissions
+    // if(!permissions.includes("roles_view")){
+    //     return;
+    // }
     const records=await Role.find({
         deleted:false
     })

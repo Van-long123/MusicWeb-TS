@@ -7,40 +7,48 @@ section#sidebar
             a(href=`${prefixAdmin}/dashboard`)
                 <i class='bx bxs-dashboard' ></i>
                 span.text Tổng quan
-        li
-            a(href=`${prefixAdmin}/topics`)
-                <i class='bx bxs-category' ></i>
-                span.text Quản lý chủ đề
-        li
-            a(href=`${prefixAdmin}/songs`)
-                <i class='bx bxl-product-hunt'></i>
-                span.text Quản lý bài hát
-        li
-            a(href=`${prefixAdmin}/singers`)
-                <i class='bx bxs-user-account' ></i>
-                span.text Quản lý ca sĩ
-        li
-            a(href=`${prefixAdmin}/roles`)
-                <i class='bx bxs-group' ></i>
-                span.text Nhóm quyền
-        li
-            a(href=`${prefixAdmin}/roles/permissions`)
-                <i class='bx bxs-pencil'></i>
-                span.text Phân quyền
-        li
-            a(href=`${prefixAdmin}/accounts`)
-                <i class='bx bxs-user-account' ></i>
-                span.text Danh sách tài khoản admin
-        li
-            a(href=`${prefixAdmin}/users`)
-                <i class='bx bxs-user-account' ></i>
-                span.text Danh sách tài khoản client
+        if(role.permissions.includes("topics_view"))
+            li
+                a(href=`${prefixAdmin}/topics`)
+                    <i class='bx bxs-category' ></i>
+                    span.text Quản lý chủ đề
+        if(role.permissions.includes("songs_view"))
+            li
+                a(href=`${prefixAdmin}/songs`)
+                    <i class='bx bxl-product-hunt'></i>
+                    span.text Quản lý bài hát
+        if(role.permissions.includes("singers_view"))
+            li
+                a(href=`${prefixAdmin}/singers`)
+                    <i class='bx bxs-user-account' ></i>
+                    span.text Quản lý ca sĩ
+        if(role.permissions.includes("roles_view"))
+            li
+                a(href=`${prefixAdmin}/roles`)
+                    <i class='bx bxs-group' ></i>
+                    span.text Nhóm quyền
+        if(role.permissions.includes("roles_permissions"))
+            li
+                a(href=`${prefixAdmin}/roles/permissions`)
+                    <i class='bx bxs-pencil'></i>
+                    span.text Phân quyền
+        if(role.permissions.includes("accounts_view"))
+            li
+                a(href=`${prefixAdmin}/accounts`)
+                    <i class='bx bxs-user-account' ></i>
+                    span.text Danh sách tài khoản admin
+        if(role.permissions.includes("users_view"))
+            li
+                a(href=`${prefixAdmin}/users`)
+                    <i class='bx bxs-user-account' ></i>
+                    span.text Danh sách tài khoản client
         
     ul.side-menu
-        li
-            a(href=`${prefixAdmin}/settings/general`)
-                i.bx.bxs-cog
-                span.text Cài đặt
+        if(role.permissions.includes("settings_view"))
+            li
+                a(href=`${prefixAdmin}/settings/general`)
+                    i.bx.bxs-cog
+                    span.text Cài đặt
         li
             a.logout(href=`${prefixAdmin}/auth/logout`)
                 i.bx.bxs-log-out-circle
