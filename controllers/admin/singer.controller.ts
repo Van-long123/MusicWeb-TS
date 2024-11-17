@@ -8,6 +8,10 @@ import Topic from '../../models/topic.model';
 import Singer from '../../models/singer.model';
 import Account from '../../models/account.model';
 export const index=async  (req:Request, res:Response) => {
+    const permissions=res.locals.role.permissions
+    if(!permissions.includes("singers_view")){
+        return;
+    }
     let find={
         deleted:false
     }
@@ -76,6 +80,10 @@ export const index=async  (req:Request, res:Response) => {
     })
 }
 export const changeStatus=async  (req:Request, res:Response) => {
+    const permissions=res.locals.role.permissions
+    if(!permissions.includes("singers_edit")){
+        return;
+    }
     const status=req.params.status
     const id=req.params.id
     // const updatedBy={
@@ -91,6 +99,10 @@ export const changeStatus=async  (req:Request, res:Response) => {
     res.redirect('back');
 }
 export const deleteItem=async  (req:Request, res:Response) => {
+    const permissions=res.locals.role.permissions
+    if(!permissions.includes("singers_delete")){
+        return;
+    }
     const id=req.params.id
     const deletedBy={
         account_id:res.locals.user.id,
@@ -107,6 +119,10 @@ export const deleteItem=async  (req:Request, res:Response) => {
 
 
 export const changeMulti=async  (req:Request, res:Response) => {
+    const permissions=res.locals.role.permissions
+    if(!permissions.includes("singers_edit")){
+        return;
+    }
     const type=req.body.type
     let ids: string[] = req.body.ids.split(',').map((id:string) => id.trim());
 
@@ -145,7 +161,10 @@ export const create=async  (req:Request, res:Response) => {
     })
 }
 export const createPost=async  (req:Request, res:Response) => {
-    
+    const permissions=res.locals.role.permissions
+    if(!permissions.includes("singers_create")){
+        return;
+    }
     const createdBy={
         account_id:res.locals.user.id,
     }
@@ -170,6 +189,10 @@ export const edit=async  (req:Request, res:Response) => {
     }
 }
 export const editPatch=async  (req:Request, res:Response) => {
+    const permissions=res.locals.role.permissions
+    if(!permissions.includes("singers_edit")){
+        return;
+    }
     const updatedBy={
         account_id:res.locals.user.id,
         updatedAt:new Date()

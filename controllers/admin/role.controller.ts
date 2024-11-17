@@ -2,6 +2,10 @@ import {Request,Response} from 'express';
 import Role from '../../models/role.model';
 import * as systemConfig from '../../config/system'
 export const index=async  (req:Request, res:Response) => {
+    const permissions=res.locals.role.permissions
+    if(!permissions.includes("roles_view")){
+        return;
+    }
     const records=await Role.find({
         deleted:false
     })
@@ -11,11 +15,19 @@ export const index=async  (req:Request, res:Response) => {
     })
 }
 export const create=async  (req:Request, res:Response) => {
+    const permissions=res.locals.role.permissions
+    if(!permissions.includes("products_edit")){
+        return;
+    }
     res.render('admin/pages/roles/create',{
        title:'Tạo nhóm quyền'
     })
 }
 export const createPost=async  (req:Request, res:Response) => {
+    const permissions=res.locals.role.permissions
+    if(!permissions.includes("roles_create")){
+        return;
+    }
     const record=new Role(req.body)
     await record.save()
     req.flash('success', `Thêm thành công nhóm quyền`);
@@ -38,6 +50,10 @@ export const edit=async  (req:Request, res:Response) => {
     }
 }
 export const editPost=async  (req:Request, res:Response) => {
+    const permissions=res.locals.role.permissions
+    if(!permissions.includes("roles_edit")){
+        return;
+    }
     await Role.updateOne({
         _id:req.params.id,
         deleted:false
@@ -47,6 +63,10 @@ export const editPost=async  (req:Request, res:Response) => {
 }
 
 export const deleteItem=async  (req:Request, res:Response) => {
+    const permissions=res.locals.role.permissions
+    if(!permissions.includes("roles_delete")){
+        return;
+    }
     const id=req.params.id
     await Role.updateOne({
         _id:id,
@@ -67,7 +87,10 @@ export const permissions=async  (req:Request, res:Response) => {
     })
 }
 export const permissionsPatch=async  (req:Request, res:Response) => {
-    console.log(req.body.permissions)
+    const permissions1=res.locals.role.permissions
+    if(!permissions1.includes("roles_permissions")){
+        return;
+    }
     const permissions=JSON.parse(req.body.permissions)
     for (const permission of permissions) {
         await Role.updateOne({

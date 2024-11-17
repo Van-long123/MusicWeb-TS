@@ -3,6 +3,10 @@ import Song from '../../models/song.model';
 import * as systemConfig from '../../config/system'
 import SettingGeneral from '../../models/settings-general.model';
 export const general=async  (req:Request, res:Response) => {
+    const permissions=res.locals.role.permissions
+    if(!permissions.includes("settings_view")){
+        return;
+    }
     try {
         const settingGeneral=await SettingGeneral.findOne({})
         res.render('admin/pages/settings/general',{
@@ -15,6 +19,10 @@ export const general=async  (req:Request, res:Response) => {
     
 }
 export const generalPatch=async  (req:Request, res:Response) => {
+    const permissions=res.locals.role.permissions
+    if(!permissions.includes("settings_edit")){
+        return;
+    }
     const settingGeneral=await SettingGeneral.findOne({});
     if(settingGeneral){
         await SettingGeneral.updateOne({

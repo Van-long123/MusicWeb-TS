@@ -184,6 +184,20 @@ block main
                     each record in records
                         td(class="text-center")
                             input(type="checkbox")
+                //- setting
+                tr
+                    td(colspan="4")
+                        b Cài đặt
+                tr(data-name="settings_view")
+                    td Xem
+                    each record in records 
+                        td(class="text-center")
+                            input(type="checkbox")
+                tr(data-name="settings_edit")
+                    td Chỉnh sửa
+                    each record in records
+                        td(class="text-center")
+                            input(type="checkbox")
     form(
         id="form-change-permissions"
         class="d-none"

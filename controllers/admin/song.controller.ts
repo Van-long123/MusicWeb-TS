@@ -9,6 +9,10 @@ import Singer from '../../models/singer.model';
 import * as systemConfig from '../../config/system'
 import Account from '../../models/account.model';
 export const index=async  (req:Request, res:Response) => {
+    const permissions=res.locals.role.permissions
+    if(!permissions.includes("songs_view")){
+        return;
+    }
     let find={
         deleted:false
     }
@@ -78,6 +82,10 @@ export const index=async  (req:Request, res:Response) => {
     })
 }
 export const changeStatus=async  (req:Request, res:Response) => {
+    const permissions=res.locals.role.permissions
+    if(!permissions.includes("songs_edit")){
+        return;
+    }
     const idSong:string = req.params.idSong
     const status:string = req.params.status
     // const updatedBy={
@@ -93,6 +101,10 @@ export const changeStatus=async  (req:Request, res:Response) => {
     res.redirect('back');
 }
 export const deleteItem=async  (req:Request, res:Response) => {
+    const permissions=res.locals.role.permissions
+    if(!permissions.includes("songs_delete")){
+        return;
+    }
     const id=req.params.idSong
     const deletedBy={
         account_id:res.locals.user.id,
@@ -108,6 +120,10 @@ export const deleteItem=async  (req:Request, res:Response) => {
 }
 
 export const changeMulti=async  (req:Request, res:Response) => {
+    const permissions=res.locals.role.permissions
+    if(!permissions.includes("songs_edit")){
+        return;
+    }
     const type=req.body.type;
     // console.log(req.body.ids.split(','))//phải lượt qua từng phần tử để cắt bỏ đi 2 đầu khoảng trắng nó mới đc
     let ids: string[] = req.body.ids.split(',').map((id:string) => id.trim());
@@ -166,6 +182,10 @@ export const create=async  (req:Request, res:Response) => {
     })
 }
 export const createPost=async  (req:Request, res:Response) => {
+    const permissions=res.locals.role.permissions
+    if(!permissions.includes("songs_create")){
+        return;
+    }
     let avatar='';
     let audio='';
     if(req.body.avatar){
@@ -225,6 +245,10 @@ export const edit=async  (req:Request, res:Response) => {
     
 }
 export const editPost=async  (req:Request, res:Response) => {
+    const permissions=res.locals.role.permissions
+    if(!permissions.includes("songs_edit")){
+        return;
+    }
     try {
         const id = req.params.id;
         if(req.body.position){

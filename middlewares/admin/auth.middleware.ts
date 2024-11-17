@@ -17,7 +17,7 @@ export const requireAuth=async(req:Request, res:Response,next:NextFunction)=>{
         }
         else{
             const role=await Role.findOne({
-                _id:user.id
+                _id:user.role_id
             }).select('title permissions')
             res.locals.user=user
             res.locals.role=role

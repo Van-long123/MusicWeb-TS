@@ -9,6 +9,10 @@ import Singer from '../../models/singer.model';
 import Account from '../../models/account.model';
 import md5 from 'md5'
 export const index=async  (req:Request, res:Response) => {
+    const permissions=res.locals.role.permissions
+    if(!permissions.includes("accounts_view")){
+        return;
+    }
     let find={
         deleted:false
     }
@@ -50,6 +54,10 @@ export const index=async  (req:Request, res:Response) => {
     })
 }
 export const changeStatus=async  (req:Request, res:Response) => {
+    const permissions=res.locals.role.permissions
+    if(!permissions.includes("accounts_view")){
+        return;
+    }
     const status=req.params.status
     const id=req.params.id
     // const updatedBy={
@@ -67,6 +75,10 @@ export const changeStatus=async  (req:Request, res:Response) => {
     res.redirect('back');
 }
 export const deleteItem=async  (req:Request, res:Response) => {
+    const permissions=res.locals.role.permissions
+    if(!permissions.includes("accounts_delete")){
+        return;
+    }
     const id=req.params.id
     await Account.updateOne({
         _id:id
@@ -79,6 +91,10 @@ export const deleteItem=async  (req:Request, res:Response) => {
 
 
 export const changeMulti=async  (req:Request, res:Response) => {
+    const permissions=res.locals.role.permissions
+    if(!permissions.includes("accounts_edit")){
+        return;
+    }
     const type=req.body.type
     let ids: string[] = req.body.ids.split(',').map((id:string) => id.trim());
 
@@ -119,6 +135,10 @@ export const create=async  (req:Request, res:Response) => {
     })
 }
 export const createPost=async  (req:Request, res:Response) => {
+    const permissions=res.locals.role.permissions
+    if(!permissions.includes("accounts_create")){
+        return;
+    }
     const emailExist=await Account.findOne({
         email:req.body.email,
         deleted:false 
@@ -151,6 +171,10 @@ export const edit=async  (req:Request, res:Response) => {
     }
 }
 export const editPatch=async  (req:Request, res:Response) => {
+    const permissions=res.locals.role.permissions
+    if(!permissions.includes("accounts_edit")){
+        return;
+    }
     const emailExist=await Account.findOne({
         _id:{$ne:req.params.id},
         email:req.body.email,
