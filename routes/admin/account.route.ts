@@ -24,5 +24,6 @@ router.patch('/edit/:id',
     uploadCloud.uploadSingle,
     controller.editPatch)
 
+router.get('/detail/:id',controller.detail)
 
 export const accountRouter:Router=router 

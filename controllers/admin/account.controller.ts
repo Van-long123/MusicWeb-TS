@@ -45,12 +45,20 @@ export const index=async  (req:Request, res:Response) => {
     .sort(sort)
     .limit(objectPagination.limitItems)
     .skip(objectPagination.skip)
+
+    for (const account of accounts) {
+        const role=await Role.findOne({
+            _id:account.role_id
+        })
+        account['role']=role
+    }
+    
     res.render('admin/pages/accounts/index',{
         title:"Danh sách tài khoản",
         records:accounts,
         fillterStatus:fillterStatus,
         keyword:keyword,
-        pagination:objectPagination
+        pagination:objectPagination,
     })
 }
 export const changeStatus=async  (req:Request, res:Response) => {
@@ -199,16 +207,18 @@ export const editPatch=async  (req:Request, res:Response) => {
 export const detail=async  (req:Request, res:Response) => {
     try {
         
-        const topic=await Topic.findOne({
+        const account=await Account.findOne({
             _id:req.params.id,
             deleted:false
         })
-        res.render('admin/pages/topics/detail',{
-            title:"Cập nhật hát mới",
-            topic:topic,
+        console.log(account)
+        res.render('admin/pages/accounts/detail',{
+            title:"Chi tiết tài khoản",
+            account:account,
         })
     } catch (error) {
         
     }
     
 }
+

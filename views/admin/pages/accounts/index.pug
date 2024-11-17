@@ -37,9 +37,8 @@ block main
                         th STT
                         th Avatar
                         th Họ tên
+                        th Phân quyền
                         th Email
-                        th Địa chỉ
-                        th Số điện thoại
                         th Trạng thái
                         th Hành động
                 tbody
@@ -51,9 +50,8 @@ block main
                             td
                                 img(src=`${item.avatar}`, alt=item.fullname, width="100px", height="auto")
                             td #{item.fullname}
+                            td #{item.role.title}
                             td #{item.email}
-                            td #{item.address}
-                            td #{item.phone}
                             td 
                                 if(item.status == "active")
                                     a(
