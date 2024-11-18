@@ -129,7 +129,9 @@ body {
     display: flex;
 }
 .profile-user img {
-    border-radius: 50%;
+    width: 40px; 
+    height: 40px; 
+    border-radius: 50% !important;
     width: 40px;
 }
 .profile-user a{

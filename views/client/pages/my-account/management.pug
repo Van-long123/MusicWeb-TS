@@ -5,15 +5,18 @@ block main
     .row
       .col-md-6
         .card.mb-3
-          .card-header Giới thiệu
+          .card-header
+            div(class="d-flex justify-content-between")  
+              span Giới thiệu
+              a(href="/user/edit-account" style="text-decoration: none") 
+                span(class="btn btn-outline-secondary d-flex align-items-center") <i class="fa-solid fa-pen me-2"></i> Chỉnh sửa
           .card-body
             p Họ và tên: Long Phạm
-            p Ngày sinh: 01/01/1970
+            p Ngày sinh: #{user.birday}
             p Giới tính: Khác
-            p Điện thoại:
-            p Địa chỉ:
-            p Tỉnh thành:
-            p Số CMND:
+            p Điện thoại: #{user.phone}
+            p Địa chỉ:#{user.address}
+            p Tỉnh thành:#{user.province}
             p Giới thiệu:
         .card
           .card-header Tài khoản

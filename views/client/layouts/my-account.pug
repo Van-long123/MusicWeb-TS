@@ -15,15 +15,18 @@ html
       .row
         .col-md-3
           .card.p-3.text-center.card-my
-            img.img-fluid.rounded-circle.mb-3(src='https://stc-id.nixcdn.com/v11/images/avatar_default_2020.png' alt='Avatar')
+            if(user.avatar)
+              img.img-fluid.rounded-circle.mb-3(src=user.avatar alt='Avatar')
+            else
+              img.img-fluid.rounded-circle.mb-3(src='https://stc-id.nixcdn.com/v11/images/avatar_default_2020.png' alt='Avatar')
             h5 Long Phạm
             ul.nav.flex-column.mt-4
               li.nav-item
-                a.nav-link(href='/user/quan-ly' class=activePage == 'quan-ly' ? 'active' : '') Quản lý tài khoản
+                a.nav-link(href='/user/manage-account' class=activePage == 'quan-ly' ? 'active' : '') Quản lý tài khoản
               //- li.nav-item
                 //- a.nav-link(href='/user/quan-ly-playlist-cua-tui' class=activePage == 'playlist' ? 'active' : '') Playlist
               li.nav-item
-                a.nav-link(href='/user/lich-su-nghe-nhac' class=activePage == 'lich-su' ? 'active' : '') Lịch sử
+                a.nav-link(href='/user/listening-history' class=activePage == 'lich-su' ? 'active' : '') Lịch sử
               li.nav-item
                 a.nav-link(href='/user/logout') Đăng xuất
         block main

@@ -239,3 +239,30 @@ export const deleteMulti=async (req:Request, res:Response) => {
     req.flash('success', `Xóa thành công ${ids.length} bài hát`);
     res.redirect('back')
 }
+
+export const editAccount =async (req:Request, res:Response) => {
+    if(res.locals.user){
+        res.locals.activePage = 'quan-ly';
+        res.render('client/pages/my-account/edit-account',{
+            title:"Trang cập nhật tài khoản"
+        })
+    }
+    else{
+        res.redirect('back')
+    }
+}
+export const editAccountPatch=async (req:Request, res:Response) => {
+    if(res.locals.user){
+        res.locals.activePage = 'quan-ly';
+        await User.updateOne({
+            _id:res.locals.user.id,
+            deleted:false
+        },req.body
+    )
+        req.flash('success', `Cập nhật thành công`);
+        res.redirect('back')
+    }
+    else{
+        res.redirect('back')
+    }
+}

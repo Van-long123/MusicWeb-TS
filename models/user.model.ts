@@ -5,6 +5,8 @@ const userSchema=new mongoose.Schema({
     email:String,
     password:String,
     address:String,
+    gender:String,
+    province:String,
     tokenUser:{
         type:String,
         default:generate.generateRandomString(30)
