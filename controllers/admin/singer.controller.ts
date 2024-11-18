@@ -58,7 +58,7 @@ export const index=async  (req:Request, res:Response) => {
             _id:singer.createdBy.account_id
         })
         if(user) {
-            singer['fullName']=user.fullname
+            singer['fullNameAccount']=user.fullname
         }
         const updateBy=singer.updatedBy[singer.updatedBy.length-1]
         if(updateBy) {

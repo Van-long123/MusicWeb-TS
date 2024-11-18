@@ -72,7 +72,7 @@ block main
                                             class="badge badge-danger") #{item.status}
                                     
                                 td 
-                                    p #{item.fullName}
+                                    p #{item.fullNameAccount}
                                     if(item.createdBy)
                                         +formatDateTime(item.createdBy.createdAt)
                                 td 
