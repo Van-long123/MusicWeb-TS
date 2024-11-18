@@ -15,23 +15,6 @@ if(buttonDelete.length>0){
 }
 // delete-item 
 
-// show alert
-const showAlert=document.querySelector('[show-alert]')
-if(showAlert){
-    const time=parseInt(showAlert.getAttribute('data-time'))
-    setTimeout(() => {
-        showAlert.classList.add('d-none')
-    }, time);
-}
-// show alert
-// close show alert 
-const closeAlert=document.querySelector('[close-alert]')
-if(closeAlert){
-    closeAlert.addEventListener('click',e=>{
-        showAlert.classList.add('d-none')
-    })
-}
-// close show alert 
 // checkboxMulti
 const checkall=document.querySelector('#select-all')
 if(checkall){
