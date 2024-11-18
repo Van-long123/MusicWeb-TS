@@ -8,6 +8,7 @@ import { console } from "inspector"
 import ListenHistory from "../../models/listen-history.model"
 import Song from "../../models/song.model"
 import Singer from "../../models/singer.model"
+import pagination from '../../helpers/paginationHelper';
 import { prefixAdmin } from "../../config/system"
 export const login=async (req:Request, res:Response) => {
     res.render('client/pages/users/login',{
@@ -197,9 +198,20 @@ export const managePlaylist=async (req:Request, res:Response) => {
 }
 export const listenHistory=async (req:Request, res:Response) => {
     if(res.locals.user){
+        //pagination
+        const countSongs=await ListenHistory.countDocuments({
+            userId: res.locals.user.id,
+        })
+        const objectPagination=pagination(req.query,countSongs,{
+            currentPage:1,
+            limitItems:10
+        })
+        //pagination
         const songHistory=await ListenHistory.find({
             userId: res.locals.user.id,     
         })
+        .limit(objectPagination.limitItems)
+        .skip(objectPagination.skip)
         for (const item of songHistory) {
             const song=await Song.findOne({
                 _id:item.songId
@@ -214,7 +226,8 @@ export const listenHistory=async (req:Request, res:Response) => {
         res.locals.activePage = 'lich-su';
         res.render('client/pages/my-account/listen-history',{
             title:"Lịch sử nghe nhạc",
-            songHistory:songHistory
+            songHistory:songHistory,
+            pagination:objectPagination
         })
     }
     else{

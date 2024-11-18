@@ -1,27 +1,34 @@
 extends ../../layouts/default
+include ../../mixins/pagination
+include ../../mixins/moment
 block main
-   .container.mt-5
-      .row
-        .col-12
-            .our-menu.mb-2
-                h2
-                    span #{title}
-                .inner-dir
-      .row.mt-3
-        each item in songs
-          .col-xl-3.col-md-6.mb-3
-            .playlist-card
-              div(class="song-item")
-                div(class="inner-image")
-                    a(href=`/songs/detail/${item.slug}`)
-                      img(src=item.avatar)
-                div(class="inner-content")
-                    div(class="inner-title")
-                        a(href=`/songs/detail/${item.slug}`) #{item.title}
-                    div(class="inner-singer") <i class="fa-solid fa-microphone-lines"></i> #{item.infoSinger.fullName}
-                    if (user)
-                      div( class=(item.like.includes(user.id) ? 'inner-like' : 'inner-inlike'))  <i class="fa-solid fa-thumbs-up"></i> #{item.likeCount} thích
-                    else
-                      div(class="inner-inlike") <i class="fa-solid fa-thumbs-up"></i> #{item.likeCount} thích
-                    //- tự làm thời gian tạo
-                    div(class="inner-time") <i class="fa-regular fa-clock"></i> Hôm nay
+  .container.mt-5
+    .row
+      .col-12
+          .our-menu.mb-2
+              h2
+                  span #{title}
+              .inner-dir
+    .row.mt-3
+      each item in songs
+        .col-xl-3.col-md-6.mb-3
+          .playlist-card
+            div(class="song-item")
+              div(class="inner-image")
+                  a(href=`/songs/detail/${item.slug}`)
+                    img(src=item.avatar)
+              div(class="inner-content")
+                  div(class="inner-title")
+                      a(href=`/songs/detail/${item.slug}`) #{item.title}
+                  div(class="inner-singer") <i class="fa-solid fa-microphone-lines"></i> #{item.infoSinger.fullName}
+                  if (user)
+                    div( class=(item.like.includes(user.id) ? 'inner-like' : 'inner-inlike'))  <i class="fa-solid fa-thumbs-up"></i> #{item.likeCount} thích
+                  else
+                    div(class="inner-inlike") <i class="fa-solid fa-thumbs-up"></i> #{item.likeCount} thích
+                  //- tự làm thời gian tạo
+                  div(class="inner-time") 
+                    i(class="fa-regular fa-clock")
+                    if(item.createdBy)
+                      +formatDateTime(item.createdBy.createdAt)
+    .d-flex.justify-content-center.mt-4
+      +pagination(pagination)

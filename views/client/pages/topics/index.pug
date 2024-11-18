@@ -1,4 +1,5 @@
 extends ../../layouts/default
+include ../../mixins/pagination
 block main
     .container.mt-5.mb-5
       .row
@@ -17,3 +18,5 @@ block main
                   h5.card-title
                     | #{topic.title}
                   p.card-text #{topic.description}
+    .d-flex.justify-content-center.mt-4
+      +pagination(pagination)

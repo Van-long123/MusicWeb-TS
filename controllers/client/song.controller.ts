@@ -2,6 +2,8 @@ import { Request,Response } from "express"
 import Topic from "../../models/topic.model"
 import Singer from "../../models/singer.model"
 import Song from "../../models/song.model"
+import pagination from '../../helpers/paginationHelper';
+
 import FavoriteSong from "../../models/favorite-song.model"
 import ListenHistory from "../../models/listen-history.model"
 export const index=async (req: Request, res: Response)=>{
@@ -10,15 +12,17 @@ export const index=async (req: Request, res: Response)=>{
         status:'active',
         deleted:false,
     }
-    let sort={};
+    let sort={
+
+    };
     let title:String="";
     if(type=='like'){
         sort['like']='desc'
-        title="Top 30 bài hát có nhiều like nhất"
+        title="Top 20 bài hát có nhiều like nhất"
     }
     else if(type=='listen'){
         sort['listen']='desc'
-        title="Top 30 bài hát có nhiều lượt nghe nhất"
+        title="Top 20 bài hát có nhiều lượt nghe nhất"
     }
     else{
         const topic=await Topic.findOne({
@@ -33,8 +37,24 @@ export const index=async (req: Request, res: Response)=>{
         find['topicId']=topic.id
         title=topic.title
     }
-    const songs= await Song.find(find).sort(sort).select('avatar title slug singerId like')
+
+    const songsLimited = await Song.find(find)
+    .sort(sort)
+    .limit(20)
+    .select('avatar title slug singerId like')
     
+
+    // / pagination cho 20 bài hát đã lấy
+    const countSongs = songsLimited.length;
+    const objectPagination = pagination(req.query, countSongs, {
+        currentPage: 1,
+        limitItems: 16,  // Hiển thị 8 bài hát mỗi trang
+    });
+
+    // Phân trang trên tập 20 bài hát đã lấy
+    //0-15  16-35
+    const songs = songsLimited.slice(objectPagination.skip, objectPagination.skip + objectPagination.limitItems);
+
     for (const item of songs) {
         const infoSinger=await Singer.findOne({
             _id: item.singerId,
@@ -48,7 +68,8 @@ export const index=async (req: Request, res: Response)=>{
     res.render('client/pages/songs/index',
         {
             title:title,
-            songs:songs
+            songs:songs,
+            pagination:objectPagination
         }
     )
 }
