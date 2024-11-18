@@ -24,5 +24,8 @@ router.get('/quan-ly',controller.myAccount)
 router.get('/lich-su-nghe-nhac',controller.listenHistory)
 router.get('/quan-ly-playlist-cua-tui',controller.managePlaylist)
 
+router.delete('/song/delete/:id',controller.deleteItem)
+router.delete('/song/delete-multi',controller.deleteMulti)
+
 export const userRouter: Router=router
 

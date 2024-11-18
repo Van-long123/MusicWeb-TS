@@ -3,6 +3,7 @@ import Topic from "../../models/topic.model"
 import Singer from "../../models/singer.model"
 import Song from "../../models/song.model"
 import FavoriteSong from "../../models/favorite-song.model"
+import ListenHistory from "../../models/listen-history.model"
 export const index=async (req: Request, res: Response)=>{
     const type:String=req.params.slug;
     let find={
@@ -106,6 +107,23 @@ export const detail=async (req: Request, res: Response)=>{
         })
     }
     
+    // listenhistory 
+    if(res.locals.user){
+        const existHistory=await ListenHistory.findOne({
+            userId: res.locals.user.id,     
+            songId: song.id,      
+        })
+        if(!existHistory){
+            const listenHistory=new ListenHistory({
+                userId: res.locals.user.id,     
+                songId: song.id,      
+            })
+            await listenHistory.save()
+        }
+        
+    }
+    
+    // listenhistory 
 
     res.render('client/pages/songs/detail',{
         title:slugSong,

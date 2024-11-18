@@ -1,4 +1,5 @@
 extends ../../layouts/default
+include ../../mixins/moment
 block main
     //- .banner.my-4
     //-     .container
@@ -89,7 +90,10 @@ block main
                     else
                       div(class="inner-inlike") <i class="fa-solid fa-thumbs-up"></i> #{item.likeCount} thích
                     //- tự làm thời gian tạo
-                    div(class="inner-time") <i class="fa-regular fa-clock"></i> Hôm nay
+                    div(class="inner-time") 
+                      i(class="fa-regular fa-clock")
+                      if(item.createdBy)
+                        +formatDateTime(item.createdBy.createdAt)
 
         .row.mb-5.d-flex.justify-content-center
             .col-12.text-center
@@ -121,7 +125,10 @@ block main
                     else
                       div(class="inner-inlike") <i class="fa-solid fa-thumbs-up"></i> #{item.likeCount} thích
                     //- tự làm thời gian tạo
-                    div(class="inner-time") <i class="fa-regular fa-clock"></i> Hôm nay
+                    div(class="inner-time") 
+                      i(class="fa-regular fa-clock")
+                      if(item.createdBy)
+                        +formatDateTime(item.createdBy.createdAt)
         .row.mb-5.d-flex.justify-content-center
             .col-12.text-center
                 a.button-main-outline(href=`/songs/listen`) 

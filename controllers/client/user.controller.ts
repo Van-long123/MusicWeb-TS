@@ -5,6 +5,10 @@ import * as generateHelper from '../../helpers/generate'
 import ForgotPassword from "../../models/forgor-password.model"
 import * as sendMailHelper from "../../helpers/sendMail"
 import { console } from "inspector"
+import ListenHistory from "../../models/listen-history.model"
+import Song from "../../models/song.model"
+import Singer from "../../models/singer.model"
+import { prefixAdmin } from "../../config/system"
 export const login=async (req:Request, res:Response) => {
     res.render('client/pages/users/login',{
         title:"Đăng nhập tài khoản"
@@ -68,7 +72,7 @@ export const registerPost=async (req:Request, res:Response) => {
 }
 export const logout=(req:Request, res:Response)=>{
     res.clearCookie('tokenUser')
-    res.redirect('back')
+    res.redirect('/')
 }
 
 export const forgotPassword=async (req:Request, res:Response) => {
@@ -168,20 +172,70 @@ export const resetPost=async (req:Request, res:Response) => {
 }
 
 export const myAccount=async (req:Request, res:Response) => {
-    res.locals.activePage = 'quan-ly';
-    res.render('client/pages/my-account/management',{
-        title:"Trang thông tin cá nhân"
-    })
+    if(res.locals.user){
+        res.locals.activePage = 'quan-ly';
+        res.render('client/pages/my-account/management',{
+            title:"Trang thông tin cá nhân"
+        })
+    }
+    else{
+        res.redirect('back')
+    }
+    
 }
 export const managePlaylist=async (req:Request, res:Response) => {
-    res.locals.activePage = 'playlist';
-    res.render('client/pages/my-account/management',{
-        title:"Trang thông tin cá nhân"
-    })
+    if(res.locals.user){
+        res.locals.activePage = 'playlist';
+        res.render('client/pages/my-account/management',{
+            title:"Trang thông tin cá nhân"
+        })
+    }
+    else{
+        res.redirect('back')
+    }
+    
 }
 export const listenHistory=async (req:Request, res:Response) => {
-    res.locals.activePage = 'lich-su';
-    res.render('client/pages/my-account/listen-history',{
-        title:"Lịch sử nghe nhạc"
+    if(res.locals.user){
+        const songHistory=await ListenHistory.find({
+            userId: res.locals.user.id,     
+        })
+        for (const item of songHistory) {
+            const song=await Song.findOne({
+                _id:item.songId
+            })
+            item['songInfo']=song
+            const singer=await Singer.findOne({
+                _id:song.singerId
+            })
+            item['singerInfo']=singer
+
+        }
+        res.locals.activePage = 'lich-su';
+        res.render('client/pages/my-account/listen-history',{
+            title:"Lịch sử nghe nhạc",
+            songHistory:songHistory
+        })
+    }
+    else{
+        res.redirect('back')
+    }
+    
+}
+export const deleteItem=async (req:Request, res:Response) => {
+    const id=req.params.id
+    await ListenHistory.deleteOne({
+        _id:id
     })
+    req.flash('success','Đã xóa bài hát thành công')
+    res.redirect('back')
+}
+export const deleteMulti=async (req:Request, res:Response) => {
+    console.log(req.body.ids);
+    let ids:string[]=req.body.ids.split(',').map((item:string)=> item.trim())
+    await ListenHistory.deleteMany({
+        _id:{$in:ids}
+    })
+    req.flash('success', `Xóa thành công ${ids.length} bài hát`);
+    res.redirect('back')
 }
