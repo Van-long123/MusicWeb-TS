@@ -18,19 +18,12 @@ block main
         .card
           .card-header Tài khoản
           .card-body
-            p Tên tài khoản: gg.phamlong123np
+            p Tên tài khoản: #{user.fullName}
             p
               | Mật khẩu: 
-              a(href='#') Đổi mật khẩu
+              a(href='/user/password/forgot') Đổi mật khẩu
             p
-              | Email: phamlong123np@gmail.com 
-              span.text-success (Kích hoạt tài khoản)
-            p
-              | Số ĐT kích hoạt: 0775580605 
-              span.text-danger (đã xác thực)
-            p
-              | Ngày hết hạn: Bạn chưa có 
-              a(href='#') Tài khoản VIP
+              | Email: #{user.email}
       .col-md-6
         .row
           .col-6

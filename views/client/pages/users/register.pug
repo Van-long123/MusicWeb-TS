@@ -9,27 +9,41 @@ block main
                         p
                             b(style="color: black;") xin chào bạn!
                     .input-type
-                        .input-type-name.form-group.mb-3.mt-3
+                        .input-type-name.form-group.mt-3
                             i(class="fa-solid fa-users")
-                            input(id="fullName"  type="text" placeholder="         Họ và tên" value=messages.nameValue ? messages.nameValue[0] : '' name="fullName")
+                            input(id="fullname"  type="text" placeholder="         Họ và tên" value=messages.nameValue ? messages.nameValue[0] : '' name="fullName" required)
                             if(messages.nameError)
                                 lable(id="name-error" class="error invalid-feedback1" for="fullName" style="display:block") #{messages.nameError} 
                             lable(id="name-error" class="error invalid-feedback1" for="full_name" ) Vui lòng nhập họ và tên
                         .input-type-email.form-group.pt-2
                             i(class="fa-solid fa-users")
-                            input(id="email" type="text" name="email" placeholder="         Email" value=messages.emailValue ? messages.emailValue[0] : '' class="")
+                            input(id="email" type="text" name="email" placeholder="         Email" value=messages.emailValue ? messages.emailValue[0] : '' class="" required)
                             if(messages.emailError)
                                 lable(id="email-error" class="error invalid-feedback1" for="full_name" style="display:block") #{messages.emailError} 
                             lable(id="email-error" class="error invalid-feedback1" for="full_name" ) Vui lòng nhập email
-                        .input-type-password.form-group
+                        .input-type-name.form-group.mt-2
+                            i(class="fa-solid fa-phone")
+                            //- pattern="\d{10,11}" sẽ chỉ cho phép nhập số có độ dài từ 10 đến 11 chữ số.
+                            input(id="phone"  type="text" placeholder="         Số điện thoại" name="phone"  value=messages.phoneValue ? messages.phoneValue[0] : '' required)
+                            if(messages.phoneError)
+                                lable(id="phone-error" class="error invalid-feedback1" for="phone" style="display:block") #{messages.phoneError} 
+                            lable(id="phone-error" class="error invalid-feedback1" for="phone" ) Vui lòng nhập số điện thoại
+                            lable(id="phone-error-format" class="error invalid-feedback1" for="phone" ) Số điện thoại ko đúng định dạng
+                        .input-type-name.form-group.mt-2
+                            i(class="fa-solid fa-location-dot")
+                            input(id="address"  type="text" placeholder="         Địa chỉ" name="address" value=messages.addressValue ? messages.addressValue[0] : '' required)
+                            if(messages.addressError)
+                                lable(id="address-error" class="error invalid-feedback1" for="address" style="display:block") #{messages.addressError} 
+                            lable(id="address-error" class="error invalid-feedback1" for="address" ) Vui lòng nhập địa chỉ
+                        .input-type-password.form-group.mt-2
                             i(class="fa-solid fa-lock")
-                            input(id="password" type="password" name="password" placeholder="         Mật khẩu" value="")
+                            input(id="password" type="password" name="password" placeholder="         Mật khẩu" value="" required)
                             if(messages.passwordError)
                                 lable(id="password-error" class="error invalid-feedback1" for="password" style="display:block") #{messages.passwordError} 
                             lable(id="password-error" class="error invalid-feedback1" for="password" ) Vui lòng nhập mật khẩu
-                        .input-type-password.form-group.pb-3
+                        .input-type-password.form-group.pb-3.mt-2
                             i(class="fa-solid fa-lock")
-                            input(id="confirmPassword" type="password" name="confirmPassword" placeholder="         Xác nhận mật khẩu" value="")
+                            input(id="confirmPassword" type="password" name="confirmPassword" placeholder="         Xác nhận mật khẩu" value="" required)
                             if(messages.confirmPasswordError)
                                 lable(id="confirmPassword-error" class="error invalid-feedback1" for="confirmPassword" style="display:block") #{messages.confirmPasswordError} 
                             lable(id="confirmPassword-error" class="error invalid-feedback1" for="confirmPassword" ) Vui lòng nhập xác nhận mật khẩu

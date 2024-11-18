@@ -20,6 +20,16 @@ export const registerPost=(req:Request, res:Response,next:NextFunction)=>{
         res.redirect(`back`);
         return;
     }
+    if(!req.body.phone){
+        req.flash('phoneError', `Vui lòng nhập số điện thoại`);
+        res.redirect(`back`);
+        return;
+    }
+    if(!req.body.address){
+        req.flash('addressError', `Vui lòng nhập địa chỉ`);
+        res.redirect(`back`);
+        return;
+    }
     if(!req.body.email){
         req.flash('emailError', `Vui lòng nhập email`);
         res.redirect(`back`);
