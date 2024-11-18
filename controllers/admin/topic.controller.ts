@@ -36,7 +36,7 @@ export const index=async  (req:Request, res:Response) => {
     const countTopics=await Topic.countDocuments(find)
     const objectPagination=pagination(req.query,countTopics,{
         currentPage:1,
-        limitItems:8
+        limitItems:3
     })
     //pagination
     // sort 
