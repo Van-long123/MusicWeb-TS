@@ -20,5 +20,9 @@ router.post('/password/otp',controller.otpPasswordPost)
 router.get('/password/reset',controller.reset)
 router.post('/password/reset',validate.resetPasswordPost,controller.resetPost)
 
+router.get('/quan-ly',controller.myAccount)
+router.get('/lich-su-nghe-nhac',controller.listenHistory)
+router.get('/quan-ly-playlist-cua-tui',controller.managePlaylist)
+
 export const userRouter: Router=router
 

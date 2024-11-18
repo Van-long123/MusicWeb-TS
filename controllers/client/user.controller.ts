@@ -166,3 +166,22 @@ export const resetPost=async (req:Request, res:Response) => {
     req.flash('success', `Đổi mật khẩu thành công`);
     res.redirect('back')
 }
+
+export const myAccount=async (req:Request, res:Response) => {
+    res.locals.activePage = 'quan-ly';
+    res.render('client/pages/my-account/management',{
+        title:"Trang thông tin cá nhân"
+    })
+}
+export const managePlaylist=async (req:Request, res:Response) => {
+    res.locals.activePage = 'playlist';
+    res.render('client/pages/my-account/management',{
+        title:"Trang thông tin cá nhân"
+    })
+}
+export const listenHistory=async (req:Request, res:Response) => {
+    res.locals.activePage = 'lich-su';
+    res.render('client/pages/my-account/listen-history',{
+        title:"Lịch sử nghe nhạc"
+    })
+}

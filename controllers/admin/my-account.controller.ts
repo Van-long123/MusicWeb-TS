@@ -5,7 +5,7 @@ import md5 from 'md5'
 export const index=async  (req:Request, res:Response) => {
     res.render("admin/pages/my-account/index",
         {
-            title:'Thông tin các nhân',
+            title:'Thông tin cá nhân',
         }
     )
 }
