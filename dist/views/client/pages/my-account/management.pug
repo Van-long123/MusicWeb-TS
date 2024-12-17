@@ -1,0 +1,44 @@
+extends ../../layouts/my-account
+block main
+  .col-md-9
+    h3.text-primary Quản Lý Tài Khoản
+    .row
+      .col-md-6
+        .card.mb-3
+          .card-header
+            div(class="d-flex justify-content-between")  
+              span Giới thiệu
+              a(href="/user/edit-account" ) 
+                span(class="btn btn-outline-secondary d-flex align-items-center") <i class="fa-solid fa-pen me-2"></i> Chỉnh sửa
+          .card-body
+            p Họ và tên: #{user.fullName}
+            //- p Ngày sinh: #{user.birday}
+            p Giới tính: Khác
+            p Điện thoại: #{user.phone}
+            p Địa chỉ: #{user.address}
+            p(id="userProvince" data-province=user.province) 
+            //- p Giới thiệu:
+        .card
+          .card-header Tài khoản
+          .card-body
+            p Tên tài khoản: #{user.fullName}
+            p
+              | Mật khẩu: 
+              a(href='/user/password/forgot') Đổi mật khẩu
+            p
+              | Email: #{user.email}
+      .col-md-6
+        .row
+          .col-6
+            a(href="/favorite-songs")
+              .card.text-center.mb-3
+                .card-body
+                  h5 Playlist
+                  .display-4 1
+                  p playlist 
+          .col-6
+            .card.text-center.mb-3
+              .card-body
+                h5 Video
+                .display-4 0
+                p video

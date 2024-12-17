@@ -1,5 +1,6 @@
 {
     "compilerOptions": {
+        "outDir": "dist",
         "target": "ES6",//cho phép biên dịch code typescript sang kiểu ES6 là các Arrow  function các thứ
 
         "module": "commonjs",//Commonjs là tiêu chuẩn được sử dụng trong nodejs dể làm việc với các module 

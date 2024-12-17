@@ -1,0 +1,48 @@
+nav.navbar.navbar-expand-lg.navbar-light.bg-light.fixed-top
+    a.navbar-brand(href='/')
+        i.fas.fa-music
+        |  NhacCuaTui
+    button.navbar-toggler(type='button', data-toggle='collapse', data-target='#navbarNav')
+        span.navbar-toggler-icon
+    #navbarNav.collapse.navbar-collapse
+        form(action="/search/result" method="get" class="form-inline box-search mx-auto custom-search-width")
+            .input-group.position-relative.w-100
+                input.form-control.search-input(type='text', name="keyword" placeholder='Search for songs, artists...' value=keyword)
+                button.btn-search(type='submit')
+                    i.fas.fa-search
+            .inner-suggest
+                .inner-list
+        ul.navbar-nav.ml-auto
+            li.nav-item
+                a.nav-link(href='/')
+                    i.fas.fa-home
+                    |Trang chủ
+            li.nav-item
+                a.nav-link(href='/topics')
+                    i.fas.fa-play-circle
+                    |Chủ đề
+            if (user)
+                li.nav-item
+                    a.nav-link(href='/favorite-songs')
+                        i.fa-solid.fa-heart
+                        |Trang yêu thích
+            if (user)
+                li.nav-item.userprofile-card-item.me-5.ms-5
+                    .profile-user
+                        a(href="/user/manage-account")
+                            if(user.avatar)
+                                img(src=user.avatar, alt="")
+                            else
+                                img(src="https://stc-id.nixcdn.com/v11/images/avatar_default_2020.png", alt="")
+                            span(class="ms-2") #{user.fullName}
+                            i(class="fa-solid fa-caret-down ms-3")
+                    .icons-user-board
+                        a.mt-1(href="/user/manage-account") Tài khoản 
+                        a.mt-1(href="/user/listening-history") Lịch sử 
+                        a.mt-1(href="/user/logout") Đăng xuất
+            else 
+                li.nav-item.ms-5
+                    a.btn.nav-login.ml-2(href="/user/login") Đăng Nhập
+                    //- button.btn.nav-login.ml-2(type='button') Đăng Nhập
+                li.nav-item.ms-2.me-5    
+                    a.btn.btn-primary.ml-2(href="/user/register") Đăng Ký

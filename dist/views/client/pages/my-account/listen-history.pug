@@ -1,0 +1,55 @@
+extends ../../layouts/my-account
+include ../../mixins/moment
+include ../../mixins/alert.pug
+include ../../mixins/pagination
+block main
+    .col-md-9
+        +alert-success(5000)
+        +alert-error(5000)
+        h3.text-primary LỊCH SỬ NGHE NHẠC
+        .d-flex.justify-content-between.mb-3
+            .form-check.delete-check
+                if(songHistory.length>0)
+                    input#select-all.form-check-input(type='checkbox' name="checkall")
+                    form(
+                        action="/user/song/delete-multi?_method=DELETE" 
+                        method="POST"
+                        class='form-delete-multi'
+                    ) 
+                        input(type="text" name="ids" value="" class="form-control d-none")
+                    a(id="btnRemoveAll" href="javascript:;" class="btn_delete_checkbox ms-2") Xóa
+                else
+                    p Bạn chưa nghe bài nhạc nào cả
+        ul.list-group.checkbox-multi
+            each item in songHistory
+                li.list-group-item.d-flex
+                    .d-flex.align-items-center
+                        input.form-check-input.me-3(type='checkbox' name="id" value=item.id)
+                        div
+                            strong #{item.songInfo.title}
+                            br
+                            small.text-muted #{item.singerInfo.fullName}
+                    .ms-auto.text-muted.text-end.me-5
+                        i.bi.bi-clock.me-1
+                        if(item.listenedAt)
+                            +formatDateTime(item.listenedAt)
+                    .ms-5
+                        a(
+                            id="btnRemoveAll" 
+                            href="javascript:;" 
+                            class="btn_delete_checkbox" 
+                            button-delete
+                            data-id=item.id
+                        ) Xóa
+                       
+        if(songHistory.length>0)
+            .d-flex.justify-content-center.mt-4
+                +pagination(pagination)
+    form(
+        action="" 
+        method='POST'
+        id="form-delete-song-history"  
+        data-path='/user/song/delete'  
+    ) 
+    
+    script(src="/js/listen-history.js")

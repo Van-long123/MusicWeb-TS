@@ -1,0 +1,24 @@
+extend ../../layouts/default
+include ../../mixins/alert.pug
+block main
+    if (account.fullname) 
+        h1(class="mb-4") #{account.fullname}
+    if (account.email) 
+        div(class="mb-4") Email: <b>#{account.email}</b>
+    if (account.phone) 
+        div(class="mb-4") Số điện: <b>#{account.phone}</b>
+    if (account.avatar)
+        div(class="mb-4")
+            img(
+            src=account.avatar
+            style="width: 100px"
+            )
+    if (account.status)
+        div(class="mb-4")
+            span Status:
+            if (account.status === "active")
+                span(class="badge badge-success") Hoạt động
+            else
+                span(class="badge badge-danger") Dừng hoạt động
+    a(href=`${prefixAdmin}/accounts/edit/${account.id}` class="btn btn-warning btn-sm ml-1") Chỉnh sửa
+    script(src="/admin/js/user.js")

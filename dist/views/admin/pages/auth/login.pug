@@ -1,0 +1,30 @@
+extends ../../layouts/auth.pug
+include ../../mixins/alert.pug
+block main
+  section.vh-100
+    .container-fluid.h-custom
+        .row.d-flex.justify-content-center.align-items-center.h-100
+            
+            .col-md-9.col-lg-6.col-xl-5
+                img.img-fluid(src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.webp", alt="Sample image")
+            .col-md-8.col-lg-6.col-xl-4.offset-xl-1
+                +alert-error(5000)
+                form(
+                action=`${prefixAdmin}/auth/login`
+                method="POST"
+                )
+                    .divider.d-flex.align-items-center.my-4
+                        p.text-center.fw-bold.mx-3.mb-0 
+                    //- // Email input
+                    .form-outline.mb-4(data-mdb-input-init)
+                        label.form-label(for="form3Example3") Tài khoản
+                        input#form3Example3.form-control.form-control-lg(type="email", placeholder="Nhập tài khoản" name="email" value=messages.emailValue ? messages.emailValue[0] : '')
+
+                    //- // Password input
+                    .form-outline.mb-3(data-mdb-input-init)
+                        label.form-label(for="form3Example4") Mật khẩu
+                        input#form3Example4.form-control.form-control-lg(type="password", placeholder="Nhập mật khẩu" name="password")
+
+                    .text-center.text-lg-start.mt-4.pt-2
+                        button.btn.btn-primary.btn-lg(type="submit", data-mdb-button-init, data-mdb-ripple-init, style="padding-left: 2.5rem; padding-right: 2.5rem;") Đăng nhập
+    

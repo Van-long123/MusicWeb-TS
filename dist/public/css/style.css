@@ -1,0 +1,807 @@
+/* home  */
+.banner img {
+  height: 350px;
+  width: 100% !important;
+  object-fit: cover;
+}
+
+.playlists .card {
+  transition: transform 0.3s ease;
+}
+
+.playlists .card:hover {
+  transform: scale(1.05);
+}
+
+.bxh h5 {
+  margin-bottom: 15px;
+}
+
+.station-section-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+
+.station-section-header-left .title {
+  font-size: 20px;
+  margin-bottom: 0;
+}
+
+.refresh-btn {
+  cursor: pointer;
+  border: 0;
+  align-items: center;
+  padding: 6px 12px;
+  min-height: 32px;
+  border-radius: 22px;
+  border-color: #9b4de0;
+  background-color: #9b4de0;
+  color: #fff;
+  font-size: 13px;
+  line-height: 20px;
+  text-transform: uppercase;
+  font-weight: 500;
+  margin-top: 10px;
+}
+
+
+.music-item {
+  border-radius: 10px;
+  padding: 15px;
+  display: flex;
+  align-items: center;
+}
+
+.music-item img {
+  width: 60px;
+  height: 60px;
+  border-radius: 5px;
+  margin-right: 15px;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+html {
+  height: 100%;
+}
+
+.main {
+  flex: 1;
+  /* chiếm diện tích còn lại */
+
+}
+
+/* home  */
+/* suggest search  */
+.box-search {
+  position: relative;
+}
+
+.box-search .inner-suggest {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  max-height: 300px;
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  z-index: 1;
+  overflow-y: auto;
+  display: none;
+}
+
+.box-search .inner-suggest.show {
+  display: block;
+}
+
+.box-search .inner-suggest .inner-item {
+  display: flex;
+  align-items: center;
+  padding: 5px;
+  border-bottom: 1px solid #ddd;
+}
+
+.box-search .inner-suggest .inner-item:hover {
+  background: #fefefe;
+  text-decoration: none;
+}
+
+.box-search .inner-suggest .inner-item:last-child {
+  border-bottom: 0;
+}
+
+.box-search .inner-suggest .inner-item .inner-image {
+  width: 60px;
+  aspect-ratio: 1/1;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.box-search .inner-suggest .inner-item .inner-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.box-search .inner-suggest .inner-item .inner-info {
+  flex: 1;
+  margin-left: 10px;
+}
+
+.box-search .inner-suggest .inner-item .inner-info .inner-title {
+  white-space: pre-wrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  display: -webkit-box;
+  margin-bottom: 5px;
+  font-size: 14px;
+  font-weight: 700;
+  color: #4d007d;
+}
+
+.box-search .inner-suggest .inner-list a {
+  text-decoration: none;
+}
+
+.box-search .inner-suggest .inner-list a .inner-info .inner-singer {
+  color: #212529;
+}
+
+/* suggest search  */
+/* song  */
+.song-item {
+  display: flex;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+
+}
+
+.song-item .inner-image {
+  width: 135px;
+  height: 147px;
+  aspect-ratio: 1/1;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.song-item .inner-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.song-item .inner-content {
+  padding: 10px;
+  flex: 1;
+}
+
+.song-item .inner-content .inner-title {
+  white-space: pre-wrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  display:
+    -webkit-box;
+  margin-bottom: 5px;
+}
+
+.song-item .inner-content .inner-title a:hover {
+  color: #7c00c8;
+  text-decoration: none;
+}
+
+.song-item .inner-content .inner-singer {
+  font-size: 13px;
+  font-weight: 500;
+  color: #282828;
+  margin-bottom: 2px;
+}
+
+.song-item .inner-content .inner-like {
+  font-size: 13px;
+  font-weight: 500;
+  color: #004cd0;
+  margin-bottom: 2px; 
+}
+.song-item .inner-content .inner-inlike {
+  font-size: 13px;
+  font-weight: 500;
+  margin-bottom: 2px; 
+}
+.song-item .inner-content .inner-time {
+  font-size: 13px;
+  font-weight: 500;
+  color: #585858;
+}
+
+.song-item .inner-content .inner-title a {
+  font-size: 14px;
+  font-weight: 700;
+  color: #4d6876;
+}
+
+.song-item .inner-content .inner-heart {
+  font-size: 13px;
+  font-weight: 500;
+  margin-bottom: 2px;
+  cursor: pointer;
+}
+
+.song-item .inner-content .inner-heart.active {
+  color: #b90000;
+}
+
+.song-item .inner-content .inner-heart.active {
+  font-weight: 900;
+}
+
+.our-menu h2 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.inner-dir {
+  width: 104px;
+  height: 2.4px;
+  background: #333333;
+  margin: 0 auto;
+  position: relative;
+
+}
+
+/* Responsive cho màn hình nhỏ hơn 991px */
+@media screen and (max-width: 991px) {
+  .inner-dir {
+    width: 80px;
+    /* Có thể thu nhỏ width nếu cần để phù hợp với màn hình nhỏ */
+  }
+}
+
+.topics a {
+  text-decoration: none;
+  color: #212529;
+}
+.topics .card-img-top{
+  width: 194.39px;
+  height:194.39px;
+}
+.suggestions a {
+  text-decoration: none;
+  color: #212529;
+}
+
+.button-main-outline {
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  padding: 8px 24px;
+  min-height: 40px;
+  color: #333333;
+  border: 1px solid #333333;
+  border-radius: 4px;
+  background: transparent;
+  transition: color 0.3s ease, background 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.button-main-outline::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  height: 2px;
+  width: 100%;
+  background-color: #333333;
+  transform: scaleX(0);
+  transition: transform 0.3s ease;
+}
+
+.button-main-outline:hover {
+  color: #fff;
+  text-decoration: none;
+  background: #333333;
+}
+
+.button-main-outline i {
+  margin-top: 4px;
+}
+
+.button-main-outline:hover::after {
+  transform: scaleX(1);
+}
+
+/* song  */
+
+/* footer  */
+.Footer {
+  background-color: rgba(241, 236, 236, 0.4);
+  padding: 25px 0 25px 0;
+  position: relative;
+  /* margin-top: 0; */
+}
+
+.Footer-social a {
+  text-decoration: none;
+  margin-bottom: 5px;
+  margin-left: 100px;
+  color: black;
+  display: flex;
+  flex-direction: column;
+}
+
+.Footer-social a:hover {
+  color: black;
+  text-decoration: none;
+}
+
+.Footer-icons a i span {
+  margin-left: 8px;
+  font-size: 15px;
+  color: #939393;
+}
+
+.Footer-content {
+  margin-left: 86px;
+  color: #939393;
+  line-height: 30px;
+}
+
+.Footer-content p {
+  text-transform: capitalize;
+  margin: 0;
+}
+
+.Footer-icons a {
+  text-decoration: none;
+  margin-bottom: 30px;
+  margin-left: 100px;
+  color: black;
+  display: flex;
+  flex-direction: column;
+}
+
+.Footer-icons a i {
+  font-size: 19px;
+  color: black;
+}
+
+.Footer-icons a i span {
+  margin-left: 8px;
+  font-size: 15px;
+  color: #939393;
+}
+
+.Footer-images {
+  margin: -15px;
+  margin-left: 10px;
+  display: flex;
+}
+
+.image-qr img {
+  width: 120px;
+}
+
+.image-app img {
+  display: flex;
+  flex-direction: column;
+}
+
+.app-image {
+  display: flex;
+}
+
+.image-app-two {
+  margin-left: 34px;
+  width: 28px;
+  margin-top: 18px;
+}
+
+.image-app-one {
+  width: 28px;
+  height: 28px;
+  margin-left: 34px;
+  margin-top: 15px;
+}
+
+.app-image span {
+  margin-left: 5px;
+  margin-top: 18px;
+}
+
+.footer-bootom {
+  padding: 20px;
+  align-items: center;
+  text-align: center;
+  /* display: flex;
+    justify-content: center; */
+}
+
+.footer-bootom p {
+  color: black;
+  text-transform: uppercase;
+  margin: 0;
+  display: inline-block;
+  font-size: 14px;
+}
+
+.footer-bootom p span {
+  margin: 0 30px 0 30px;
+}
+
+.footer-bootom-image p {
+  margin-top: 20px;
+  display: block;
+}
+
+.footer-bootom-image img {
+  width: 150px;
+}
+
+/* @media screen and (max-width:991px) {
+    .sidebar {
+        display: none;
+    }
+} */
+.h6 {
+  text-align: center;
+}
+
+@media screen and (max-width:991px) {
+  .footer-bootom {
+    display: none;
+  }
+
+  .Footer-body {
+    margin-bottom: 10px;
+  }
+
+  .h6 {
+    margin-bottom: 10px;
+
+  }
+
+  .Footer-body:nth-child(3) {
+    margin-left: -17px;
+  }
+}
+
+@media screen and (max-width:767px) {
+  .h6 {
+    margin-bottom: 10px;
+    text-align: start;
+  }
+
+  /* .Footer-body:nth-child(2){
+        margin-left: -20px;
+    } */
+}
+
+/* 992 */
+@media screen and (max-width:767px) {
+  .h6 {
+    margin-bottom: 10px;
+    text-align: start;
+  }
+
+  /* .Footer-body:nth-child(2){
+        margin-left: -20px;
+    } */
+}
+
+@media (min-width:992px) and (max-width:1024px) {
+  .Footer-content {
+    margin-left: 27px;
+  }
+
+  .Footer-icons {
+    margin-left: -60px;
+  }
+}
+
+/* footer  */
+
+/* detail  */
+/* Định kiểu cho phần container */
+.singer-detail .inner-actions .inner-like {
+  cursor: pointer;
+}
+
+.singer-detail .inner-actions .inner-heart {
+  cursor: pointer;
+}
+
+.singer-detail .inner-actions .inner-heart i {
+  color: #b90000;
+}
+
+.singer-detail .inner-actions .inner-heart.active {
+  color: #b90000;
+}
+
+.singer-detail .inner-actions .inner-heart.active i {
+  font-weight: 900;
+}
+
+.singer-detail .inner-actions .inner-like i {
+  color: #0059ff;
+}
+
+.singer-detail .inner-actions .inner-like.active {
+  color: #0059ff;
+}
+
+.singer-detail .inner-actions .inner-like.active i {
+  font-weight: 900;
+}
+
+.inner-title {
+  font-size: 20px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 15px;
+}
+
+/* Định kiểu cho các thông tin bài hát (Thời gian, ca sĩ, chủ đề) */
+.inner-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.inner-action {
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  gap: 5px;
+  color: #999;
+  white-space: nowrap;
+}
+
+.inner-action i {
+  margin-right: 5px;
+  color: #333;
+}
+
+/* Định kiểu cho phần icon thời gian */
+.fa-clock {
+  /* color: #f99; */
+}
+
+/* Định kiểu cho phần icon like */
+.fa-thumbs-up {
+  /* color: #0059ff ; */
+  /* color: #1c5ac5 !important; */
+}
+
+/* Định kiểu cho phần icon tim */
+
+
+/* Định kiểu cho phần trình phát nhạc */
+.inner-play {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.inner-avatar img {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 15px;
+}
+
+.inner-audio {
+  width: 100%;
+}
+
+/* Định kiểu cho phần mô tả bài hát */
+.inner-desc {
+  margin-bottom: 15px;
+  padding: 15px 20px;
+  border-radius: 4px;
+  background-color: #f7f7f7;
+}
+
+.inner-label {
+  font-size: 16px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.inner-text {
+  font-size: 14px;
+  color: #999;
+  line-height: 1.5;
+  /* tức là nó hiển thị đúng như những gì mà ở trong code nó đang có */
+  white-space: pre;
+}
+
+.singer-detail .inner-avatar {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  overflow: hidden;
+  border: 5px solid #F57F20;
+  margin-right: 20px;
+  animation-name: spin;
+  animation-duration: 12s;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+  animation-play-state: paused;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.singer-detail .inner-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.singer-detail .inner-desc {
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  margin-bottom: 20px;
+}
+
+.singer-detail .inner-desc .inner-label {
+  font-size: 16px;
+  font-weight: 700;
+  color: #F57F20;
+  padding: 10px 15px;
+  border-bottom: 1px solid #ddd;
+}
+
+.singer-detail .inner-desc .inner-text {
+  font-size: 14px;
+  padding: 10px 15px;
+}
+
+
+/* detail */
+
+
+/* box-auth */
+
+.modal {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(48, 45, 45, 0.5);
+  z-index: 100000;
+  overflow: hidden;
+  /* Loại bỏ thanh cuộn */
+}
+
+.modal-content {
+  background-color: white;
+  margin: 10% auto;
+  padding: 20px;
+  border: 1px solid #888;
+
+  text-align: center;
+  border-radius: 5px;
+  max-height: 90vh;
+  /* Giới hạn chiều cao */
+  overflow-y: auto;
+  /* Chỉ cuộn khi nội dung quá cao */
+  width: 25%;
+  position: relative;
+}
+
+input:focus {
+  outline: none;
+}
+
+.modal {
+  z-index: 1000;
+}
+
+.modal-text {
+  font-size: 14px;
+  color: rgb(81, 81, 88);
+}
+
+.confirm {
+  border: 1px solid rgb(11, 116, 229);
+  color: rgb(11, 116, 229);
+  margin-right: 8px;
+  cursor: pointer;
+  border-radius: 3px;
+  padding: 5px;
+}
+
+.cancel {
+  border-radius: 3px;
+  padding: 5px;
+  background-color: rgb(11, 116, 229);
+  color: rgb(255, 255, 255);
+  cursor: pointer;
+}
+
+/* .close {
+  float: right;
+  cursor: pointer;
+} */
+
+.modal-actions {
+  margin-top: 20px;
+}
+
+.addsucces-xmark {
+  margin-bottom: 10px;
+}
+
+.addsucces-xmark {
+  cursor: pointer;
+  position: absolute;
+  right: 10px;
+  top: 4px;
+  font-size: 18px;
+}
+
+.image-auth img {
+  width: 247.15px;
+  height: auto;
+  margin: 0 auto 20px;
+  display: block;
+}
+
+.modal-content h3.title {
+  font-size: 1.5rem;
+  margin-bottom: 15px;
+}
+
+.modal-content .login-btn {
+  background-color: #a147d2;
+  border: none;
+  border-radius: 25px;
+  padding: 10px 20px;
+  color: #fff;
+  cursor: pointer;
+  width: 100%;
+}
+
+.modal-content .description {
+  font-size: 0.9rem;
+}
+
+.modal-content .description a {
+  color: #212529;
+  text-decoration: underline;
+}
+
+/* box-auth */

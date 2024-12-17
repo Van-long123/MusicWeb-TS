@@ -1,0 +1,27 @@
+mixin pagination(pagination)
+    ul(class="pagination")
+        li(class="page-item")
+            button(class="page-link" button-pagination=1) &laquo;
+
+        if(pagination.currentPage > 1)
+            li(class="page-item")
+                button(class="page-link" button-pagination=pagination.currentPage-1) Trang trước
+
+        //- Tính toán giới hạn hiển thị 3 
+        //- 2: 1 4    
+        //- kiểu min max thì nó giới hạn rồi max thì nhỏ hơn 1 là nó lấy 1 
+        //- min là lơn hơn totalPage là lấy totalPage vì thế giới hạn page sẵn rồi nên ko sợ vượt quá 
+        - var startPage = Math.max(1, pagination.currentPage - 1)
+        - var endPage = Math.min(pagination.totalPage, pagination.currentPage + 2)
+
+        - for(var i = startPage; i <= endPage; i++)
+            li(class=`page-item ${pagination.currentPage == i ? "active" : ""}`)
+                button(class="page-link" button-pagination=i) #{i}
+
+
+        if(pagination.currentPage < pagination.totalPage)
+            li(class="page-item")
+                button(class="page-link" button-pagination=pagination.currentPage + 1) Kế tiếp
+
+        li(class="page-item")
+            button(class="page-link" button-pagination=pagination.totalPage) &raquo;

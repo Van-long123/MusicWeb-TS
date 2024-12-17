@@ -1,0 +1,47 @@
+extend ../../layouts/default
+block main  
+    .head-title
+        .left
+            h1 Dashboard
+            ul.breadcrumb
+                li
+                    a(href=`${prefixAdmin}/dashboard`) Dashboard
+                li
+                    i.bx.bx-chevron-right
+                li
+                    a.active(href=`${prefixAdmin}/dashboard`) Home
+    ul.box-info
+        .container  
+            .row
+                .col-md-6.product
+                    li
+                        i.bx.bxs-calendar-check
+                        span.text
+                            h3 Danh mục sản phẩm
+                            p Số lượng:<b> </b>
+                            p Hoạt động:<b></b>
+                            p Dừng hoạt động: <b></b>
+                .col-md-6.product-category
+                    li
+                        i(class='bx bxl-product-hunt')
+                        span.text
+                            h3 Sản phẩm
+                            p Số lượng:<b></b>
+                            p Hoạt động:<b></b>
+                            p Dừng hoạt động: <b></b>
+                .col-md-6.user
+                    li
+                        i.bx.bxs-user-circle
+                        span.text
+                            h3 Tài khoản khách hàng
+                            p Số lượng:<b></b>
+                            p Hoạt động:<b></b>
+                            p Dừng hoạt động: <b></b>
+                .col-md-6.account
+                    li
+                        i.bx.bxs-group
+                        span.text
+                            h3 Tài khoản admin
+                            p Số lượng:
+                            p Hoạt động:
+                            p Dừng hoạt động:

@@ -1,0 +1,58 @@
+extend ../../layouts/default
+include ../../mixins/alert.pug
+block main 
+    if(role.permissions.includes("singers_create"))
+        h1 Thêm mới ca sĩ
+        +alert-success(5000)
+        +alert-error(5000)
+        form(
+            action=`${prefixAdmin}/singers/create`,
+            method="POST"
+            enctype="multipart/form-data"
+        )
+            div(class="form-group")
+                label(for="title") Họ và tên
+                input(
+                type="text",
+                class="form-control",
+                id="title",
+                name="fullName",
+                required
+                )
+            div(class="form-group" upload-image)
+                label(for="avatar") Ảnh
+                input(
+                    type="file",
+                    class="form-control-file",
+                    id="avatar",
+                    name="avatar"
+                    accept="image/*"
+                    upload-image-input
+                )
+                img(id="blah" class="image-prev" src="" upload-image-preview width="300px")
+            div(class="form-group form-check form-check-inline")
+                input(
+                    type="radio",
+                    class="form-check-input",
+                    id="statusActive",
+                    name="status",
+                    value="active",
+                    checked
+                )
+                label(for="statusActive" class="form-check-label") Hoạt động
+            div(class="form-group form-check form-check-inline")
+                input(
+                    type="radio",
+                    class="form-check-input",
+                    id="statusInActive",
+                    name="status",
+                    value="inactive"
+                )
+                label(for="statusInActive" class="form-check-label") Dừng hoạt động
+            div(class="form-group")
+                button(
+                    class="btn btn-primary"
+                    type="submit"
+                ) Tạo mới
+    else
+        img(src="/images/5206817.jpg", alt="Unauthorization" style="width:1000px;height:600px")

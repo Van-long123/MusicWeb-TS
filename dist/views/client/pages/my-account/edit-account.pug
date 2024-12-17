@@ -1,0 +1,125 @@
+extends ../../layouts/my-account
+include ../../mixins/alert.pug
+block main
+    .col-md-9
+        +alert-success(5000)
+        h3.text-primary Cập nhật tài khoản
+        form(action=`/user/edit-account?_method=PATCH` method='POST'  enctype="multipart/form-data")
+            div(class="align-items-center d-flex mb-4" upload-image)
+                label(for="avatar") Ảnh
+                input(
+                    type="file",
+                    class="form-control-file",
+                    id="avatar",
+                    name="avatar"
+                    accept="image/*"
+                    upload-image-input
+                )
+                img(id="blah" class="image-prev rounded" src=user.avatar upload-image-preview width="300px")
+            .mb-3
+                label.form-label(for='username') Email đăng nhập
+                input#username.form-control(type='text' name="email" value=user.email readonly='')
+            .mb-3
+                label.form-label(for='displayName') Họ và tên
+                input#displayName.form-control(type='text' value=user.fullName name="fullName")
+            //- .row.mb-3
+            //-     .col
+            //-         label.form-label(for='dob-day') Ngày sinh
+            //-         select#dob-day.form-select
+            //-             option(selected) 01
+            //-             option 02
+            //-             option 03
+            //-     .col
+            //-         label.form-label(for='dob-month') Tháng
+            //-         select#dob-month.form-select
+            //-             option(selected='') 01
+            //-             option 02
+            //-             option 03
+            //-     .col
+            //-         label.form-label(for='dob-year') Năm
+            //-         select#dob-year.form-select
+            //-             option(selected='') 1970
+            //-             option 1980
+            //-             option 1990
+            .mb-3
+                label.form-label(for='gender') Giới tính
+                select#gender.form-select(name="gender")
+                    option(value="other" selected=(user && user.gender) === 'other' ? true : false ) Khác
+                    option(value="male" selected=(user && user.gender) === 'male' ? true : false) Nam
+                    option(value='femail' selected=(user && user.gender) === 'femail' ? true : false) Nữ
+            .mb-3
+                label.form-label(for='address') Địa chỉ 
+                input#address.form-control(type='text' name="address" value=user.address) 
+            .mb-3
+                label.form-label(for='city') Thành phố
+                select#selCity.form-select(name="province" city-id=user.province)
+                    option(disabled) --Chọn thành phố--
+                    option(value='1') An Giang
+                    option(value='2') Bà Rịa-Vũng Tàu
+                    option(value='3') Bắc Giang
+                    option(value='4') Bắc Kạn
+                    option(value='5') Bạc Liêu
+                    option(value='6') Bắc Ninh
+                    option(value='7') Bến Tre
+                    option(value='8') Bình Định
+                    option(value='9') Bình Dương
+                    option(value='10') Bình Phước
+                    option(value='11') Bình Thuận
+                    option(value='12') Cà Mau
+                    option(value='13') Cần Thơ
+                    option(value='14') Cao Bằng
+                    option(value='15') Đà Nẵng
+                    option(value='16') Đăk Lăk
+                    option(value='17') Đăk Nông
+                    option(value='18') Điện Biên
+                    option(value='19') Đồng Nai
+                    option(value='20') Đồng Tháp
+                    option(value='21') Gia Lai
+                    option(value='22') Hà Giang
+                    option(value='23') Hà Nam
+                    option(value='24') Hà Nội
+                    option(value='25') Hà Tĩnh
+                    option(value='26') Hải Dương
+                    option(value='27') Hải Phòng
+                    option(value='28') Hậu Giang
+                    option(value='29') Hoà Bình
+                    option(value='30') Hưng Yên
+                    option(value='31') Khánh Hòa
+                    option(value='32') Kiên Giang
+                    option(value='33') Kon Tum
+                    option(value='34') Lai Châu
+                    option(value='35') Lâm Đồng
+                    option(value='36') Lạng Sơn
+                    option(value='37') Lào Cai
+                    option(value='38') Long An
+                    option(value='39') Nam Định
+                    option(value='40') Nghệ An
+                    option(value='41') Ninh Bình
+                    option(value='42') Ninh Thuận
+                    option(value='43') Phú Thọ
+                    option(value='44') Phú Yên
+                    option(value='45') Quảng Bình
+                    option(value='46') Quảng Nam
+                    option(value='47') Quảng Ngãi
+                    option(value='48') Quảng Ninh
+                    option(value='49') Quảng Trị
+                    option(value='50') Sóc Trăng
+                    option(value='51') Sơn La
+                    option(value='52') Tây Ninh
+                    option(value='53') Thái Bình
+                    option(value='54') Thái Nguyên
+                    option(value='55') Thanh Hóa
+                    option(value='56') Thừa Thiên-Huế
+                    option(value='57') Tiền Giang
+                    option(value='58') Hồ Chí Minh
+                    option(value='59') Trà Vinh
+                    option(value='60') Tuyên Quang
+                    option(value='61') Vĩnh Long
+                    option(value='62') Vĩnh Phúc
+                    option(value='63') Yên Bái
+            .mb-3
+                label.form-label(for='phone' ) Số điện thoại
+                input#phone.form-control(type='text' name="phone" value=user.phone)
+            button.btn.btn-success(type='submit') Cập nhật
+            a(href="/user/manage-account" class="btn btn-success ms-4") Trở về
+    

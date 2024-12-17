@@ -1,0 +1,26 @@
+extend ../../layouts/default
+include ../../mixins/alert.pug
+block main
+    if (user.fullName) 
+        h1(class="mb-4") #{user.fullName}
+    if (user.email) 
+        div(class="mb-4") Email: <b>#{user.email}</b>
+    if (user.address) 
+        div(class="mb-4") Địa chỉ: <b>#{user.address}</b>
+    if (user.phone) 
+        div(class="mb-4") Số điện: <b>#{user.phone}</b>
+    if (user.avatar)
+        div(class="mb-4")
+            img(
+            src=user.avatar
+            style="width: 100px"
+            )
+    if (user.status)
+        div(class="mb-4")
+            span Status:
+            if (user.status === "active")
+                span(class="badge badge-success") Hoạt động
+            else
+                span(class="badge badge-danger") Dừng hoạt động
+    a(href=`${prefixAdmin}/users/edit/${user.id}` class="btn btn-warning btn-sm ml-1") Chỉnh sửa
+    script(src="/admin/js/user.js")

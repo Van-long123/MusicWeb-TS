@@ -1,0 +1,136 @@
+extends ../../layouts/default
+include ../../mixins/moment
+block main
+    //- .banner.my-4
+    //-     .container
+    //-         #carouselExampleIndicators.carousel.slide(data-bs-ride='carousel')
+    //-             ol.carousel-indicators
+    //-                 li.active(data-bs-target='#carouselExampleIndicators' data-bs-slide-to='0')
+    //-                 li(data-bs-target='#carouselExampleIndicators' data-bs-slide-to='1')
+    //-                 li(data-bs-target='#carouselExampleIndicators' data-bs-slide-to='2')
+    //-             .carousel-inner
+    //-                 .carousel-item.active
+    //-                     img.d-block.w-100(src='https://backend.daca.vn/assets/images/cat-doi-noi-sau.jpg' alt='Banner 1')
+    //-                 .carousel-item
+    //-                     img.d-block.w-100(src='https://backend.daca.vn/assets/images/cat-doi-noi-sau.jpg' alt='Banner 2')
+    //-                 .carousel-item
+    //-                     img.d-block.w-100(src='https://backend.daca.vn/assets/images/cat-doi-noi-sau.jpg' alt='Banner 3')
+    //-             a.carousel-control-prev(href='#carouselExampleIndicators' role='button' data-bs-slide='prev')
+    //-                 span.carousel-control-prev-icon(aria-hidden='true')
+    //-                 span.sr-only Previous
+    //-             a.carousel-control-next(href='#carouselExampleIndicators' role='button' data-bs-slide='next')
+    //-                 span.carousel-control-next-icon(aria-hidden='true')
+    //-                 span.sr-only Next
+
+
+
+    section.suggestions.my-5.container
+        .station-section-header
+            .station-section-header-left
+                h3.subtitle Bắt đầu nghe từ một bài hát
+                h3.title Gợi ý dành riêng cho bạn
+            .station-section-header-right
+                button.zm-btn.refresh-btn.button
+                    i.bi.bi-arrow-clockwise
+                    span Làm mới
+        .row.boxListRandom
+          each item in songsRandom
+            .col-md-4.col-6
+              a(href=`/songs/detail/${item.slug}`) 
+                .music-item
+                    img(src=item.avatar, alt=item.title)
+                    div(class="music-text")
+                        h5.mb-0 #{item.title}
+                        small <i class="fa-solid fa-microphone-lines"></i> #{item.infoSinger.fullName}
+                
+    .container
+      .row
+        .col-12
+            .our-menu.mb-2
+                h2
+                    span CHỦ ĐỀ & THỂ LOẠI  
+                .inner-dir
+      .row.topics
+        each topic in topics
+          .col-md-2
+            a(href=`/songs/${topic.slug}`) 
+              .card.playlist-card
+                img.card-img-top(src=topic.avatar, alt=topic.title)
+                .card-body
+                  h5.card-title
+                    | #{topic.title}
+                  p.card-text #{topic.description}
+        
+        .row.mt-3.mb-5
+            .col-12.text-center
+                a.button-main-outline(href="/topics") 
+                    span Xem thêm 
+                    i.fa-solid.fa-angle-down
+    .container
+      .row
+        .col-12
+            .our-menu.mb-2
+                h2
+                    span Top 20 bài hát nhiều like nhất
+                .inner-dir
+      .row
+        each item in songsLike
+          .col-xl-3.col-md-6.mb-3
+            .playlist-card
+              div(class="song-item")
+                div(class="inner-image")
+                    a(href=`/songs/detail/${item.slug}`)
+                      img(src=item.avatar)
+                div(class="inner-content")
+                    div(class="inner-title")
+                        a(href=`/songs/detail/${item.slug}`) #{item.title}
+                    div(class="inner-singer") <i class="fa-solid fa-microphone-lines"></i> #{item.infoSinger.fullName}
+                    if (user)
+                      div( class=(item.like.includes(user.id) ? 'inner-like' : 'inner-inlike'))  <i class="fa-solid fa-thumbs-up"></i> #{item.likeCount} thích
+                    else
+                      div(class="inner-inlike") <i class="fa-solid fa-thumbs-up"></i> #{item.likeCount} thích
+                    //- tự làm thời gian tạo
+                    div(class="inner-time") 
+                      i(class="fa-regular fa-clock")
+                      if(item.createdBy)
+                        +formatDateTime(item.createdBy.createdAt)
+
+        .row.mb-5.d-flex.justify-content-center
+            .col-12.text-center
+                a.button-main-outline(href=`/songs/like`) 
+                    span Xem thêm 
+                    i.fa-solid.fa-angle-down
+
+    .container
+      .row
+        .col-12
+            .our-menu.mb-2
+                h2
+                    span Top 20 bài hát nhiều lượt nghe nhất
+                .inner-dir
+      .row
+        each item in songsListen
+          .col-xl-3.col-md-6.mb-3
+            .playlist-card
+              div(class="song-item")
+                div(class="inner-image")
+                    a(href=`/songs/detail/${item.slug}`)
+                      img(src=item.avatar)
+                div(class="inner-content")
+                    div(class="inner-title")
+                        a(href=`/songs/detail/${item.slug}`) #{item.title}
+                    div(class="inner-singer") <i class="fa-solid fa-microphone-lines"></i> #{item.infoSinger.fullName}
+                    if (user)
+                      div( class=(item.like.includes(user.id) ? 'inner-like' : 'inner-inlike'))  <i class="fa-solid fa-thumbs-up"></i> #{item.likeCount} thích
+                    else
+                      div(class="inner-inlike") <i class="fa-solid fa-thumbs-up"></i> #{item.likeCount} thích
+                    //- tự làm thời gian tạo
+                    div(class="inner-time") 
+                      i(class="fa-regular fa-clock")
+                      if(item.createdBy)
+                        +formatDateTime(item.createdBy.createdAt)
+        .row.mb-5.d-flex.justify-content-center
+            .col-12.text-center
+                a.button-main-outline(href=`/songs/listen`) 
+                    span Xem thêm 
+                    i.fa-solid.fa-angle-down

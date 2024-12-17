@@ -1,0 +1,16 @@
+mixin box-auth()
+    div(id="confirmationModal" class=`modal ${user ? 'active' : 'inactive'}`)
+        div(class="modal-content" style="width: 25%")
+            p.addsucces-xmark
+                i(class="fa-solid fa-xmark" close-alert)
+            .image-auth
+                img(src="https://zmp3-static.zmdcdn.me/skins/zmp3-v6.1/images/login.png", alt="")
+            h3.title Đăng Nhập NhacCuaTui
+            a(href="/user/login") 
+                button(class="zm-btn login-btn button", style="background-color: #a147d2; color: #fff; width: 100%; margin-bottom: 20px;") Đăng nhập
+            .description
+                | Bằng cách đăng nhập tài khoản, bạn đã đồng ý với
+                a(href="#")  Điều khoản dịch vụ 
+                span và
+                a(href="#")  Chính sách bảo mật
+                |  của NhacCuaTui
