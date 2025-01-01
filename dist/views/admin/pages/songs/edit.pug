@@ -66,6 +66,14 @@ block main
                 rows="20"
                 ) #{song.lyrics}
             div(class="form-group")
+                label(for="rawLyrics") Lời bài hát gốc
+                textarea(
+                class="form-control",
+                id="rawLyrics",
+                name="rawLyrics",
+                rows="20"
+                ) #{song.rawLyrics}
+            div(class="form-group")
                 label(for="desc") Mô tả
                 textarea(
                 class="form-control tiny-mce",

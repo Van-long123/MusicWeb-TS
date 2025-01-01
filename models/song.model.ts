@@ -9,6 +9,7 @@ const songSchema=new mongoose.Schema({
     singerId:String,
     position:Number,
     topicId:String,
+    rawLyrics:String,
     like:{
         type:[String],
         default:[]

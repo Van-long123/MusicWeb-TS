@@ -14,6 +14,7 @@ const songSchema = new mongoose_1.default.Schema({
     singerId: String,
     position: Number,
     topicId: String,
+    rawLyrics: String,
     like: {
         type: [String],
         default: []

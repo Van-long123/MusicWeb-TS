@@ -208,6 +208,7 @@ export const createPost=async  (req:Request, res:Response) => {
         description: req.body.description,
         status: req.body.status,
         lyrics:req.body.lyrics,
+        rawLyrics:req.body.rawLyrics,
         position: req.body.position,
         avatar: avatar,
         audio: audio
@@ -265,6 +266,7 @@ export const editPost=async  (req:Request, res:Response) => {
             description: req.body.description,
             status: req.body.status,
             lyrics:req.body.lyrics,
+            rawLyrics:req.body.rawLyrics,
             position: req.body.position,
         }
         if(req.body.avatar){

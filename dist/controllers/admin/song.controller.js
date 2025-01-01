@@ -224,6 +224,7 @@ const createPost = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
         description: req.body.description,
         status: req.body.status,
         lyrics: req.body.lyrics,
+        rawLyrics: req.body.rawLyrics,
         position: req.body.position,
         avatar: avatar,
         audio: audio
@@ -282,6 +283,7 @@ const editPost = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
             description: req.body.description,
             status: req.body.status,
             lyrics: req.body.lyrics,
+            rawLyrics: req.body.rawLyrics,
             position: req.body.position,
         };
         if (req.body.avatar) {
