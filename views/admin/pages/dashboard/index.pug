@@ -17,31 +17,39 @@ block main
                     li
                         i.bx.bxs-calendar-check
                         span.text
-                            h3 Danh mục sản phẩm
-                            p Số lượng:<b> </b>
-                            p Hoạt động:<b></b>
-                            p Dừng hoạt động: <b></b>
+                            h3 Chủ đề
+                            p Số lượng:<b> #{statistic.topic.total} </b>
+                            p Hoạt động:<b> #{statistic.topic.active} </b>
+                            p Dừng hoạt động: <b> #{statistic.topic.inactive}</b>
                 .col-md-6.product-category
                     li
                         i(class='bx bxl-product-hunt')
                         span.text
-                            h3 Sản phẩm
-                            p Số lượng:<b></b>
-                            p Hoạt động:<b></b>
-                            p Dừng hoạt động: <b></b>
+                            h3 Bài hát
+                            p Số lượng:<b> #{statistic.song.total} </b>
+                            p Hoạt động:<b> #{statistic.song.active} </b>
+                            p Dừng hoạt động: <b> #{statistic.song.inactive}</b>
                 .col-md-6.user
                     li
                         i.bx.bxs-user-circle
                         span.text
                             h3 Tài khoản khách hàng
-                            p Số lượng:<b></b>
-                            p Hoạt động:<b></b>
-                            p Dừng hoạt động: <b></b>
+                            p Số lượng:<b> #{statistic.user.total} </b>
+                            p Hoạt động:<b> #{statistic.user.active} </b>
+                            p Dừng hoạt động: <b> #{statistic.user.inactive}</b>
                 .col-md-6.account
                     li
                         i.bx.bxs-group
                         span.text
                             h3 Tài khoản admin
-                            p Số lượng:
-                            p Hoạt động:
-                            p Dừng hoạt động:
+                            p Số lượng:<b> #{statistic.account.total} </b>
+                            p Hoạt động:<b> #{statistic.account.active} </b>
+                            p Dừng hoạt động: <b> #{statistic.account.inactive}</b>
+                .col-md-6.user
+                    li
+                        i.bx.bxs-user-circle
+                        span.text
+                            h3 Ca sĩ
+                            p Số lượng:<b> #{statistic.singer.total} </b>
+                            p Hoạt động:<b> #{statistic.singer.active} </b>
+                            p Dừng hoạt động: <b> #{statistic.singer.inactive}</b>
