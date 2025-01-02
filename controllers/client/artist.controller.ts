@@ -1,7 +1,7 @@
 import { Request,Response } from "express"
 import Singer from "../../models/singer.model"
 import Song from "../../models/song.model"
-
+import { duration } from "../../helpers/duration"
 export const index=async(req: Request, res: Response)=>{
     try {
         const slug=req.params.slugArtist
@@ -16,7 +16,7 @@ export const index=async(req: Request, res: Response)=>{
             singerId:artist.id
         }).sort({
             'createdBy.createdAt':'desc'
-        }).limit(6)
+        }).limit(6).select('-lyrics -rawLyrics')
         const songs=await Song.find({
             singerId:artist.id
         }).sort({
@@ -25,8 +25,31 @@ export const index=async(req: Request, res: Response)=>{
         if(songs.length<1 || songsFeatured.length<1){
             return res.redirect('/');
         }
+        // forEach không chờ hoàn tất các Promise trong callback
+        // rray.prototype.forEach không hỗ trợ việc xử lý bất đồng bộ 
+        
+        // songsFeatured.forEach(async song =>{
+            // const fileDuration = await duration(song.audio);
+            // song['duration']=fileDuration
+        // })
+
+        // nhưng không tối ưu nếu bạn có nhiều bài hát vì nó sẽ lặp từng thằng
+        // for (const song of songsFeatured) {
+        //     const fileDuration = await duration(song.audio);
+        //     song['duration']=fileDuration
+        // }
+
+        // Promise.all là một phương pháp trong JavaScript giúp xử lý nhiều Promise song song
+        await Promise.all(
+            songsFeatured.map(async (song) => {
+                const fileDuration = await duration(song.audio);
+                song['duration'] = fileDuration;
+            })
+        );
+             
 
         res.render('client/pages/artists/index',{
+            title:artist.fullName,
             artist:artist,
             songsFeatured:songsFeatured,
             songs:songs

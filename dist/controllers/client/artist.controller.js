@@ -15,6 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.index = void 0;
 const singer_model_1 = __importDefault(require("../../models/singer.model"));
 const song_model_1 = __importDefault(require("../../models/song.model"));
+const duration_1 = require("../../helpers/duration");
 const index = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const slug = req.params.slugArtist;
@@ -28,7 +29,7 @@ const index = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
             singerId: artist.id
         }).sort({
             'createdBy.createdAt': 'desc'
-        }).limit(6);
+        }).limit(6).select('-lyrics -rawLyrics');
         const songs = yield song_model_1.default.find({
             singerId: artist.id
         }).sort({
@@ -37,7 +38,12 @@ const index = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         if (songs.length < 1 || songsFeatured.length < 1) {
             return res.redirect('/');
         }
+        yield Promise.all(songsFeatured.map((song) => __awaiter(void 0, void 0, void 0, function* () {
+            const fileDuration = yield (0, duration_1.duration)(song.audio);
+            song['duration'] = fileDuration;
+        })));
         res.render('client/pages/artists/index', {
+            title: artist.fullName,
             artist: artist,
             songsFeatured: songsFeatured,
             songs: songs
