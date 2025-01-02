@@ -34,18 +34,12 @@ export const index=async(req: Request, res: Response)=>{
         // })
 
         // nhưng không tối ưu nếu bạn có nhiều bài hát vì nó sẽ lặp từng thằng
-        // for (const song of songsFeatured) {
-        //     const fileDuration = await duration(song.audio);
-        //     song['duration']=fileDuration
-        // }
+        for (const song of songsFeatured) {
+            const fileDuration = await duration(song.audio);
+            song['duration']=fileDuration
+        }
 
-        // Promise.all là một phương pháp trong JavaScript giúp xử lý nhiều Promise song song
-        await Promise.all(
-            songsFeatured.map(async (song) => {
-                const fileDuration = await duration(song.audio);
-                song['duration'] = fileDuration;
-            })
-        );
+       
              
 
         res.render('client/pages/artists/index',{

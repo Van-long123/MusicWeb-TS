@@ -38,10 +38,10 @@ const index = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         if (songs.length < 1 || songsFeatured.length < 1) {
             return res.redirect('/');
         }
-        yield Promise.all(songsFeatured.map((song) => __awaiter(void 0, void 0, void 0, function* () {
+        for (const song of songsFeatured) {
             const fileDuration = yield (0, duration_1.duration)(song.audio);
             song['duration'] = fileDuration;
-        })));
+        }
         res.render('client/pages/artists/index', {
             title: artist.fullName,
             artist: artist,
