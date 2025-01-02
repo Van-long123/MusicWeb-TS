@@ -7,71 +7,75 @@ import pagination from '../../helpers/paginationHelper';
 import FavoriteSong from "../../models/favorite-song.model"
 import ListenHistory from "../../models/listen-history.model"
 export const index=async (req: Request, res: Response)=>{
-    const type:String=req.params.slug;
-    let find={
-        status:'active',
-        deleted:false,
-    }
-    let sort={
-
-    };
-    let title:String="";
-    if(type=='like'){
-        sort['like']='desc'
-        title="Top 20 bài hát có nhiều like nhất"
-    }
-    else if(type=='listen'){
-        sort['listen']='desc'
-        title="Top 20 bài hát có nhiều lượt nghe nhất"
-    }
-    else{
-        const topic=await Topic.findOne({
-            slug: req.params.slug,
+    try {
+        const type:String=req.params.slug;
+        let find={
             status:'active',
             deleted:false,
-        })
-        if(!topic){
-            res.redirect('back');
-            return ;
         }
-        find['topicId']=topic.id
-        title=topic.title
-    }
+        let sort={
 
-    const songsLimited = await Song.find(find)
-    .sort(sort)
-    .limit(20)
-    .select('avatar title slug singerId like')
-    
-
-    // / pagination cho 20 bài hát đã lấy
-    const countSongs = songsLimited.length;
-    const objectPagination = pagination(req.query, countSongs, {
-        currentPage: 1,
-        limitItems: 16,  // Hiển thị 8 bài hát mỗi trang
-    });
-
-    // Phân trang trên tập 20 bài hát đã lấy
-    //0-15  16-35
-    const songs = songsLimited.slice(objectPagination.skip, objectPagination.skip + objectPagination.limitItems);
-
-    for (const item of songs) {
-        const infoSinger=await Singer.findOne({
-            _id: item.singerId,
-            status:'active',
-            deleted:false
-        }).select('fullName')
-        item['likeCount']= item.like.length; 
-
-        item['infoSinger']=infoSinger
-    }
-    res.render('client/pages/songs/index',
-        {
-            title:title,
-            songs:songs,
-            pagination:objectPagination
+        };
+        let title:String="";
+        if(type=='like'){
+            sort['like']='desc'
+            title="Top 20 bài hát có nhiều like nhất"
         }
-    )
+        else if(type=='listen'){
+            sort['listen']='desc'
+            title="Top 20 bài hát có nhiều lượt nghe nhất"
+        }
+        else{
+            const topic=await Topic.findOne({
+                slug: req.params.slug,
+                status:'active',
+                deleted:false,
+            })
+            if(!topic){
+                res.redirect('back');
+                return ;
+            }
+            find['topicId']=topic.id
+            title=topic.title
+        }
+
+        const songsLimited = await Song.find(find)
+        .sort(sort)
+        .limit(20)
+        .select('avatar title slug singerId like')
+        
+
+        // / pagination cho 20 bài hát đã lấy
+        const countSongs = songsLimited.length;
+        const objectPagination = pagination(req.query, countSongs, {
+            currentPage: 1,
+            limitItems: 16,  // Hiển thị 8 bài hát mỗi trang
+        });
+
+        // Phân trang trên tập 20 bài hát đã lấy
+        //0-15  16-35
+        const songs = songsLimited.slice(objectPagination.skip, objectPagination.skip + objectPagination.limitItems);
+
+        for (const item of songs) {
+            const infoSinger=await Singer.findOne({
+                _id: item.singerId,
+                status:'active',
+                deleted:false
+            }).select('fullName')
+            item['likeCount']= item.like.length; 
+
+            item['infoSinger']=infoSinger
+        }
+        res.render('client/pages/songs/index',
+            {
+                title:title,
+                songs:songs,
+                pagination:objectPagination
+            }
+        )
+    } catch (error) {
+        res.redirect('/')
+    }
 }
 
 export const random=async (req: Request, res: Response)=>{
@@ -96,62 +100,66 @@ export const random=async (req: Request, res: Response)=>{
 
 
 export const detail=async (req: Request, res: Response)=>{
-    const slugSong:string=req.params.slugSong;
-    const song=await Song.findOne({
-        slug:slugSong,
-        deleted:false,
-        status:"active"
-    })
-    song['likeCount']= song.like.length; 
-    
-    const singer= await Singer.findOne({
-        _id: song.singerId,
-        status:'active',
-        deleted:false
-    }).select('fullName')
-    const topic=await Topic.findOne({
-        _id: song.topicId,
-        status:'active',
-        deleted:false
-    }).select('title')
+    try {
+        const slugSong:string=req.params.slugSong;
+        const song=await Song.findOne({
+            slug:slugSong,
+            deleted:false,
+            status:"active"
+        })
+        song['likeCount']= song.like.length; 
+        
+        const singer= await Singer.findOne({
+            _id: song.singerId,
+            status:'active',
+            deleted:false
+        }).select('fullName')
+        const topic=await Topic.findOne({
+            _id: song.topicId,
+            status:'active',
+            deleted:false
+        }).select('title')
 
-    if(res.locals.user){
-        // if(res.locals.user.id){ sẽ báo lỗi vì user nó undefinded thì trỏ tới id sẽ lỗi 
-        // vì vậy chỉ nên res.locals.user 
-        const isFavoriteSong=await FavoriteSong.findOne({
-            userId:res.locals.user.id,
-            songId:song.id
-        })
-        song['isFavoriteSong']=isFavoriteSong ? true : false
-        song['isLikeSong']=song['like'].some(item=>{
-            return item==res.locals.user.id
-        })
-    }
-    
-    // listenhistory 
-    if(res.locals.user){
-        const existHistory=await ListenHistory.findOne({
-            userId: res.locals.user.id,     
-            songId: song.id,      
-        })
-        if(!existHistory){
-            const listenHistory=new ListenHistory({
+        if(res.locals.user){
+            // if(res.locals.user.id){ sẽ báo lỗi vì user nó undefinded thì trỏ tới id sẽ lỗi 
+            // vì vậy chỉ nên res.locals.user 
+            const isFavoriteSong=await FavoriteSong.findOne({
+                userId:res.locals.user.id,
+                songId:song.id
+            })
+            song['isFavoriteSong']=isFavoriteSong ? true : false
+            song['isLikeSong']=song['like'].some(item=>{
+                return item==res.locals.user.id
+            })
+        }
+        
+        // listenhistory 
+        if(res.locals.user){
+            const existHistory=await ListenHistory.findOne({
                 userId: res.locals.user.id,     
                 songId: song.id,      
             })
-            await listenHistory.save()
+            if(!existHistory){
+                const listenHistory=new ListenHistory({
+                    userId: res.locals.user.id,     
+                    songId: song.id,      
+                })
+                await listenHistory.save()
+            }
+            
         }
         
-    }
-    
-    // listenhistory 
+        // listenhistory 
 
-    res.render('client/pages/songs/detail',{
-        title:slugSong,
-        song:song,
-        singer:singer,
-        topic:topic,
-    })
+        res.render('client/pages/songs/detail',{
+            title:slugSong,
+            song:song,
+            singer:singer,
+            topic:topic,
+        })
+    } catch (error) {
+        res.redirect('/')
+    }
 }
 export const listen=async (req: Request, res: Response)=>{
     try {

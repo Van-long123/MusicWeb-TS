@@ -4,6 +4,7 @@ import { topicRouter } from "./topic.route"
 import { songRouter } from "./song.route"
 import { searchRouter } from "./search.route"
 import { userRouter } from "./user.route"
+import { artistRouter } from "./artist.route" 
 import { favoriteSongRoutes } from "./favorite-song.route"
 import * as userMiddleware from '../../middlewares/client/infoUser.middleware'
 import * as settingMiddleware from '../../middlewares/client/setting.middleware'
@@ -16,5 +17,6 @@ const clientRoutes = (app:Express)=>{
     app.use('/search',searchRouter)
     app.use('/user',userRouter)
     app.use('/favorite-songs',favoriteSongRoutes)
+    app.use('/artist',artistRouter)
 }
 export default clientRoutes

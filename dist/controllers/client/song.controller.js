@@ -20,58 +20,63 @@ const paginationHelper_1 = __importDefault(require("../../helpers/paginationHelp
 const favorite_song_model_1 = __importDefault(require("../../models/favorite-song.model"));
 const listen_history_model_1 = __importDefault(require("../../models/listen-history.model"));
 const index = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const type = req.params.slug;
-    let find = {
-        status: 'active',
-        deleted: false,
-    };
-    let sort = {};
-    let title = "";
-    if (type == 'like') {
-        sort['like'] = 'desc';
-        title = "Top 20 bài hát có nhiều like nhất";
-    }
-    else if (type == 'listen') {
-        sort['listen'] = 'desc';
-        title = "Top 20 bài hát có nhiều lượt nghe nhất";
-    }
-    else {
-        const topic = yield topic_model_1.default.findOne({
-            slug: req.params.slug,
+    try {
+        const type = req.params.slug;
+        let find = {
             status: 'active',
             deleted: false,
-        });
-        if (!topic) {
-            res.redirect('back');
-            return;
+        };
+        let sort = {};
+        let title = "";
+        if (type == 'like') {
+            sort['like'] = 'desc';
+            title = "Top 20 bài hát có nhiều like nhất";
         }
-        find['topicId'] = topic.id;
-        title = topic.title;
+        else if (type == 'listen') {
+            sort['listen'] = 'desc';
+            title = "Top 20 bài hát có nhiều lượt nghe nhất";
+        }
+        else {
+            const topic = yield topic_model_1.default.findOne({
+                slug: req.params.slug,
+                status: 'active',
+                deleted: false,
+            });
+            if (!topic) {
+                res.redirect('back');
+                return;
+            }
+            find['topicId'] = topic.id;
+            title = topic.title;
+        }
+        const songsLimited = yield song_model_1.default.find(find)
+            .sort(sort)
+            .limit(20)
+            .select('avatar title slug singerId like');
+        const countSongs = songsLimited.length;
+        const objectPagination = (0, paginationHelper_1.default)(req.query, countSongs, {
+            currentPage: 1,
+            limitItems: 16,
+        });
+        const songs = songsLimited.slice(objectPagination.skip, objectPagination.skip + objectPagination.limitItems);
+        for (const item of songs) {
+            const infoSinger = yield singer_model_1.default.findOne({
+                _id: item.singerId,
+                status: 'active',
+                deleted: false
+            }).select('fullName');
+            item['likeCount'] = item.like.length;
+            item['infoSinger'] = infoSinger;
+        }
+        res.render('client/pages/songs/index', {
+            title: title,
+            songs: songs,
+            pagination: objectPagination
+        });
     }
-    const songsLimited = yield song_model_1.default.find(find)
-        .sort(sort)
-        .limit(20)
-        .select('avatar title slug singerId like');
-    const countSongs = songsLimited.length;
-    const objectPagination = (0, paginationHelper_1.default)(req.query, countSongs, {
-        currentPage: 1,
-        limitItems: 16,
-    });
-    const songs = songsLimited.slice(objectPagination.skip, objectPagination.skip + objectPagination.limitItems);
-    for (const item of songs) {
-        const infoSinger = yield singer_model_1.default.findOne({
-            _id: item.singerId,
-            status: 'active',
-            deleted: false
-        }).select('fullName');
-        item['likeCount'] = item.like.length;
-        item['infoSinger'] = infoSinger;
+    catch (error) {
+        res.redirect('/');
     }
-    res.render('client/pages/songs/index', {
-        title: title,
-        songs: songs,
-        pagination: objectPagination
-    });
 });
 exports.index = index;
 const random = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -95,52 +100,57 @@ const random = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
 });
 exports.random = random;
 const detail = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const slugSong = req.params.slugSong;
-    const song = yield song_model_1.default.findOne({
-        slug: slugSong,
-        deleted: false,
-        status: "active"
-    });
-    song['likeCount'] = song.like.length;
-    const singer = yield singer_model_1.default.findOne({
-        _id: song.singerId,
-        status: 'active',
-        deleted: false
-    }).select('fullName');
-    const topic = yield topic_model_1.default.findOne({
-        _id: song.topicId,
-        status: 'active',
-        deleted: false
-    }).select('title');
-    if (res.locals.user) {
-        const isFavoriteSong = yield favorite_song_model_1.default.findOne({
-            userId: res.locals.user.id,
-            songId: song.id
+    try {
+        const slugSong = req.params.slugSong;
+        const song = yield song_model_1.default.findOne({
+            slug: slugSong,
+            deleted: false,
+            status: "active"
         });
-        song['isFavoriteSong'] = isFavoriteSong ? true : false;
-        song['isLikeSong'] = song['like'].some(item => {
-            return item == res.locals.user.id;
-        });
-    }
-    if (res.locals.user) {
-        const existHistory = yield listen_history_model_1.default.findOne({
-            userId: res.locals.user.id,
-            songId: song.id,
-        });
-        if (!existHistory) {
-            const listenHistory = new listen_history_model_1.default({
+        song['likeCount'] = song.like.length;
+        const singer = yield singer_model_1.default.findOne({
+            _id: song.singerId,
+            status: 'active',
+            deleted: false
+        }).select('fullName');
+        const topic = yield topic_model_1.default.findOne({
+            _id: song.topicId,
+            status: 'active',
+            deleted: false
+        }).select('title');
+        if (res.locals.user) {
+            const isFavoriteSong = yield favorite_song_model_1.default.findOne({
+                userId: res.locals.user.id,
+                songId: song.id
+            });
+            song['isFavoriteSong'] = isFavoriteSong ? true : false;
+            song['isLikeSong'] = song['like'].some(item => {
+                return item == res.locals.user.id;
+            });
+        }
+        if (res.locals.user) {
+            const existHistory = yield listen_history_model_1.default.findOne({
                 userId: res.locals.user.id,
                 songId: song.id,
             });
-            yield listenHistory.save();
+            if (!existHistory) {
+                const listenHistory = new listen_history_model_1.default({
+                    userId: res.locals.user.id,
+                    songId: song.id,
+                });
+                yield listenHistory.save();
+            }
         }
+        res.render('client/pages/songs/detail', {
+            title: slugSong,
+            song: song,
+            singer: singer,
+            topic: topic,
+        });
     }
-    res.render('client/pages/songs/detail', {
-        title: slugSong,
-        song: song,
-        singer: singer,
-        topic: topic,
-    });
+    catch (error) {
+        res.redirect('/');
+    }
 });
 exports.detail = detail;
 const listen = (req, res) => __awaiter(void 0, void 0, void 0, function* () {

@@ -93,9 +93,10 @@ if(boxSearch){
             .then(data=>{
                 if(data.code==200){
                     const songs=data.songs;
-                    if(songs.length>0){
+                    const singers=data.singers;
+                    if(songs.length>0 || singers.length>0){
                         boxSuggest.classList.add('show')
-                        const htmls=songs.map(song=>{
+                        const htmlSong=songs.map(song=>{
                             return `
                                 <a class="inner-item" href="/songs/detail/${song.slug}">
                                     <div class="inner-image"><img src=${song.avatar} /></div>
@@ -106,6 +107,17 @@ if(boxSearch){
                                 </a>
                             ` 
                         })
+                        const htmlSinger=singers.map(singer=>{
+                            return `
+                                <a class="inner-item" href="/artist/${singer.slug}">
+                                    <div class="inner-image image-artist"><img src=${singer.avatar} /></div>
+                                    <div class="inner-info">
+                                        <div class="inner-singer"><i class="fa-solid fa-microphone-lines"></i> ${singer.fullName}</div>
+                                    </div>
+                                </a>
+                            ` 
+                        })
+                        const htmls=htmlSong.concat(htmlSinger)
                         const boxList=boxSuggest.querySelector('.inner-list')
                         boxList.innerHTML=htmls.join('')
                     }

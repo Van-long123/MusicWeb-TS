@@ -130,7 +130,9 @@ html {
   height: 100%;
   object-fit: cover;
 }
-
+.box-search .inner-suggest .inner-item .image-artist img {
+  border-radius: 50% !important;
+}
 .box-search .inner-suggest .inner-item .inner-info {
   flex: 1;
   margin-left: 10px;
@@ -850,3 +852,92 @@ input:focus {
 
 
 /* swiper */
+
+.detail-artist .play-button {
+  background: #9147ff;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  border: none;
+}
+.detail-artist .follow-button {
+  background: rgba(0,0,0,0.1);
+  border: none;
+  padding: 4px 16px;
+  border-radius: 20px;
+  font-size: 14px;
+}
+.detail-artist .song-item {
+  padding: 8px;
+  border-radius: 4px;
+  transition: background 0.2s;
+  cursor: pointer;
+}
+.detail-artist .song-item:hover {
+  background: rgba(0,0,0,0.05);
+}
+.detail-artist .rounded-album {
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 4px;
+}
+.detail-artist .rounded-song {
+  width: 48px;
+  height: 48px;
+  object-fit: cover;
+  border-radius: 4px;
+}
+.detail-artist .artist-image {
+    width: 140px;
+    height: 140px;
+    border-radius: 999px;
+}
+.artist-name {
+  text-transform: none;
+  font-size: 60px;
+  font-weight: 500;
+  line-height: normal;
+}
+.detail-artist .album-item {
+  text-align: center;
+}
+
+.detail-artist .album-cover {
+  width: 100%;
+  height: auto;
+  border-radius: 4px;
+  object-fit: cover;
+}
+
+.detail-artist .album-item h3 {
+  font-size: 14px;
+  font-weight: 500;
+  margin-top: 8px;
+  margin-bottom: 4px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.detail-artist .album-item span {
+  font-size: 12px;
+  color: gray;
+}
+.detail-artist a{
+  text-decoration: none;
+  color: #212529;
+}
+
+.detail-artist .song-item .flex-grow-1 {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; /* Hoặc dùng `center` nếu muốn căn giữa theo chiều ngang */
+}
+.detail-artist .song-name{
+  font-weight: 600 !important;
+}

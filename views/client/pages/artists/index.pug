@@ -1,0 +1,51 @@
+extends ../../layouts/default
+include ../../mixins/moment
+block main
+    div(class="container detail-artist mt-5 mb-5")
+        div(class="d-flex align-items-center gap-4 mb-5")
+            img(src=artist.avatar alt=artist.fullName class="artist-image")
+            div
+                div(class="d-flex align-items-center gap-2")
+                    h1(class="h2 mb-0 artist-name") #{artist.fullName}
+                    //- button(class="play-button") ▶
+        div(class="row")
+            div(class="col-md-4")
+                h2(class="h5 mb-3") Mới Phát Hành
+                div(class="bg-light p-3 rounded")
+                    a(href=`/songs/detail/${songsFeatured[0].slug}`) 
+                        div(class="d-flex gap-3")
+                            img(src=songsFeatured[0].avatar alt=songsFeatured[0].title class="rounded-album")
+                            div
+                                p(class="text-secondary small") Single
+                                span(class="mt-1 song-name") #{songsFeatured[0].title}
+                                p(class="text-secondary small") #{artist.fullName}
+                                p(class="text-secondary small mt-3") 
+                                    +formatDateTime(songsFeatured[0].createdBy.createdAt)
+            div(class="col-md-8")
+                div(class="d-flex justify-content-between align-items-center mb-3")
+                    h2(class="h5 mb-0") Bài Hát Nổi Bật
+                div(class="song-list")
+                    .row
+                        each song in songsFeatured
+                            div(class="col-md-6")
+                                a(href=`/songs/detail/${song.slug}`) 
+                                    div(class="song-item d-flex align-items-center gap-3 mb-1")
+                                        img(src=song.avatar alt=song.title class="rounded-song")
+                                        //- flex-grow-1 chiếm không gian trông còn lại trong container
+                                        div(class="flex-grow-1")
+                                            h3(class="h6 mb-0") song.title
+                                            p(class="text-secondary small mb-0") #{artist.fullName}
+                                        span(class="text-secondary small") 
+                                            +formatDateTime(song.createdBy.createdAt)
+        div(class="mt-5")
+            h2(class="h5 mb-3") Bài hát khắc việt
+            div(class="row gy-4")
+                each song in songs
+                    div(class="col-6 col-md-2")
+                        div(class="album-item text-center")
+                            a(href=`/songs/detail/${song.slug}`) 
+                                img(src=song.avatar alt=song.title class="album-cover")
+                                h3(class="h6 mt-2 mb-1 text-truncate") #{song.title}
+                            span(class="text-secondary small") 
+                                +formatDateTime(song.createdBy.createdAt)
+                
