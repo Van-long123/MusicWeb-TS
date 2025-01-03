@@ -6,6 +6,8 @@ import pagination from '../../helpers/paginationHelper';
 
 import FavoriteSong from "../../models/favorite-song.model"
 import ListenHistory from "../../models/listen-history.model"
+import axios from "axios";
+import path from 'path'
 export const index=async (req: Request, res: Response)=>{
     try {
         const type:String=req.params.slug;
@@ -296,3 +298,33 @@ export const favorite=async (req: Request, res: Response)=>{
 }
 
 
+
+
+export const download=async (req: Request, res: Response)=>{
+    const fileUrl= String(req.query.file_url);
+    // được sử dụng để lấy tên file từ URL
+    const fileName = path.basename(fileUrl);
+    
+    try {
+        // Khi bạn gọi axios.get() với responseType: 'stream', axios bắt đầu tải file từ URL và tạo một stream chứa nội dung của file đó.
+        const response = await axios.get(fileUrl, { responseType: 'stream' });
+    
+        // Đặt header để tải file về
+        // Content-Disposition: Header này cho trình duyệt biết rằng file này sẽ được tải về thay vì 
+        // hiển thị trong cửa sổ trình duyệt. attachment có nghĩa là trình duyệt sẽ hiển thị hộp thoại tải xuống
+        // , và filename=${fileName} chỉ định tên file khi người dùng lưu file xuống máy.
+        res.setHeader('Content-Disposition', `attachment; filename=${fileName}`);
+        // Content-Type: Đây là header HTTP để chỉ định kiểu nội dung của file. Trong trường hợp này,
+        //  chúng ta sử dụng audio/mpeg để chỉ định rằng file này là một file MP3.
+        res.setHeader('Content-Type', 'audio/mpeg');
+    
+        // Gửi stream của file tới trình duyệt để tải
+
+// Sau khi nhận được dữ liệu từ axios, phương thức pipe() sẽ tự động chuyển dữ liệu từ stream response.data vào res. Express sẽ gửi dòng dữ liệu này tới trình duyệt của người dùng. Dữ liệu sẽ được "đẩy" tới trình duyệt theo từng phần nhỏ (dưới dạng stream), thay vì tải toàn bộ file vào bộ nhớ trước.
+// Trình duyệt nhận và lưu file: Trình duyệt của người dùng sẽ nhận dữ liệu từ stream này và bắt đầu lưu file vào máy tính của họ theo tên file mà bạn đã chỉ định trong header Content-Disposition.        
+        response.data.pipe(res);
+
+    } catch (error) {
+        res.redirect('back');
+    }
+}   

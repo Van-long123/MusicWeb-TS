@@ -526,7 +526,13 @@ html {
 .singer-detail .inner-actions .inner-like {
   cursor: pointer;
 }
-
+.singer-detail .inner-actions .inner-dowload {
+  cursor: pointer;
+}
+.singer-detail .inner-actions .inner-dowload a{
+  text-decoration: none;
+  color: #212529;
+}
 .singer-detail .inner-actions .inner-heart {
   cursor: pointer;
 }

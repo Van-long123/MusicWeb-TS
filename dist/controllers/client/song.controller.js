@@ -12,13 +12,15 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.favorite = exports.like = exports.listen = exports.detail = exports.random = exports.index = void 0;
+exports.download = exports.favorite = exports.like = exports.listen = exports.detail = exports.random = exports.index = void 0;
 const topic_model_1 = __importDefault(require("../../models/topic.model"));
 const singer_model_1 = __importDefault(require("../../models/singer.model"));
 const song_model_1 = __importDefault(require("../../models/song.model"));
 const paginationHelper_1 = __importDefault(require("../../helpers/paginationHelper"));
 const favorite_song_model_1 = __importDefault(require("../../models/favorite-song.model"));
 const listen_history_model_1 = __importDefault(require("../../models/listen-history.model"));
+const axios_1 = __importDefault(require("axios"));
+const path_1 = __importDefault(require("path"));
 const index = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const type = req.params.slug;
@@ -282,3 +284,17 @@ const favorite = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     }
 });
 exports.favorite = favorite;
+const download = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const fileUrl = String(req.query.file_url);
+    const fileName = path_1.default.basename(fileUrl);
+    try {
+        const response = yield axios_1.default.get(fileUrl, { responseType: 'stream' });
+        res.setHeader('Content-Disposition', `attachment; filename=${fileName}`);
+        res.setHeader('Content-Type', 'audio/mpeg');
+        response.data.pipe(res);
+    }
+    catch (error) {
+        res.redirect('back');
+    }
+});
+exports.download = download;

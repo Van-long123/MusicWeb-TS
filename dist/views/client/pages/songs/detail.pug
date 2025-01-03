@@ -17,7 +17,11 @@ block main
                             |   #{topic.title}
                         div(class="inner-action inner-listen" )
                             i(class="fa-solid fa-headphones") 
-                            span #{song.listen} lượt nghe                            
+                            span #{song.listen} lượt nghe  
+                        div(class="inner-action inner-dowload" data-audio=song.audio )
+                            a(href=`/songs/download?file_url=${song.audio}`) 
+                                i(class="fa-solid fa-download") 
+                                span Dowload                                
                         div(class=`inner-action inner-like ${song.isLikeSong ? 'active' : ''}`  button-like=song.id)
                             i(class="fa-regular fa-thumbs-up") 
                             span #{song.likeCount} thích

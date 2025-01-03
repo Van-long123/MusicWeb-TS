@@ -28,6 +28,7 @@ const express_1 = require("express");
 const controller = __importStar(require("../../controllers/client/song.controller"));
 const router = (0, express_1.Router)();
 router.get('/random', controller.random);
+router.get('/download', controller.download);
 router.get('/:slug', controller.index);
 router.get('/detail/:slugSong', controller.detail);
 router.patch('/listen/:idSong', controller.listen);
