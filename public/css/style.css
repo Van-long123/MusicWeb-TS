@@ -529,6 +529,9 @@ html {
 .singer-detail .inner-actions .inner-dowload {
   cursor: pointer;
 }
+.singer-detail .inner-actions .inner-dowload  span{
+  color: #999;
+}
 .singer-detail .inner-actions .inner-dowload a{
   text-decoration: none;
   color: #212529;
@@ -947,3 +950,129 @@ input:focus {
 .detail-artist .song-name{
   font-weight: 600 !important;
 }
+
+/* upload  */
+.upload .card {
+  border-radius: 4px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.upload .song-info {
+  display: flex;
+  align-items: center;
+  padding: 15px;
+  background-color: #f8f9fa;
+  border-bottom: 1px solid #dee2e6;
+}
+
+.upload .song-icon {
+  width: 40px;
+  height: 40px;
+  background-color: #fff;
+  border: 1px solid #dee2e6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 15px;
+}
+
+.upload .song-details {
+  color: #6c757d;
+}
+
+.upload .form-label {
+  color: #6c757d;
+  font-weight: normal;
+}
+
+.upload .form-control {
+  border-radius: 4px;
+}
+
+.upload .upload-preview {
+  width: 250px;
+  height: 180px;
+  border: 2px dashed #dee2e6;
+  border-radius: 4px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: #fff;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  margin-left: auto;
+}
+
+.upload .btn-cancel {
+  background-color: #f0f0f0;
+  border: none;
+  color: #333;
+  padding: 8px 20px;
+}
+
+.upload .btn-upload {
+  padding: 8px 20px;
+  border: none;
+  margin-left: 10px;
+}
+
+.upload .btn-normal {
+  background-color: #3b89e8;
+  color: white;
+}
+
+.upload .btn-vip {
+  background-color: #ffc107;
+  color: white;
+}
+
+.upload #imageInput {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.upload .preview-image {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+.upload .guidelines {
+  margin-top: 30px;
+}
+
+.upload .guidelines h5 {
+  color: #333;
+  font-size: 1.1rem;
+  margin-bottom: 15px;
+}
+
+.upload .guidelines li {
+  color: #666;
+  margin-bottom: 8px;
+  line-height: 1.5;
+}
+
+.upload .text-primary {
+  color: #0d6efd !important;
+  text-decoration: none;
+}
+.content_alert{
+  width: 100%;
+  padding: 7px 10px;
+  background: #f8d6da;
+  border: 1px solid #6f1521;
+  color: #6f1521;
+  margin-bottom: 10px;
+  border-radius: 8px;
+  text-align: center;
+  display: none;
+}
+/* upload  */

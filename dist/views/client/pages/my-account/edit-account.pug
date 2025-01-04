@@ -44,9 +44,9 @@ block main
             .mb-3
                 label.form-label(for='gender') Giới tính
                 select#gender.form-select(name="gender")
-                    option(value="other" selected=(user && user.gender) === 'other' ? true : false ) Khác
-                    option(value="male" selected=(user && user.gender) === 'male' ? true : false) Nam
-                    option(value='femail' selected=(user && user.gender) === 'femail' ? true : false) Nữ
+                    option(value="Khác" selected=(user && user.gender) === 'Khác' ? true : false ) Khác
+                    option(value="Đàn ông" selected=(user && user.gender) === 'Đàn ông' ? true : false) Nam
+                    option(value='Phụ nữ' selected=(user && user.gender) === 'Phụ nữ' ? true : false) Nữ
             .mb-3
                 label.form-label(for='address') Địa chỉ 
                 input#address.form-control(type='text' name="address" value=user.address) 

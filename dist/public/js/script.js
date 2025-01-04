@@ -235,3 +235,53 @@ var swiper = new Swiper(".mySwiper", {
         prevEl: ".swiper-button-prev",
     },
 });
+
+
+// upload 
+const imageInput=document.querySelector('#imageInput')
+if(imageInput){
+    imageInput.addEventListener('change',e=>{
+        const file=e.target.files[0]
+        const preview = document.getElementById('preview');
+        const defaultIcon = document.getElementById('defaultIcon');
+        if(file){
+            preview.src=URL.createObjectURL(file)
+            preview.style.display="block";
+            defaultIcon.style.display="none";
+        }
+    })
+}
+
+const uploadAudio=document.querySelector('[upload-audio]');
+if(uploadAudio){
+    const uploadAudioInput=document.querySelector('[upload-audio-input]')
+    const uploadAudioPlay=document.querySelector('[upload-audio-play]')
+    const source=uploadAudioPlay.querySelector('source')
+    uploadAudioInput.addEventListener('change',(e)=>{
+        const file=e.target.files[0]
+        console.log(file)
+        if(file){
+            source.src = URL.createObjectURL(file)
+            uploadAudioPlay.load()
+        }
+    })
+}
+// upload 
+
+// show alert
+const showAlert=document.querySelector('[show-alert]')
+if(showAlert){
+    const time=parseInt(showAlert.getAttribute('data-time'))
+    setTimeout(() => {
+        showAlert.classList.add('d-none')
+    }, time);
+}
+// show alert
+// close show alert 
+const close_alert=document.querySelector('.alert [close-alert]')
+if(close_alert){
+    close_alert.addEventListener('click',e=>{
+        showAlert.classList.add('d-none')
+    })
+}
+// close show alert 

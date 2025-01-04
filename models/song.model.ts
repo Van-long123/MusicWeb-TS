@@ -31,6 +31,7 @@ const songSchema=new mongoose.Schema({
     },
     createdBy:{
         account_id:String,
+        user_id:String,
         createdAt:{
             type:Date,
             default:Date.now,

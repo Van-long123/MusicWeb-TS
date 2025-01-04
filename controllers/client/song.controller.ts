@@ -328,3 +328,50 @@ export const download=async (req: Request, res: Response)=>{
         res.redirect('back');
     }
 }   
+
+export const upload=async (req: Request, res: Response)=>{
+    const topics=await Topic.find({
+        deleted:false
+    }).select('title')
+    const singers=await Singer.find({
+        deleted:false 
+    }).select('fullName')
+    res.render('client/pages/songs/upload',
+        {
+            title:'Upload bài hát',
+            topics:topics,
+            singers:singers
+        }
+    )
+}
+export const createPost=async (req: Request, res: Response)=>{
+    let avatar='';
+    let audio='';
+    if(req.body.avatar){
+        avatar=req.body.avatar[0]
+    }
+    if(req.body.audio){
+        audio=req.body.audio[0]
+    }
+    const countSong=await Song.countDocuments();
+    req.body.position=countSong+1
+    const dataSong={
+        title: req.body.title,
+        topicId: req.body.topicId,
+        singerId: req.body.singerId,
+        description: req.body.description,
+        status: 'inactive',
+        lyrics:req.body.lyrics,
+        position: req.body.position,
+        avatar: avatar,
+        audio: audio
+    }
+    const createdBy={
+        user_id:res.locals.user.id,
+    }
+    dataSong['createdBy']=createdBy
+    const song=new Song(dataSong)
+    await song.save();
+    req.flash('success', `Đã thêm thành công bài hát`);
+    res.redirect(`/songs/upload`);
+}

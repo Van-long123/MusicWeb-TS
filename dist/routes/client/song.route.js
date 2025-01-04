@@ -22,13 +22,22 @@ var __importStar = (this && this.__importStar) || function (mod) {
     __setModuleDefault(result, mod);
     return result;
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.songRouter = void 0;
 const express_1 = require("express");
+const multer_1 = __importDefault(require("multer"));
+const upload = (0, multer_1.default)();
+const uploadCloud = __importStar(require("../../middlewares/admin/uploadCloud.middleware"));
 const controller = __importStar(require("../../controllers/client/song.controller"));
+const upload_validate_1 = require("../../validates/upload.validate");
 const router = (0, express_1.Router)();
 router.get('/random', controller.random);
 router.get('/download', controller.download);
+router.get('/upload', controller.upload);
+router.post('/create', upload.fields([{ name: 'avatar', maxCount: 1 }, { name: 'audio', maxCount: 1 }]), upload_validate_1.createPost, uploadCloud.uploadFields, controller.createPost);
 router.get('/:slug', controller.index);
 router.get('/detail/:slugSong', controller.detail);
 router.patch('/listen/:idSong', controller.listen);

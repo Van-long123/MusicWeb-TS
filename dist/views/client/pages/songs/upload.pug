@@ -1,0 +1,105 @@
+extends ../../layouts/default
+include ../../mixins/alert
+block main
+    if(user)
+        .container.py-4.upload
+            +alert-success(5000)
+            +alert-error(5000)
+            .card
+                .song-info
+                    .song-icon
+                        svg(width='24' height='24' fill='#6c757d' viewbox='0 0 16 16')
+                            path(d='M9 13c0 1.105-1.12 2-2.5 2S4 14.105 4 13s1.12-2 2.5-2 2.5.895 2.5 2z')
+                            path(fill-rule='evenodd' d='M9 3v10H8V3h1z')
+                            path(d='M8 2.82a1 1 0 0 1 .804-.98l3-.6A1 1 0 0 1 13 2.22V4L8 5V2.82z')
+                    .song-details
+                        //- div Gió Bắc
+                        //- small 4.88MB / MP3
+                .card-body
+                    form(action="/songs/create" id="form-create-song" method="POST" enctype="multipart/form-data") 
+                        .row   
+                            .col-md-8
+                                
+                                .mb-3
+                                    label(for="title" class="form-label") Tên bài hát, video:
+                                    input(type="text" name="title" id="title" class="form-control" )
+                                .mb-3
+                                    label.form-label Ca sĩ, diễn viên trình diễn:
+                                    select(name="singerId" id="singerId" class="form-control" )
+                                        option(value="" disabled selected) -- Chọn ca sĩ --
+                                        each singer in singers
+                                            option(value=singer.id)  #{singer.fullName}
+                                .mb-3
+                                    label.form-label Thể loại
+                                    select(name="topicId" id="topicId" class="form-control" )
+                                        option(value="" disabled selected) -- Chọn thể loại --
+                                        each topic in  topics
+                                            option(value=topic.id)  #{topic.title}
+                                .mb-3
+                                    div(class="form-group" upload-audio)
+                                        label(for="audio") File âm thanh
+                                        input(
+                                            type="file",
+                                            class="form-control-file",
+                                            id="audio",
+                                            name="audio"
+                                            accept="audio/*"
+                                            upload-audio-input
+                                        )
+                                        br
+                                        br
+                                        audio(controls upload-audio-play)
+                                            source(src="")
+                                .mb-3
+                                    div(class="form-group")
+                                        label(for="lyrics") Lời bài hát
+                                        textarea(
+                                        class="form-control",
+                                        id="lyrics",
+                                        name="lyrics",
+                                        rows="10"
+                                        ) 
+                                .mb-3
+                                    div(class="form-group")
+                                        label(for="desc") Mô tả
+                                        textarea(
+                                        class="form-control tiny-mce",
+                                        id="desc",
+                                        name="description",
+                                        rows="10"
+                                        ) 
+                            .col-md-4
+                                #uploadArea.upload-preview
+                                    input#imageInput(type='file' accept='image/*' name="avatar")
+                                    #defaultIcon
+                                        svg(width='24' height='24' fill='#6c757d' viewbox='0 0 16 16')
+                                        path(d='M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z')
+                                        path(d='M8 0a8 8 0 1 1 0 16A8 8 0 0 1 8 0zM1.5 8a6.5 6.5 0 1 0 13 0 6.5 6.5 0 0 0-13 0z')
+                                        .ms-1.mb-4 Tải ảnh
+                                    img#preview.preview-image(style='display: none;')
+                        .mt-4
+                            div(class="content_alert alert-success" data-time=4000 ) Bạn cần nhập và chọn đủ thông tin. <i class="fa-solid fa-xmark" close-content> </i>
+
+                            button.btn.btn-cancel(type='button') Hủy
+                            button.btn.btn-upload.btn-normal(type='submit') Tải thường, duyệt trong 72h
+            .guidelines
+                .row
+                    .col-md-6
+                        h5 Hướng dẫn:
+                        ul.list-unstyled
+                            li - Đảm bảo tài khoản đã được kích hoạt và đăng nhập.
+                            li - File upload không quá 120MB, bit-rate tối thiểu 128kbps.
+                            li - Định dạng file upload: .mp3, .wma, .wav, .mp4, .avi, .flac, v.v.
+                            li - Thời gian kiểm duyệt: 72 giờ (User Thường) và 12 giờ (User VIP).
+                            li - Ảnh bài hát (cover) phải có kích thước từ 640x640 pixel trở lên.
+                    .col-md-6
+                        h5 Quy định:
+                        ul.list-unstyled
+                            li
+                            | - Nội dung vi phạm 
+                            a.text-primary(href='#') Thỏa thuận sử dụng
+                            | sẽ bị xóa khỏi hệ thống.
+                            li - Ảnh không phù hợp sẽ bị từ chối.
+        script(src="/js/upload.js") 
+    else
+        img(src="/images/5206817.jpg", alt="Unauthorization" style="width:1000px;height:600px")

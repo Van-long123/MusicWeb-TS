@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.download = exports.favorite = exports.like = exports.listen = exports.detail = exports.random = exports.index = void 0;
+exports.createPost = exports.upload = exports.download = exports.favorite = exports.like = exports.listen = exports.detail = exports.random = exports.index = void 0;
 const topic_model_1 = __importDefault(require("../../models/topic.model"));
 const singer_model_1 = __importDefault(require("../../models/singer.model"));
 const song_model_1 = __importDefault(require("../../models/song.model"));
@@ -298,3 +298,49 @@ const download = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     }
 });
 exports.download = download;
+const upload = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const topics = yield topic_model_1.default.find({
+        deleted: false
+    }).select('title');
+    const singers = yield singer_model_1.default.find({
+        deleted: false
+    }).select('fullName');
+    res.render('client/pages/songs/upload', {
+        title: 'Upload bài hát',
+        topics: topics,
+        singers: singers
+    });
+});
+exports.upload = upload;
+const createPost = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    let avatar = '';
+    let audio = '';
+    if (req.body.avatar) {
+        avatar = req.body.avatar[0];
+    }
+    if (req.body.audio) {
+        audio = req.body.audio[0];
+    }
+    const countSong = yield song_model_1.default.countDocuments();
+    req.body.position = countSong + 1;
+    const dataSong = {
+        title: req.body.title,
+        topicId: req.body.topicId,
+        singerId: req.body.singerId,
+        description: req.body.description,
+        status: 'inactive',
+        lyrics: req.body.lyrics,
+        position: req.body.position,
+        avatar: avatar,
+        audio: audio
+    };
+    const createdBy = {
+        user_id: res.locals.user.id,
+    };
+    dataSong['createdBy'] = createdBy;
+    const song = new song_model_1.default(dataSong);
+    yield song.save();
+    req.flash('success', `Đã thêm thành công bài hát`);
+    res.redirect(`/songs/upload`);
+});
+exports.createPost = createPost;
