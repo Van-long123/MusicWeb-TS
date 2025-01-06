@@ -96,6 +96,10 @@ const changeStatus = (req, res) => __awaiter(void 0, void 0, void 0, function* (
     }
     const status = req.params.status;
     const id = req.params.id;
+    const updatedBy = {
+        account_id: res.locals.user.id,
+        updatedAt: new Date()
+    };
     console.log(id);
     console.log(status);
     yield account_model_1.default.updateOne({

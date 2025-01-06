@@ -150,24 +150,32 @@ const changeMulti = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
     const type = req.body.type;
     let ids = req.body.ids.split(',')
         .map((id) => id.trim());
+    const updatedBy = {
+        account_id: res.locals.user.id,
+        updatedAt: new Date()
+    };
     switch (type) {
         case 'active':
             yield song_model_1.default.updateMany({
                 _id: { $in: ids }
             }, {
-                status: 'active'
+                status: 'active', $push: { updatedBy: updatedBy }
             });
             req.flash('success', `Cập nhật trạng thái thành công ${ids.length} bài hát`);
             break;
         case 'inactive':
-            yield song_model_1.default.updateMany({ _id: { $in: ids } }, { status: 'inactive' });
+            yield song_model_1.default.updateMany({ _id: { $in: ids } }, { status: 'inactive', $push: { updatedBy: updatedBy } });
             req.flash('success', `Cập nhật trạng thái thành công ${ids.length} bài hát`);
             break;
         case 'delete-all':
+            const deletedBy = {
+                account_id: res.locals.user.id,
+                deletedAt: new Date()
+            };
             yield song_model_1.default.updateMany({
                 _id: { $in: ids }
             }, {
-                deleted: true
+                deleted: true, deletedBy: deletedBy
             });
             req.flash('success', `Xóa thành công ${ids.length} bài hát`);
             break;
@@ -179,7 +187,7 @@ const changeMulti = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
                 yield song_model_1.default.updateOne({
                     _id: id
                 }, {
-                    position: position
+                    position: position, $push: { updatedBy: updatedBy }
                 });
             }
             req.flash('success', `Đổi vị trí thành công ${ids.length} bài hát`);

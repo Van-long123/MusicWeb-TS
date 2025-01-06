@@ -68,10 +68,10 @@ export const changeStatus=async  (req:Request, res:Response) => {
     }
     const status=req.params.status
     const id=req.params.id
-    // const updatedBy={
-    //     account_id:String,
-    //     updatedAt:new Date()
-    // }
+    const updatedBy={
+        account_id:res.locals.user.id,
+        updatedAt:new Date()
+    }
     console.log(id)
     console.log(status)
     await Account.updateOne({

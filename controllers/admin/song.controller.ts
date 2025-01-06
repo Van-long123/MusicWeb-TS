@@ -128,27 +128,35 @@ export const changeMulti=async  (req:Request, res:Response) => {
     // console.log(req.body.ids.split(','))//phải lượt qua từng phần tử để cắt bỏ đi 2 đầu khoảng trắng nó mới đc
     let ids: string[] = req.body.ids.split(',')
     .map((id:string) => id.trim());
+    const updatedBy={
+        account_id:res.locals.user.id,
+        updatedAt:new Date()
+    }
     switch(type) {
         case 'active':
             await Song.updateMany({
                 _id:{$in:ids}
             },{
-                status:'active'
+                status:'active',$push:{updatedBy:updatedBy}
             })
             req.flash('success', `Cập nhật trạng thái thành công ${ids.length} bài hát`);
             break;
         case 'inactive':
             await Song.updateMany(
                 { _id: { $in: ids } }, // Điều kiện tìm kiếm các bài hát có id trong mảng ids
-                { status: 'inactive' }  // Cập nhật status thành 'inactive'
+                { status: 'inactive',$push:{updatedBy:updatedBy} }  // Cập nhật status thành 'inactive'
             );
             req.flash('success', `Cập nhật trạng thái thành công ${ids.length} bài hát`);
             break;
         case 'delete-all':
+            const deletedBy={
+                account_id:res.locals.user.id,
+                deletedAt:new Date()
+            }
             await Song.updateMany({
                 _id:{$in:ids}
             },{
-                deleted:true
+                deleted:true,deletedBy:deletedBy
             })
             req.flash('success', `Xóa thành công ${ids.length} bài hát`);
             break;
@@ -160,7 +168,7 @@ export const changeMulti=async  (req:Request, res:Response) => {
                 await Song.updateOne({
                     _id:id
                 },{
-                    position:position
+                    position:position,$push:{updatedBy:updatedBy}
                 })
             }
             req.flash('success', `Đổi vị trí thành công ${ids.length} bài hát`);

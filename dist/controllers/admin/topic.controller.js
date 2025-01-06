@@ -112,10 +112,14 @@ const changeStatus = (req, res) => __awaiter(void 0, void 0, void 0, function* (
     }
     const status = req.params.status;
     const id = req.params.id;
+    const updatedBy = {
+        account_id: res.locals.user.id,
+        updatedAt: new Date()
+    };
     yield topic_model_1.default.updateOne({
         _id: id
     }, {
-        status: status
+        status: status, $push: { updatedBy: updatedBy }
     });
     req.flash('success', 'Cập nhật trạng thái chủ đề thành công');
     res.redirect('back');
@@ -147,12 +151,16 @@ const changeMulti = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
     }
     const type = req.body.type;
     let ids = req.body.ids.split(',').map((id) => id.trim());
+    const updatedBy = {
+        account_id: res.locals.user.id,
+        updatedAt: new Date()
+    };
     switch (type) {
         case 'active':
             yield topic_model_1.default.updateMany({
                 _id: { $in: ids }
             }, {
-                status: 'active'
+                status: 'active', $push: { updatedBy: updatedBy }
             });
             req.flash('success', `Cập nhật trạng thái thành công ${ids.length} chủ đề`);
             break;
@@ -160,15 +168,19 @@ const changeMulti = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
             yield topic_model_1.default.updateMany({
                 _id: { $in: ids }
             }, {
-                status: 'inactive'
+                status: 'inactive', $push: { updatedBy: updatedBy }
             });
             req.flash('success', `Cập nhật trạng thái thành công ${ids.length} chủ đề`);
             break;
         case 'delete-all':
+            const deletedBy = {
+                account_id: res.locals.user.id,
+                deletedAt: new Date()
+            };
             yield topic_model_1.default.updateMany({
                 _id: { $in: ids }
             }, {
-                deleted: true
+                deleted: true, deletedBy: deletedBy
             });
             req.flash('success', `Xóa thành công ${ids.length} chủ đề`);
             break;
@@ -180,7 +192,7 @@ const changeMulti = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
                 yield topic_model_1.default.updateOne({
                     _id: id
                 }, {
-                    position: position
+                    position: position, $push: { updatedBy: updatedBy }
                 });
             }
             req.flash('success', `Đổi vị trí thành công ${ids.length} chủ đề`);

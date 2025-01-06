@@ -87,14 +87,14 @@ export const changeStatus=async  (req:Request, res:Response) => {
     }
     const status=req.params.status
     const id=req.params.id
-    // const updatedBy={
-    //     account_id:String,
-    //     updatedAt:new Date()
-    // }
+    const updatedBy={
+        account_id:res.locals.user.id,
+        updatedAt:new Date()
+    }
     await Topic.updateOne({
         _id:id
     },{
-        status:status
+        status:status,$push:{updatedBy:updatedBy}
     })
     req.flash('success', 'Cập nhật trạng thái chủ đề thành công');
     res.redirect('back');
@@ -127,14 +127,17 @@ export const changeMulti=async  (req:Request, res:Response) => {
     }
     const type=req.body.type
     let ids: string[] = req.body.ids.split(',').map((id:string) => id.trim());
-
+    const updatedBy={
+        account_id:res.locals.user.id,
+        updatedAt:new Date()
+    }
     // let ids:string[]=req.body.ids.split(',').map((id:string)=>{return id.trim()})
     switch (type) {
         case 'active':
             await Topic.updateMany({
                 _id:{$in:ids}
             },{
-                status:'active'
+                status:'active',$push:{updatedBy:updatedBy}
             })
             req.flash('success', `Cập nhật trạng thái thành công ${ids.length} chủ đề`);
             break;
@@ -142,15 +145,19 @@ export const changeMulti=async  (req:Request, res:Response) => {
             await Topic.updateMany({
                 _id:{$in:ids}
             },{
-                status:'inactive'
+                status:'inactive',$push:{updatedBy:updatedBy}
             })
             req.flash('success', `Cập nhật trạng thái thành công ${ids.length} chủ đề`);
             break;
         case 'delete-all':
+            const deletedBy={
+                account_id:res.locals.user.id,
+                deletedAt:new Date()
+            }
             await Topic.updateMany({
                 _id:{$in:ids}
             },{
-                deleted:true
+                deleted:true,deletedBy:deletedBy
             })
             req.flash('success', `Xóa thành công ${ids.length} chủ đề`);
             break;
@@ -162,7 +169,7 @@ export const changeMulti=async  (req:Request, res:Response) => {
                 await Topic.updateOne({
                     _id:id
                 },{
-                    position:position
+                    position:position,$push:{updatedBy:updatedBy}
                 })
             }
             req.flash('success', `Đổi vị trí thành công ${ids.length} chủ đề`);
