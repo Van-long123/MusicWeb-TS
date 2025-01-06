@@ -61,7 +61,7 @@ block main
                                 td
                                     input(type="number", name="position" value=item.position min=1 style="width:60px")
                                 td 
-                                    if(role.permissions.includes("products_edit"))
+                                    if(role.permissions.includes("playlists_edit"))
                                         if(item.status == 'active')
                                             a(
                                                 href="javascript:;"
