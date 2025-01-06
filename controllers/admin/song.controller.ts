@@ -88,14 +88,14 @@ export const changeStatus=async  (req:Request, res:Response) => {
     }
     const idSong:string = req.params.idSong
     const status:string = req.params.status
-    // const updatedBy={
-    //     account_id:String,
-    //     updatedAt:new Date()
-    // }
+    const updatedBy={
+        account_id:String,
+        updatedAt:new Date()
+    }
     await Song.updateOne({
         _id:idSong
     },{
-        status:status
+        status:status,$push:{updatedBy:updatedBy}
     })
     req.flash('success', 'Cập nhật trạng thái bài hát thành công');
     res.redirect('back');
@@ -126,7 +126,8 @@ export const changeMulti=async  (req:Request, res:Response) => {
     }
     const type=req.body.type;
     // console.log(req.body.ids.split(','))//phải lượt qua từng phần tử để cắt bỏ đi 2 đầu khoảng trắng nó mới đc
-    let ids: string[] = req.body.ids.split(',').map((id:string) => id.trim());
+    let ids: string[] = req.body.ids.split(',')
+    .map((id:string) => id.trim());
     switch(type) {
         case 'active':
             await Song.updateMany({

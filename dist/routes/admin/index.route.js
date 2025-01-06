@@ -33,6 +33,7 @@ const user_route_1 = require("./user.route");
 const setting_route_1 = require("./setting.route");
 const auth_route_1 = require("./auth.route");
 const my_account_route_1 = require("./my-account.route");
+const playlist_router_1 = require("./playlist.router");
 const authMiddleware = __importStar(require("../../middlewares/admin/auth.middleware"));
 const adminRoutes = (app) => {
     const PATH_ADMIN = '/admin';
@@ -45,6 +46,7 @@ const adminRoutes = (app) => {
     app.use(PATH_ADMIN + '/users', authMiddleware.requireAuth, user_route_1.userRouter);
     app.use(PATH_ADMIN + '/settings', authMiddleware.requireAuth, setting_route_1.settingRouter);
     app.use(PATH_ADMIN + '/my-account', authMiddleware.requireAuth, my_account_route_1.myAccountRouter);
+    app.use(PATH_ADMIN + '/playlists', authMiddleware.requireAuth, playlist_router_1.playlistRouter);
     app.use(PATH_ADMIN + '/auth', auth_route_1.authRouter);
 };
 exports.default = adminRoutes;

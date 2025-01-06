@@ -1,0 +1,26 @@
+extend ../../layouts/default
+include ../../mixins/alert.pug
+block main
+    //- div=playlist
+    if (playlist.title) 
+        div(class="mb-4") <h2>#{playlist.title}</h2>
+    if (topic.title) 
+        div(class="mb-4") Chủ đề: <b>#{topic.title}</b>
+    if (playlist.avatar)
+        div(class="mb-4")
+            img(
+            src=playlist.avatar
+            style="width: 100px"
+            )
+    if (playlist.status)
+        div(class="mb-4")
+            span Status:
+            if (playlist.status === "active")
+                span(class="badge badge-success") Hoạt động
+            else
+                span(class="badge badge-danger") Dừng hoạt động
+    if (playlist.position) 
+        div(class="mb-4") Vị trí: <b>#{playlist.position}</b>
+    if (playlist.description)
+        div(class="mb-4") !{playlist.description}
+    a(href=`${prefixAdmin}/playlist/edit/${playlist.id}` class="btn btn-warning btn-sm ml-1") Chỉnh sửa

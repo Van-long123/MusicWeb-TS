@@ -22,6 +22,10 @@ section#sidebar
                 a(href=`${prefixAdmin}/singers`)
                     <i class='bx bxs-user-account' ></i>
                     span.text Quản lý ca sĩ
+        li
+            a(href=`${prefixAdmin}/playlists`)
+                <i class="bx bxs-playlist"></i>
+                span.text Quản lý playlist
         if(role.permissions.includes("roles_view"))
             li
                 a(href=`${prefixAdmin}/roles`)
