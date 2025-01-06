@@ -44,6 +44,10 @@ const account_model_1 = __importDefault(require("../../models/account.model"));
 const topic_model_1 = __importDefault(require("../../models/topic.model"));
 const systemConfig = __importStar(require("../../config/system"));
 const index = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const permissions = res.locals.role.permissions;
+    if (!permissions.includes("playlists_view")) {
+        return;
+    }
     let find = {
         deleted: false
     };
@@ -99,6 +103,10 @@ const index = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
 });
 exports.index = index;
 const changeStatus = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const permissions = res.locals.role.permissions;
+    if (!permissions.includes("playlists_edit")) {
+        return;
+    }
     const status = req.params.status;
     const id = req.params.id;
     const updatedBy = {
@@ -115,6 +123,10 @@ const changeStatus = (req, res) => __awaiter(void 0, void 0, void 0, function* (
 });
 exports.changeStatus = changeStatus;
 const deleteItem = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const permissions = res.locals.role.permissions;
+    if (!permissions.includes("playlists_delete")) {
+        return;
+    }
     const id = req.params.id;
     const deletedBy = {
         account_id: res.locals.user.id,
@@ -131,6 +143,10 @@ const deleteItem = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
 });
 exports.deleteItem = deleteItem;
 const changeMulti = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const permissions = res.locals.role.permissions;
+    if (!permissions.includes("playlists_edit")) {
+        return;
+    }
     const type = req.body.type;
     let ids = req.body.ids.split(',').map((id) => id.trim());
     const updatedBy = {
@@ -180,6 +196,10 @@ const changeMulti = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
 });
 exports.changeMulti = changeMulti;
 const detail = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const permissions = res.locals.role.permissions;
+    if (!permissions.includes("playlists_view")) {
+        return;
+    }
     try {
         const id = req.params.id;
         const playlist = yield playlist_model_1.default.findOne({
@@ -211,6 +231,10 @@ const create = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
 });
 exports.create = create;
 const createPost = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const permissions = res.locals.role.permissions;
+    if (!permissions.includes("playlists_create")) {
+        return;
+    }
     if (req.body.position) {
         req.body.position = parseInt(req.body.position);
     }
@@ -248,6 +272,10 @@ const edit = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
 });
 exports.edit = edit;
 const editPatch = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const permissions = res.locals.role.permissions;
+    if (!permissions.includes("playlists_edit")) {
+        return;
+    }
     try {
         const id = req.params.id;
         if (req.body.position) {

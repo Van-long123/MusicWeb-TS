@@ -89,7 +89,7 @@ export const changeStatus=async  (req:Request, res:Response) => {
     const idSong:string = req.params.idSong
     const status:string = req.params.status
     const updatedBy={
-        account_id:String,
+        account_id:res.locals.user.id,
         updatedAt:new Date()
     }
     await Song.updateOne({

@@ -24,9 +24,11 @@ block main
             .card-body
                 .row
                     .col-8
-                        +form-change-multi-singer(`${prefixAdmin}/accounts/change-multi?_method=PATCH`)
+                        if(role.permissions.includes("accounts_edit"))
+                            +form-change-multi-singer(`${prefixAdmin}/accounts/change-multi?_method=PATCH`)
                     .col-4
-                        a(href=`${prefixAdmin}/accounts/create` class="btn btn-outline-success") +Thêm mới
+                        if(role.permissions.includes("accounts_create"))
+                            a(href=`${prefixAdmin}/accounts/create` class="btn btn-outline-success") +Thêm mới
         .card.mb-3
             .card-header Danh sách
                 .card-body
@@ -54,28 +56,40 @@ block main
                                 td #{item.role.title}
                                 td #{item.email}
                                 td 
-                                    if(item.status == "active")
-                                        a(
-                                            href="javascript:;"
-                                            data-status=item.status
-                                            data-id=item.id
-                                            button-change-status
-                                            class="badge badge-success") #{item.status}
-                                    else
-                                        a(
-                                            href="javascript:;"
-                                            data-status=item.status
-                                            data-id=item.id
-                                            button-change-status
-                                            class="badge badge-danger") #{item.status}
+                                    if(role.permissions.includes("accounts_edit"))
+                                        if(item.status == 'active')
+                                            a(
+                                                href="javascript:;"
+                                                data-status=item.status
+                                                data-id=item.id
+                                                button-change-status
+                                                class="badge badge-success") #{item.status}
+                                        else
+                                            a(
+                                                href="javascript:;"
+                                                data-status=item.status
+                                                data-id=item.id
+                                                button-change-status
+                                                class="badge badge-danger") #{item.status}
+                                    else 
+                                        if(item.status == "active")
+                                            a(
+                                                href="javascript:;"
+                                                class="badge badge-success") #{item.status}
+                                        else
+                                            a(
+                                                href="javascript:;"
+                                                class="badge badge-danger") #{item.status}
                                 td 
                                     a(href=`${prefixAdmin}/accounts/detail/${item.id}` class="btn btn-secondary btn-sm") Chi tiết
-                                    a(href=`${prefixAdmin}/accounts/edit/${item.id}` class="btn btn-warning btn-sm ml-1") Sửa
-                                    button(
-                                        class="btn btn-danger btn-sm ml-1"
-                                        data-id=item.id
-                                        button-delete
-                                        ) Xóa
+                                    if(role.permissions.includes("accounts_edit"))
+                                        a(href=`${prefixAdmin}/accounts/edit/${item.id}` class="btn btn-warning btn-sm ml-1") Sửa
+                                    if(role.permissions.includes("accounts_delete"))
+                                        button(
+                                            class="btn btn-danger btn-sm ml-1"
+                                            data-id=item.id
+                                            button-delete
+                                            ) Xóa
         
         +pagination(pagination)
         form(

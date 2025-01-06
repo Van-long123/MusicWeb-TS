@@ -83,6 +83,30 @@ block main
                         each record in records
                             td(class="text-center")
                                 input(type="checkbox")
+                    //- danh sách phát
+                    tr
+                        td(colspan="4")
+                            b Danh sách phát
+                    tr(data-name="playlists_view")
+                        td Xem
+                        each record in records 
+                            td(class="text-center")
+                                input(type="checkbox")
+                    tr(data-name="playlists_create")
+                        td Thêm mới
+                        each record in records
+                            td(class="text-center")
+                                input(type="checkbox")
+                    tr(data-name="playlists_edit")
+                        td Chỉnh sửa
+                        each record in records
+                            td(class="text-center")
+                                input(type="checkbox")
+                    tr(data-name="playlists_delete")
+                        td Xóa
+                        each record in records
+                            td(class="text-center")
+                                input(type="checkbox")
                     //- Ca sĩ 
                     tr
                         td(colspan="4")

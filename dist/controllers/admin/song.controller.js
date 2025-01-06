@@ -111,7 +111,7 @@ const changeStatus = (req, res) => __awaiter(void 0, void 0, void 0, function* (
     const idSong = req.params.idSong;
     const status = req.params.status;
     const updatedBy = {
-        account_id: String,
+        account_id: res.locals.user.id,
         updatedAt: new Date()
     };
     yield song_model_1.default.updateOne({

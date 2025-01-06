@@ -8,6 +8,10 @@ import Topic from '../../models/topic.model';
 import * as systemConfig from '../../config/system'
 
 export const index=async  (req:Request, res:Response) => {
+    const permissions=res.locals.role.permissions
+    if(!permissions.includes("playlists_view")){
+        return;
+    }
     let find={
         deleted:false
     }
@@ -63,6 +67,10 @@ export const index=async  (req:Request, res:Response) => {
     })
 }
 export const changeStatus=async  (req:Request, res:Response) => {
+    const permissions=res.locals.role.permissions
+    if(!permissions.includes("playlists_edit")){
+        return;
+    }
     const status=req.params.status
     const id=req.params.id
     const updatedBy={
@@ -78,6 +86,10 @@ export const changeStatus=async  (req:Request, res:Response) => {
     res.redirect('back');
 }
 export const deleteItem=async  (req:Request, res:Response) => {
+    const permissions=res.locals.role.permissions
+    if(!permissions.includes("playlists_delete")){
+        return;
+    }
     const id=req.params.id
     const deletedBy={
         account_id:res.locals.user.id,
@@ -93,6 +105,10 @@ export const deleteItem=async  (req:Request, res:Response) => {
     res.redirect('back')
 }
 export const changeMulti=async  (req:Request, res:Response) => {
+    const permissions=res.locals.role.permissions
+    if(!permissions.includes("playlists_edit")){
+        return;
+    }
     const type=req.body.type;
     let ids:string[]=req.body.ids.split(',').map((id:string)=>id.trim());
     const updatedBy={
@@ -144,6 +160,10 @@ export const changeMulti=async  (req:Request, res:Response) => {
     res.redirect('back')
 }
 export const detail=async  (req:Request, res:Response) => {
+    const permissions=res.locals.role.permissions
+    if(!permissions.includes("playlists_view")){
+        return;
+    }
     try {
         const id=req.params.id;
         const playlist=await Playlist.findOne({
@@ -175,6 +195,10 @@ export const create=async  (req:Request, res:Response) => {
     })
 }
 export const createPost=async  (req:Request, res:Response) => {
+    const permissions=res.locals.role.permissions
+    if(!permissions.includes("playlists_create")){
+        return;
+    }
     if(req.body.position){
         req.body.position=parseInt(req.body.position)
     }
@@ -212,10 +236,10 @@ export const edit=async  (req:Request, res:Response) => {
     
 }
 export const editPatch=async  (req:Request, res:Response) => {
-    // const permissions=res.locals.role.permissions
-    // if(!permissions.includes("songs_edit")){
-    //     return;
-    // }
+    const permissions=res.locals.role.permissions
+    if(!permissions.includes("playlists_edit")){
+        return;
+    }
     try {
         const id = req.params.id;
         if(req.body.position){
