@@ -130,9 +130,11 @@ html {
   height: 100%;
   object-fit: cover;
 }
+
 .box-search .inner-suggest .inner-item .image-artist img {
   border-radius: 50% !important;
 }
+
 .box-search .inner-suggest .inner-item .inner-info {
   flex: 1;
   margin-left: 10px;
@@ -331,6 +333,114 @@ html {
   transform: scaleX(1);
 }
 
+.overlay .fa-heart {
+  color: white;
+  font-size: 1.2rem;
+}
+
+.playlist-item {
+  cursor: pointer;
+}
+
+.playlist-image-container {
+  position: relative;
+  border-radius: 8px;
+  overflow: hidden;
+  margin-bottom: 12px;
+}
+
+.playlist-image {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.playlist-image-container:hover .overlay {
+  opacity: 1;
+}
+
+/* Button Container */
+.button-container {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  gap: 15px;
+  align-items: center;
+}
+
+.play-btn,
+.btn-heart {
+  width: 40px;
+  height: 40px;
+  border: 2px solid white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  color: white;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: all 0.3s ease;
+}
+
+.btn-heart {
+  cursor: pointer;
+}
+
+.playlist-image-container:hover .play-btn,
+.playlist-image-container:hover .btn-heart {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.play-btn:hover,
+.btn-heart:hover {
+  background: rgba(255, 255, 255, 0.1);
+  transform: scale(1.1);
+}
+
+.playlist-title {
+  color: #212529;
+  font-size: 1rem;
+  font-weight: bold;
+  margin-bottom: 4px;
+}
+
+.playlist-artists {
+  color: #212529;
+  font-size: 0.9rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.btn-heart.active,
+.btn-heart.active i {
+  color: #ff6b81;
+  /* Màu đỏ khi active */
+}
+
+.btn-heart.active {
+  background: rgba(255, 255, 255, 0.2);
+  /* Nền mờ khi active */
+  transform: scale(1.2);
+  /* Hiệu ứng phóng to khi active */
+}
+
 /* song  */
 
 /* footer  */
@@ -526,16 +636,20 @@ html {
 .singer-detail .inner-actions .inner-like {
   cursor: pointer;
 }
+
 .singer-detail .inner-actions .inner-dowload {
   cursor: pointer;
 }
-.singer-detail .inner-actions .inner-dowload  span{
+
+.singer-detail .inner-actions .inner-dowload span {
   color: #999;
 }
-.singer-detail .inner-actions .inner-dowload a{
+
+.singer-detail .inner-actions .inner-dowload a {
   text-decoration: none;
   color: #212529;
 }
+
 .singer-detail .inner-actions .inner-heart {
   cursor: pointer;
 }
@@ -822,13 +936,20 @@ input:focus {
 /* box-auth */
 /* swiper */
 .swiper {
-  width: 85%; /* Chiều rộng slider */
-  height: 400px; /* Chiều cao slider */
-  margin: 0 auto; /* Căn giữa slider */
-  border-radius: 10px; /* Bo góc slider */
-  overflow: hidden; /* Ẩn phần dư */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Đổ bóng */
-  background: #f9f9f9; /* Màu nền */
+  width: 85%;
+  /* Chiều rộng slider */
+  height: 400px;
+  /* Chiều cao slider */
+  margin: 0 auto;
+  /* Căn giữa slider */
+  border-radius: 10px;
+  /* Bo góc slider */
+  overflow: hidden;
+  /* Ẩn phần dư */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  /* Đổ bóng */
+  background: #f9f9f9;
+  /* Màu nền */
 }
 
 .swiper-slide {
@@ -839,21 +960,25 @@ input:focus {
   align-items: center;
   background: #fff;
 }
-.swiper-slide a{
-  display: block;
-  width: 100%; 
-  height: 100%;
-  object-fit: fill; 
-  border-radius: 10px; 
-}
-.swiper-slide  img {
+
+.swiper-slide a {
   display: block;
   width: 100%;
-  height: 100%; 
-  object-fit: fill; 
-  border-radius: 10px; 
+  height: 100%;
+  object-fit: fill;
+  border-radius: 10px;
 }
-.swiper-button-next, .swiper-button-prev {
+
+.swiper-slide img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+  border-radius: 10px;
+}
+
+.swiper-button-next,
+.swiper-button-prev {
   color: #fff;
 }
 
@@ -873,45 +998,53 @@ input:focus {
   color: white;
   border: none;
 }
+
 .detail-artist .follow-button {
-  background: rgba(0,0,0,0.1);
+  background: rgba(0, 0, 0, 0.1);
   border: none;
   padding: 4px 16px;
   border-radius: 20px;
   font-size: 14px;
 }
+
 .detail-artist .song-item {
   padding: 8px;
   border-radius: 4px;
   transition: background 0.2s;
   cursor: pointer;
 }
+
 .detail-artist .song-item:hover {
-  background: rgba(0,0,0,0.05);
+  background: rgba(0, 0, 0, 0.05);
 }
+
 .detail-artist .rounded-album {
   width: 120px;
   height: 120px;
   object-fit: cover;
   border-radius: 4px;
 }
+
 .detail-artist .rounded-song {
   width: 48px;
   height: 48px;
   object-fit: cover;
   border-radius: 4px;
 }
+
 .detail-artist .artist-image {
-    width: 140px;
-    height: 140px;
-    border-radius: 999px;
+  width: 140px;
+  height: 140px;
+  border-radius: 999px;
 }
+
 .artist-name {
   text-transform: none;
   font-size: 60px;
   font-weight: 500;
   line-height: normal;
 }
+
 .detail-artist .album-item {
   text-align: center;
 }
@@ -937,7 +1070,8 @@ input:focus {
   font-size: 12px;
   color: gray;
 }
-.detail-artist a{
+
+.detail-artist a {
   text-decoration: none;
   color: #212529;
 }
@@ -945,16 +1079,18 @@ input:focus {
 .detail-artist .song-item .flex-grow-1 {
   display: flex;
   flex-direction: column;
-  align-items: flex-start; /* Hoặc dùng `center` nếu muốn căn giữa theo chiều ngang */
+  align-items: flex-start;
+  /* Hoặc dùng `center` nếu muốn căn giữa theo chiều ngang */
 }
-.detail-artist .song-name{
+
+.detail-artist .song-name {
   font-weight: 600 !important;
 }
 
 /* upload  */
 .upload .card {
   border-radius: 4px;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
 .upload .song-info {
@@ -1064,7 +1200,8 @@ input:focus {
   color: #0d6efd !important;
   text-decoration: none;
 }
-.content_alert{
+
+.content_alert {
   width: 100%;
   padding: 7px 10px;
   background: #f8d6da;
@@ -1075,4 +1212,5 @@ input:focus {
   text-align: center;
   display: none;
 }
+
 /* upload  */

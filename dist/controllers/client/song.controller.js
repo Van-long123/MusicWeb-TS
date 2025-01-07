@@ -23,44 +23,16 @@ const axios_1 = __importDefault(require("axios"));
 const path_1 = __importDefault(require("path"));
 const index = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const type = req.params.slug;
         let find = {
             status: 'active',
             deleted: false,
         };
-        let sort = {};
-        let title = "";
-        if (type == 'like') {
-            sort['like'] = 'desc';
-            title = "Top 20 bài hát có nhiều like nhất";
-        }
-        else if (type == 'listen') {
-            sort['listen'] = 'desc';
-            title = "Top 20 bài hát có nhiều lượt nghe nhất";
-        }
-        else {
-            const topic = yield topic_model_1.default.findOne({
-                slug: req.params.slug,
-                status: 'active',
-                deleted: false,
-            });
-            if (!topic) {
-                res.redirect('back');
-                return;
-            }
-            find['topicId'] = topic.id;
-            title = topic.title;
-        }
-        const songsLimited = yield song_model_1.default.find(find)
-            .sort(sort)
-            .limit(20)
-            .select('avatar title slug singerId like');
-        const countSongs = songsLimited.length;
+        const countSongs = yield song_model_1.default.countDocuments(find);
         const objectPagination = (0, paginationHelper_1.default)(req.query, countSongs, {
             currentPage: 1,
             limitItems: 16,
         });
-        const songs = songsLimited.slice(objectPagination.skip, objectPagination.skip + objectPagination.limitItems);
+        const songs = yield song_model_1.default.find(find).limit(objectPagination.limitItems).skip(objectPagination.skip);
         for (const item of songs) {
             const infoSinger = yield singer_model_1.default.findOne({
                 _id: item.singerId,
@@ -71,7 +43,7 @@ const index = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
             item['infoSinger'] = infoSinger;
         }
         res.render('client/pages/songs/index', {
-            title: title,
+            title: 'Tất cả các bài hát',
             songs: songs,
             pagination: objectPagination
         });

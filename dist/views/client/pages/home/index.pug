@@ -1,27 +1,6 @@
 extends ../../layouts/default
 include ../../mixins/moment
 block main
-    //- .banner.my-4
-    //-     .container
-    //-         #carouselExampleIndicators.carousel.slide(data-bs-ride='carousel')
-    //-             ol.carousel-indicators
-    //-                 li.active(data-bs-target='#carouselExampleIndicators' data-bs-slide-to='0')
-    //-                 li(data-bs-target='#carouselExampleIndicators' data-bs-slide-to='1')
-    //-                 li(data-bs-target='#carouselExampleIndicators' data-bs-slide-to='2')
-    //-             .carousel-inner
-    //-                 .carousel-item.active
-    //-                     img.d-block.w-100(src='https://backend.daca.vn/assets/images/cat-doi-noi-sau.jpg' alt='Banner 1')
-    //-                 .carousel-item
-    //-                     img.d-block.w-100(src='https://backend.daca.vn/assets/images/cat-doi-noi-sau.jpg' alt='Banner 2')
-    //-                 .carousel-item
-    //-                     img.d-block.w-100(src='https://backend.daca.vn/assets/images/cat-doi-noi-sau.jpg' alt='Banner 3')
-    //-             a.carousel-control-prev(href='#carouselExampleIndicators' role='button' data-bs-slide='prev')
-    //-                 span.carousel-control-prev-icon(aria-hidden='true')
-    //-                 span.sr-only Previous
-    //-             a.carousel-control-next(href='#carouselExampleIndicators' role='button' data-bs-slide='next')
-    //-                 span.carousel-control-next-icon(aria-hidden='true')
-    //-                 span.sr-only Next
-
     div(class="swiper mySwiper mt-5")
       div(class="swiper-wrapper")
           div(class="swiper-slide") 
@@ -84,33 +63,24 @@ block main
         .col-12
             .our-menu.mb-2
                 h2
-                    span Top 20 bài hát nhiều like nhất
+                    span Top 100
                 .inner-dir
       .row
-        each item in songsLike
-          .col-xl-3.col-md-6.mb-3
-            .playlist-card
-              div(class="song-item")
-                div(class="inner-image")
-                    a(href=`/songs/detail/${item.slug}`)
-                      img(src=item.avatar)
-                div(class="inner-content")
-                    div(class="inner-title")
-                        a(href=`/songs/detail/${item.slug}`) #{item.title}
-                    div(class="inner-singer") <i class="fa-solid fa-microphone-lines"></i> #{item.infoSinger.fullName}
-                    if (user)
-                      div( class=(item.like.includes(user.id) ? 'inner-like' : 'inner-inlike'))  <i class="fa-solid fa-thumbs-up"></i> #{item.likeCount} thích
-                    else
-                      div(class="inner-inlike") <i class="fa-solid fa-thumbs-up"></i> #{item.likeCount} thích
-                    //- tự làm thời gian tạo
-                    div(class="inner-time") 
-                      i(class="fa-regular fa-clock")
-                      if(item.createdBy)
-                        +formatDateTime(item.createdBy.createdAt)
-
+        each playlist in playlists
+          .col-md-3.col-12.mb-4
+            .playlist-item
+              .playlist-image-container
+                img(src=playlist.avatar alt=playlist.title class="playlist-image")
+                .overlay
+                  .button-container
+                    span(class="btn-heart active" title="Thêm vào thư viện") <i class="fa-regular fa-heart"></i>
+                    a(href=`/playlists/${playlist.slug}`) 
+                      button(class="play-btn" title="Top 100 Bài Hát Nhạc Trẻ Hay Nhất") <svg width="20" height="20" viewBox="0 0 24 24" fill="white" stroke="white"> <polygon points="7 4 19 12 7 20"></polygon> </svg>
+              .playlist-title #{playlist.title}
+              .playlist-artists #{playlist.nameSinger}
         .row.mb-5.d-flex.justify-content-center
             .col-12.text-center
-                a.button-main-outline(href=`/songs/like`) 
+                a.button-main-outline(href=`/playlists`) 
                     span Xem thêm 
                     i.fa-solid.fa-angle-down
 
@@ -119,11 +89,11 @@ block main
         .col-12
             .our-menu.mb-2
                 h2
-                    span Top 20 bài hát nhiều lượt nghe nhất
+                    span Tất cả bài hát
                 .inner-dir
       .row
-        each item in songsListen
-          .col-xl-3.col-md-6.mb-3
+        each item in songs
+          .col-xl-3.col-md-6.col-12.mb-3
             .playlist-card
               div(class="song-item")
                 div(class="inner-image")
@@ -144,6 +114,6 @@ block main
                         +formatDateTime(item.createdBy.createdAt)
         .row.mb-5.d-flex.justify-content-center
             .col-12.text-center
-                a.button-main-outline(href=`/songs/listen`) 
+                a.button-main-outline(href=`/songs`) 
                     span Xem thêm 
                     i.fa-solid.fa-angle-down

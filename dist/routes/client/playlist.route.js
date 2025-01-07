@@ -28,4 +28,5 @@ const express_1 = require("express");
 const controller = __importStar(require("../../controllers/client/playlist.controller"));
 const router = (0, express_1.Router)();
 router.get('/', controller.index);
+router.get('/:slug', controller.detail);
 exports.playlistRouter = router;

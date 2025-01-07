@@ -1,25 +1,90 @@
 import { Request,Response } from "express"
 import Song from "../../models/song.model"
 import Singer from "../../models/singer.model"
+import Playlist from "../../models/playlist.model"
+import Topic from "../../models/topic.model"
+import pagination from "../../helpers/paginationHelper"
 export const index=async (req: Request, res: Response)=>{
-    const songs=await Song.find({
+    let find={
+        status:'active',
         deleted:false,
-        status:"active"
-    }).limit(4).select('title avatar description audio rawLyrics lyrics singerId')
-    let singers=[]
-    for (const song of songs) {
-        const singer= await Singer.findOne({
-            _id: song.singerId,
-            status:'active',
-            deleted:false
-        }).select('fullName')
-        singers.push(singer.fullName)
     }
+    const countPlaylist=await Playlist.countDocuments(find)
+    const objectPagination=pagination(req.query, countPlaylist, {
+        currentPage: 1,
+        limitItems: 12,  // Hiển thị 8 bài hát mỗi trang
+    });
+    const playlists=await Playlist.find(find).limit(objectPagination.limitItems).skip(objectPagination.skip)
+    
+    for (const item of playlists) {
+        const topic=await Topic.findOne({
+            _id: item.topicId,
+        })
+        const songs = await Song.aggregate([
+            {
+                $match: {
+                    topicId: topic.id // Lọc theo topicId
+                }
+            },
+            {
+                $group: {
+                    _id: "$singerId" // Nhóm theo singerId để loại bỏ trùng lặp
+                }
+            },
+            {
+                $limit: 6 // Lấy 3 giá trị đầu tiên
+            }
+        ]);
+        const singerIds = songs.map(song => song._id);
+        const singers = await Singer.find({ _id: { $in: singerIds } }).select('fullName');
+        const nameSinger=singers.map((item)=>{
+            return item.fullName
+        }).join(', ')
+        item['nameSinger']=nameSinger
+    }   
     res.render('client/pages/playlists/index',
         {
-            songs:songs,
-            singers:singers
+            title:"Top 100 | Tuyển tập nhạc hay chọn lọc",
+            playlists:playlists,
+            pagination:objectPagination
         }
     )
+}
+export const detail=async (req: Request, res: Response)=>{
+    try {
+        const slug=req.params.slug
+        const playlist = await Playlist.findOne({
+            slug:slug,
+        }).select('topicId')
+        if(!playlist){
+            res.redirect('/') 
+            return;
+        }
+
+        const songs=await Song.find({
+            deleted:false,
+            status:"active",
+            topicId:playlist.topicId
+        }).sort({
+            listen:'desc'
+        }).limit(100).select('title avatar description audio rawLyrics lyrics singerId')
+        let singers=[]
+        for (const song of songs) {
+            const singer= await Singer.findOne({
+                _id: song.singerId,
+                status:'active',
+                deleted:false
+            }).select('fullName')
+            singers.push(singer.fullName)
+        }
+        res.render('client/pages/playlists/detail',
+            {
+                songs:songs,
+                singers:singers
+            }
+        )
+    } catch (error) {
+        res.redirect('/')   
+    }
   
 }

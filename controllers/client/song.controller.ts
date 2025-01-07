@@ -10,53 +10,33 @@ import axios from "axios";
 import path from 'path'
 export const index=async (req: Request, res: Response)=>{
     try {
-        const type:String=req.params.slug;
         let find={
             status:'active',
             deleted:false,
         }
-        let sort={
 
-        };
-        let title:String="";
-        if(type=='like'){
-            sort['like']='desc'
-            title="Top 20 bài hát có nhiều like nhất"
-        }
-        else if(type=='listen'){
-            sort['listen']='desc'
-            title="Top 20 bài hát có nhiều lượt nghe nhất"
-        }
-        else{
-            const topic=await Topic.findOne({
-                slug: req.params.slug,
-                status:'active',
-                deleted:false,
-            })
-            if(!topic){
-                res.redirect('back');
-                return ;
-            }
-            find['topicId']=topic.id
-            title=topic.title
-        }
+        // const songsLimited = await Song.find(find)
+        // .limit(20)
+        // .select('avatar title slug singerId like')
 
-        const songsLimited = await Song.find(find)
-        .sort(sort)
-        .limit(20)
-        .select('avatar title slug singerId like')
-        
+        // // / pagination cho 20 bài hát đã lấy
+        // const countSongs = songsLimited.length;
+        // const objectPagination = pagination(req.query, countSongs, {
+        //     currentPage: 1,
+        //     limitItems: 16,  // Hiển thị 8 bài hát mỗi trang
+        // });
 
-        // / pagination cho 20 bài hát đã lấy
-        const countSongs = songsLimited.length;
+        // // Phân trang trên tập 20 bài hát đã lấy
+        // //0-15  16-35
+        // const songs = songsLimited.slice(objectPagination.skip, objectPagination.skip + objectPagination.limitItems);
+
+        const countSongs = await Song.countDocuments(find);
         const objectPagination = pagination(req.query, countSongs, {
             currentPage: 1,
             limitItems: 16,  // Hiển thị 8 bài hát mỗi trang
         });
 
-        // Phân trang trên tập 20 bài hát đã lấy
-        //0-15  16-35
-        const songs = songsLimited.slice(objectPagination.skip, objectPagination.skip + objectPagination.limitItems);
+        const songs =await Song.find(find).limit(objectPagination.limitItems).skip(objectPagination.skip)
 
         for (const item of songs) {
             const infoSinger=await Singer.findOne({
@@ -70,7 +50,7 @@ export const index=async (req: Request, res: Response)=>{
         }
         res.render('client/pages/songs/index',
             {
-                title:title,
+                title:'Tất cả các bài hát',
                 songs:songs,
                 pagination:objectPagination
             }

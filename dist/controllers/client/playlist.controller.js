@@ -12,26 +12,89 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.index = void 0;
+exports.detail = exports.index = void 0;
 const song_model_1 = __importDefault(require("../../models/song.model"));
 const singer_model_1 = __importDefault(require("../../models/singer.model"));
+const playlist_model_1 = __importDefault(require("../../models/playlist.model"));
+const topic_model_1 = __importDefault(require("../../models/topic.model"));
+const paginationHelper_1 = __importDefault(require("../../helpers/paginationHelper"));
 const index = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const songs = yield song_model_1.default.find({
+    let find = {
+        status: 'active',
         deleted: false,
-        status: "active"
-    }).limit(4).select('title avatar description audio rawLyrics lyrics singerId');
-    let singers = [];
-    for (const song of songs) {
-        const singer = yield singer_model_1.default.findOne({
-            _id: song.singerId,
-            status: 'active',
-            deleted: false
-        }).select('fullName');
-        singers.push(singer.fullName);
+    };
+    const countPlaylist = yield playlist_model_1.default.countDocuments(find);
+    const objectPagination = (0, paginationHelper_1.default)(req.query, countPlaylist, {
+        currentPage: 1,
+        limitItems: 12,
+    });
+    const playlists = yield playlist_model_1.default.find(find).limit(objectPagination.limitItems).skip(objectPagination.skip);
+    for (const item of playlists) {
+        const topic = yield topic_model_1.default.findOne({
+            _id: item.topicId,
+        });
+        const songs = yield song_model_1.default.aggregate([
+            {
+                $match: {
+                    topicId: topic.id
+                }
+            },
+            {
+                $group: {
+                    _id: "$singerId"
+                }
+            },
+            {
+                $limit: 6
+            }
+        ]);
+        const singerIds = songs.map(song => song._id);
+        const singers = yield singer_model_1.default.find({ _id: { $in: singerIds } }).select('fullName');
+        const nameSinger = singers.map((item) => {
+            return item.fullName;
+        }).join(', ');
+        item['nameSinger'] = nameSinger;
     }
     res.render('client/pages/playlists/index', {
-        songs: songs,
-        singers: singers
+        title: "Top 100 | Tuyển tập nhạc hay chọn lọc",
+        playlists: playlists,
+        pagination: objectPagination
     });
 });
 exports.index = index;
+const detail = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const slug = req.params.slug;
+        const playlist = yield playlist_model_1.default.findOne({
+            slug: slug,
+        }).select('topicId');
+        if (!playlist) {
+            res.redirect('/');
+            return;
+        }
+        const songs = yield song_model_1.default.find({
+            deleted: false,
+            status: "active",
+            topicId: playlist.topicId
+        }).sort({
+            listen: 'desc'
+        }).limit(100).select('title avatar description audio rawLyrics lyrics singerId');
+        let singers = [];
+        for (const song of songs) {
+            const singer = yield singer_model_1.default.findOne({
+                _id: song.singerId,
+                status: 'active',
+                deleted: false
+            }).select('fullName');
+            singers.push(singer.fullName);
+        }
+        res.render('client/pages/playlists/detail', {
+            songs: songs,
+            singers: singers
+        });
+    }
+    catch (error) {
+        res.redirect('/');
+    }
+});
+exports.detail = detail;

@@ -43,6 +43,6 @@ const clientRoutes = (app) => {
     app.use('/user', user_route_1.userRouter);
     app.use('/favorite-songs', favorite_song_route_1.favoriteSongRoutes);
     app.use('/artist', artist_route_1.artistRouter);
-    app.use('/playlist', playlist_route_1.playlistRouter);
+    app.use('/playlists', playlist_route_1.playlistRouter);
 };
 exports.default = clientRoutes;

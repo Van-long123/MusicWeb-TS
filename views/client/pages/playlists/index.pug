@@ -1,16 +1,29 @@
 extends ../../layouts/default
-block main 
-    .singer-detail
-        .container.my-3
-            .row
-                .col-12
-                    .inner-title Top 100
-                    .inner-play
-                        .inner-audio
-                            div(id="aplayer" data-song=songs  data-singer=singers)
-                    .inner-desc
-                        .inner-label Lời bài hát
-                        .inner-text.lyric
-    script(src="https://unpkg.com/aplayer/dist/APlayer.min.js")
-    script(src="/js/playlist.js") 
-                                                
+include ../../mixins/pagination
+include ../../mixins/alert.pug
+include ../../mixins/moment
+block main
+    .container.mt-4
+      .row
+        .col-12
+            +alert-success(5000)
+            +alert-error(5000)
+            .our-menu.mb-4
+                h2
+                    span Top 100
+                .inner-dir
+      .row
+        each playlist in playlists
+          .col-md-3.col-12.mb-4
+            .playlist-item
+              .playlist-image-container
+                img(src=playlist.avatar alt=playlist.title class="playlist-image")
+                .overlay
+                  .button-container
+                    span(class="btn-heart active" title="Thêm vào thư viện") <i class="fa-regular fa-heart"></i>
+                    button(class="play-btn" title="Top 100 Bài Hát Nhạc Trẻ Hay Nhất") <svg width="20" height="20" viewBox="0 0 24 24" fill="white" stroke="white"> <polygon points="7 4 19 12 7 20"></polygon> </svg>
+              .playlist-title #{playlist.title}
+              .playlist-artists #{playlist.nameSinger}
+
+        .d-flex.justify-content-center.mt-4
+            +pagination(pagination)

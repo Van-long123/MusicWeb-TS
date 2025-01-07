@@ -19,6 +19,6 @@ const clientRoutes = (app:Express)=>{
     app.use('/user',userRouter)
     app.use('/favorite-songs',favoriteSongRoutes)
     app.use('/artist',artistRouter)
-    app.use('/playlist',playlistRouter)
+    app.use('/playlists',playlistRouter)
 }
 export default clientRoutes
