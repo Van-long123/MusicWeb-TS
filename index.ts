@@ -17,9 +17,13 @@ app.set('view engine', 'pug')
 app.set('views',`${__dirname}/views`)
 app.use(express.static(`${__dirname}/public`))
 databse.connect()
+app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(cookieParser())
 app.use('/tinymce', express.static(path.join(__dirname, 'node_modules', 'tinymce'))); 
+//passport 
+import './passport';
+//passport 
 //flash
 // Cấu hình express-session
 app.use(

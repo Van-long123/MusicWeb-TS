@@ -57,7 +57,8 @@ const loginPost = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const user = yield user_model_1.default.findOne({
         email: email,
         deleted: false,
-        status: 'active'
+        status: 'active',
+        typeLogin: 'normal'
     });
     if (!user) {
         req.flash('emailError', 'Email không tồn tại');
@@ -92,7 +93,8 @@ const registerPost = (req, res) => __awaiter(void 0, void 0, void 0, function* (
     const existEmail = yield user_model_1.default.findOne({
         email: email,
         deleted: false,
-        status: 'active'
+        status: 'active',
+        typeLogin: 'normal'
     });
     inspector_1.console.log(existEmail);
     if (existEmail) {

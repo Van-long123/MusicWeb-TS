@@ -45,9 +45,11 @@ app.set('view engine', 'pug');
 app.set('views', `${__dirname}/views`);
 app.use(express_1.default.static(`${__dirname}/public`));
 databse.connect();
+app.use(express_1.default.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use((0, cookie_parser_1.default)());
 app.use('/tinymce', express_1.default.static(path_1.default.join(__dirname, 'node_modules', 'tinymce')));
+require("./passport");
 app.use((0, express_session_1.default)({
     secret: 'your_secret_key',
     resave: false,

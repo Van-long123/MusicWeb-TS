@@ -23,7 +23,7 @@
 }
 .sectionLogin .section-L-left img {
     width: 100%;
-    height: 70vh;
+    height: 100%;
     border-radius: 1rem 0px 0px 1rem;
 }
 .section-L-right {
@@ -317,4 +317,68 @@ input[type="tel"], input[type="password"], input[type="email"],input[type="text"
 
 i[close-alert1]{
     cursor: pointer !important;
+}
+
+
+
+.social-login {
+    width: 90%;
+    margin: 18px 10px;
+}
+.social-login a{
+    text-decoration: none !important;
+}
+.social-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 15px;
+    border-radius: 2rem;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.google-btn {
+    background: white;
+    border: 1px solid #e3e3e3;
+    color: #757575;
+}
+
+.google-btn:hover {
+    background: #f5f5f5;
+}
+
+.fb-btn {
+    background: #1877f2;
+    color: white;
+}
+
+.fb-btn:hover {
+    background: #166fe5;
+}
+
+.social-btn i {
+    margin-right: 10px;
+    font-size: 18px;
+}
+
+.divider {
+    display: flex;
+    align-items: center;
+    margin: 20px 50px 20px 20px;
+}
+
+.divider::before,
+.divider::after {
+    content: '';
+    flex: 1;
+    border-bottom: 1px solid #e3e3e3;
+}
+
+.divider span {
+    padding: 0 10px;
+    color: #757575;
+    font-size: 14px;
 }

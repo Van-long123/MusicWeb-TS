@@ -8,6 +8,7 @@ import { artistRouter } from "./artist.route"
 import { playlistRouter } from "./playlist.route"
 import { favoriteSongRoutes } from "./favorite-song.route"
 import { favoritePlaylistRoutes } from "./favorite-playlist.route"
+import { authRouter } from "./auth.route"
 import * as userMiddleware from '../../middlewares/client/infoUser.middleware'
 import * as settingMiddleware from '../../middlewares/client/setting.middleware'
 const clientRoutes = (app:Express)=>{
@@ -22,5 +23,6 @@ const clientRoutes = (app:Express)=>{
     app.use('/favorite-playlists',favoritePlaylistRoutes)
     app.use('/artist',artistRouter)
     app.use('/playlists',playlistRouter)
+    app.use('/auth',authRouter)
 }
 export default clientRoutes

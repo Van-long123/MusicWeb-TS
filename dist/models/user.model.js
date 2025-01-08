@@ -29,6 +29,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const mongoose_1 = __importDefault(require("mongoose"));
 const generate = __importStar(require("../helpers/generate"));
 const userSchema = new mongoose_1.default.Schema({
+    _id: { type: String, default: () => new mongoose_1.default.Types.ObjectId().toHexString(), },
     fullName: String,
     email: String,
     password: String,
@@ -38,6 +39,10 @@ const userSchema = new mongoose_1.default.Schema({
     tokenUser: {
         type: String,
         default: generate.generateRandomString(30)
+    },
+    typeLogin: {
+        type: String,
+        default: 'normal'
     },
     phone: String,
     avatar: String,

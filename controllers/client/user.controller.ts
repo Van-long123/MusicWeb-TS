@@ -20,7 +20,8 @@ export const loginPost=async (req:Request, res:Response) => {
     const user=await User.findOne({
         email: email,
         deleted:false,
-        status:'active'
+        status:'active',
+        typeLogin:'normal'
     })
     if(!user){
         req.flash('emailError','Email không tồn tại')
@@ -55,7 +56,8 @@ export const registerPost=async (req:Request, res:Response) => {
     const existEmail=await User.findOne({
         email: email,
         deleted:false,
-        status:'active'
+        status:'active',
+        typeLogin:'normal'
     })
     console.log(existEmail)
     if(existEmail){
