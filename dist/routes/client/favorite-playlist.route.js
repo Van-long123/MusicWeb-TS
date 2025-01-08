@@ -23,11 +23,9 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.playlistRouter = void 0;
+exports.favoritePlaylistRoutes = void 0;
 const express_1 = require("express");
-const controller = __importStar(require("../../controllers/client/playlist.controller"));
 const router = (0, express_1.Router)();
+const controller = __importStar(require("../../controllers/client/favorite-playlist.controller"));
 router.get('/', controller.index);
-router.patch('/favorite/:typeFavorite/:idPlaylist', controller.favorite);
-router.get('/:slug', controller.detail);
-exports.playlistRouter = router;
+exports.favoritePlaylistRoutes = router;

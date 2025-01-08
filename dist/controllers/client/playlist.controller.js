@@ -12,12 +12,13 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.detail = exports.index = void 0;
+exports.favorite = exports.detail = exports.index = void 0;
 const song_model_1 = __importDefault(require("../../models/song.model"));
 const singer_model_1 = __importDefault(require("../../models/singer.model"));
 const playlist_model_1 = __importDefault(require("../../models/playlist.model"));
 const topic_model_1 = __importDefault(require("../../models/topic.model"));
 const paginationHelper_1 = __importDefault(require("../../helpers/paginationHelper"));
+const favorite_playlist_model_1 = __importDefault(require("../../models/favorite-playlist.model"));
 const index = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     let find = {
         status: 'active',
@@ -98,3 +99,56 @@ const detail = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     }
 });
 exports.detail = detail;
+const favorite = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const idPlaylist = req.params.idPlaylist;
+        const typeFavorite = req.params.typeFavorite;
+        const userId = res.locals.user.id;
+        console.log(idPlaylist);
+        console.log(typeFavorite);
+        switch (typeFavorite) {
+            case 'favorite':
+                const playlistFavorite = yield favorite_playlist_model_1.default.findOne({
+                    playlistId: idPlaylist,
+                    userId: userId,
+                });
+                if (!playlistFavorite) {
+                    const record = new favorite_playlist_model_1.default({
+                        playlistId: idPlaylist,
+                        userId: userId,
+                    });
+                    yield record.save();
+                }
+                break;
+            case 'unFavorite':
+                const isSongFavorite = yield favorite_playlist_model_1.default.findOne({
+                    playlistId: idPlaylist,
+                    userId: userId,
+                });
+                if (isSongFavorite) {
+                    yield favorite_playlist_model_1.default.deleteOne({
+                        playlistId: idPlaylist,
+                        userId: userId,
+                    });
+                }
+                break;
+            default:
+                res.json({
+                    code: 400,
+                    message: 'Lỗi !'
+                });
+                break;
+        }
+        res.json({
+            code: 200,
+            message: "Thành công!",
+        });
+    }
+    catch (error) {
+        res.json({
+            code: 400,
+            message: "Lỗi!"
+        });
+    }
+});
+exports.favorite = favorite;

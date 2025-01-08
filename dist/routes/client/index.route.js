@@ -31,6 +31,7 @@ const user_route_1 = require("./user.route");
 const artist_route_1 = require("./artist.route");
 const playlist_route_1 = require("./playlist.route");
 const favorite_song_route_1 = require("./favorite-song.route");
+const favorite_playlist_route_1 = require("./favorite-playlist.route");
 const userMiddleware = __importStar(require("../../middlewares/client/infoUser.middleware"));
 const settingMiddleware = __importStar(require("../../middlewares/client/setting.middleware"));
 const clientRoutes = (app) => {
@@ -42,6 +43,7 @@ const clientRoutes = (app) => {
     app.use('/search', search_route_1.searchRouter);
     app.use('/user', user_route_1.userRouter);
     app.use('/favorite-songs', favorite_song_route_1.favoriteSongRoutes);
+    app.use('/favorite-playlists', favorite_playlist_route_1.favoritePlaylistRoutes);
     app.use('/artist', artist_route_1.artistRouter);
     app.use('/playlists', playlist_route_1.playlistRouter);
 };

@@ -13,20 +13,20 @@ nav.navbar.navbar-expand-lg.navbar-light.bg-light.fixed-top
             .inner-suggest
                 .inner-list
         ul.navbar-nav.ml-auto
-            li.nav-item
-                a.nav-link(href='/')
-                    i.fas.fa-home
-                    |Trang chủ
-            li.nav-item
-                a.nav-link(href='/topics')
-                    i.fas.fa-play-circle
-                    |Chủ đề
+            
+            //- li.nav-item
+            //-     a.nav-link(href='/topics')
+            //-         i.fas.fa-play-circle
+            //-         |Chủ đề
             if (user)
                 li.nav-item
                     a.nav-link(href='/favorite-songs')
                         i.fa-solid.fa-heart
-                        |Bài hát yêu thích
-            if (user)
+                        |Bài hát yêu thích 
+                li.nav-item.li-playlist
+                    a.nav-link(href='/favorite-playlists')
+                        i(class="bx bxs-playlist")
+                        span Playlist
                 li.nav-item.userprofile-card-item.me-5.ms-5
                     .profile-user
                         a(href="/user/manage-account")

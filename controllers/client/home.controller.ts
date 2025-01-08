@@ -3,6 +3,7 @@ import Topic from "../../models/topic.model"
 import Song from "../../models/song.model"
 import Singer from "../../models/singer.model"
 import Playlist from "../../models/playlist.model"
+import FavoritePlaylist from "../../models/favorite-playlist.model"
 
 export const index=async (req:Request, res:Response) => {
     const topics= await Topic.find({
@@ -57,6 +58,19 @@ export const index=async (req:Request, res:Response) => {
     })
     
     for (const item of playlists) {
+
+        if(res.locals.user){
+            // if(res.locals.user.id){ sẽ báo lỗi vì user nó undefinded thì trỏ tới id sẽ lỗi 
+            // vì vậy chỉ nên res.locals.user 
+            const isFavoritePlaylist=await FavoritePlaylist.findOne({
+                userId:res.locals.user.id,
+                playlistId:item.id
+            })
+            item['isFavoritePlaylist']=isFavoritePlaylist ? true : false
+        }
+
+
+
         const topic=await Topic.findOne({
             _id: item.topicId,
         })
@@ -92,6 +106,7 @@ export const index=async (req:Request, res:Response) => {
         }).join(', ')
         item['nameSinger']=nameSinger
     }   
+    
     res.render('client/pages/home/index',
         {
             title:"Trang chủ",

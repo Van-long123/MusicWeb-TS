@@ -4,6 +4,7 @@ import Singer from "../../models/singer.model"
 import Playlist from "../../models/playlist.model"
 import Topic from "../../models/topic.model"
 import pagination from "../../helpers/paginationHelper"
+import FavoritePlaylist from "../../models/favorite-playlist.model"
 export const index=async (req: Request, res: Response)=>{
     let find={
         status:'active',
@@ -87,4 +88,59 @@ export const detail=async (req: Request, res: Response)=>{
         res.redirect('/')   
     }
   
+}
+
+
+export const favorite=async (req: Request, res: Response)=>{
+    try {
+        const idPlaylist=req.params.idPlaylist
+        const typeFavorite=req.params.typeFavorite
+        const userId=res.locals.user.id
+        console.log(idPlaylist)
+        console.log(typeFavorite)
+        switch (typeFavorite) {
+            case 'favorite':
+                const playlistFavorite=await FavoritePlaylist.findOne({
+                    playlistId:idPlaylist,
+                    userId:userId,
+                })
+                if(!playlistFavorite){
+                    const record=new FavoritePlaylist({
+                        playlistId:idPlaylist,
+                        userId:userId,
+                    });
+                    await record.save()
+                }
+                break;
+            case 'unFavorite':
+                const isSongFavorite=await FavoritePlaylist.findOne({
+                    playlistId:idPlaylist,
+                    userId:userId,
+                })
+                if(isSongFavorite){
+                    await FavoritePlaylist.deleteOne({
+                        playlistId:idPlaylist,
+                        userId:userId,
+                    })
+                }
+                break;
+            default:
+                res.json({
+                    code:400,
+                    message:'Lỗi !'
+                })
+                break;
+        }
+        res.json({
+            code:200,
+            message:"Thành công!",
+        })
+    } catch (error) {
+        res.json({
+            code:400,
+            message:"Lỗi!"
+     
+        })
+    }
+    
 }

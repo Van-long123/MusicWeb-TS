@@ -13,55 +13,25 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.index = void 0;
-const topic_model_1 = __importDefault(require("../../models/topic.model"));
 const song_model_1 = __importDefault(require("../../models/song.model"));
 const singer_model_1 = __importDefault(require("../../models/singer.model"));
-const playlist_model_1 = __importDefault(require("../../models/playlist.model"));
 const favorite_playlist_model_1 = __importDefault(require("../../models/favorite-playlist.model"));
+const playlist_model_1 = __importDefault(require("../../models/playlist.model"));
+const topic_model_1 = __importDefault(require("../../models/topic.model"));
 const index = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const topics = yield topic_model_1.default.find({
-        status: 'active',
-        deleted: false,
-    }).limit(6);
-    const songsRandom = yield song_model_1.default.aggregate([
-        { $match: { status: 'active', deleted: false } },
-        { $sample: { size: 9 } }
-    ]);
-    for (const item of songsRandom) {
-        const infoSinger = yield singer_model_1.default.findOne({
-            _id: item.singerId,
-            status: 'active',
-            deleted: false
-        }).select('fullName');
-        item['infoSinger'] = infoSinger;
-    }
-    const songs = yield song_model_1.default.find({
-        status: 'active',
-        deleted: false,
-    }).limit(4).select('avatar title slug singerId like');
-    for (const item of songs) {
-        const infoSinger = yield singer_model_1.default.findOne({
-            _id: item.singerId,
-            status: 'active',
-            deleted: false
-        }).select('fullName');
-        item['likeCount'] = item.like.length;
-        item['infoSinger'] = infoSinger;
-    }
-    const playlists = yield playlist_model_1.default.find({
-        status: 'active',
-        deleted: false,
+    const userId = res.locals.user.id;
+    const favoritePlaylists = yield favorite_playlist_model_1.default.find({
+        userId: userId
     });
-    for (const item of playlists) {
-        if (res.locals.user) {
-            const isFavoritePlaylist = yield favorite_playlist_model_1.default.findOne({
-                userId: res.locals.user.id,
-                playlistId: item.id
-            });
-            item['isFavoritePlaylist'] = isFavoritePlaylist ? true : false;
-        }
+    for (const playlist of favoritePlaylists) {
+        const infoPlaylist = yield playlist_model_1.default.findOne({
+            _id: playlist.playlistId,
+            status: 'active',
+            deleted: false,
+        });
+        playlist['infoPlaylist'] = infoPlaylist;
         const topic = yield topic_model_1.default.findOne({
-            _id: item.topicId,
+            _id: infoPlaylist.topicId,
         });
         const songs = yield song_model_1.default.aggregate([
             {
@@ -86,14 +56,11 @@ const index = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         const nameSinger = singers.map((item) => {
             return item.fullName;
         }).join(', ');
-        item['nameSinger'] = nameSinger;
+        playlist['nameSinger'] = nameSinger;
     }
-    res.render('client/pages/home/index', {
-        title: "Trang chủ",
-        topics: topics,
-        playlists: playlists,
-        songs: songs,
-        songsRandom: songsRandom
+    res.render('client/pages/favorite-playlists/index', {
+        title: 'Bài hát yêu thích',
+        favoritePlaylists: favoritePlaylists
     });
 });
 exports.index = index;

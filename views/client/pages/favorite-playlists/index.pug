@@ -1,0 +1,22 @@
+extends ../../layouts/default
+block main
+   .container.mt-5
+      .row
+        .col-12
+            .our-menu.mb-2
+                h2
+                    span Danh sách phát yêu thích
+                .inner-dir
+      .row.mt-3
+        each playlist in favoritePlaylists
+          .col-md-3.col-12.mb-4
+            .playlist-item
+              .playlist-image-container
+                img(src=playlist.infoPlaylist.avatar alt=playlist.infoPlaylist.title class="playlist-image")
+                .overlay
+                  .button-container
+                    span(class=`btn-heart active` title="Thêm vào thư viện" button-favorite-playlist=playlist.infoPlaylist.id) <i class="fa-regular fa-heart"></i>
+                    a(href=`/playlists/${playlist.infoPlaylist.slug}`) 
+                      button(class="play-btn" title="Top 100 Bài Hát Nhạc Trẻ Hay Nhất") <svg width="20" height="20" viewBox="0 0 24 24" fill="white" stroke="white"> <polygon points="7 4 19 12 7 20"></polygon> </svg>
+              .playlist-title #{playlist.infoPlaylist.title}
+              .playlist-artists #{playlist.nameSinger}

@@ -107,6 +107,22 @@ if(buttonLike){
             .then(res=>res.json())
             .then(data=>{
                 if(data.code==200){
+                    const notification = document.getElementById('notification');
+                    const timeout=notification.getAttribute('data-time')
+                    if(typeLike=='like'){
+                        notification.classList.remove('hidden')
+                        notification.classList.add('show')
+                        notification.textContent='Bạn đã thích bài hát này'
+                    }
+                    else{
+                        notification.classList.remove('hidden')
+                        notification.classList.add('show')
+                        notification.textContent='Bạn đã bỏ qua bài hát này'
+                    }
+                    setTimeout(() => {
+                        notification.classList.remove('show')
+                        notification.classList.add('hidden')
+                    },timeout );
                     buttonLike.querySelector('span').innerHTML=`${data.like} thích`
                     buttonLike.classList.toggle('active')
                     
@@ -116,7 +132,7 @@ if(buttonLike){
 }
 // button like 
 
-// button Favorite 
+// button Favorite song
 const buttonFavorite =document.querySelector('[button-favorite]')
 if(buttonFavorite){
     buttonFavorite.addEventListener('click',e=>{
@@ -139,13 +155,76 @@ if(buttonFavorite){
             })
             .then(data=>{
                 if(data.code==200){
+                    const notification = document.getElementById('notification');
+                    const timeout=notification.getAttribute('data-time')
+                    if(typeFavorite=='favorite'){
+                        notification.classList.remove('hidden')
+                        notification.classList.add('show')
+                        notification.textContent='Đã thêm bài hát vào thư viện'
+                    }
+                    else{
+                        notification.classList.remove('hidden')
+                        notification.classList.add('show')
+                        notification.textContent='Đã xóa bài hát vào thư viện'
+                    }
+                    setTimeout(() => {
+                        notification.classList.remove('show')
+                        notification.classList.add('hidden')
+                    },timeout );
                     buttonFavorite.classList.toggle('active');
                 }
             })
     })
 }
-// button Favorite 
-
+// button Favorite song
+// button Favorite playlist
+const buttonFavoritePlaylist =document.querySelectorAll('[button-favorite-playlist]')
+if(buttonFavoritePlaylist){
+    buttonFavoritePlaylist.forEach(btn=>{
+        btn.addEventListener('click',e=>{
+            const confirmationModal=document.querySelector('#confirmationModal')
+            const active=confirmationModal.classList.contains('inactive')
+            if(active){
+                confirmationModal.style.display = "block";
+                return;
+            }
+            const idPlaylist=btn.getAttribute('button-favorite-playlist')
+            const isActive=btn.classList.contains('active')
+            const typeFavorite=isActive ? 'unFavorite' :'favorite';
+            const link =`/playlists/favorite/${typeFavorite}/${idPlaylist}`
+            const option={
+                method:"PATCH"
+            }
+            fetch(link,option)
+                .then(res=>{
+                    return res.json()
+                })
+                .then(data=>{
+                    if(data.code==200){
+                        const notification = document.getElementById('notification');
+                        const timeout=notification.getAttribute('data-time')
+                        if(typeFavorite=='favorite'){
+                            notification.classList.remove('hidden')
+                            notification.classList.add('show')
+                            notification.textContent='Đã thêm playlist vào thư viện'
+                        }
+                        else{
+                            notification.classList.remove('hidden')
+                            notification.classList.add('show')
+                            notification.textContent='Đã xóa playlist vào thư viện'
+                        }
+                        setTimeout(() => {
+                            notification.classList.remove('show')
+                            notification.classList.add('hidden')
+                        },timeout );
+                        btn.classList.toggle('active');
+                        //hiển thị thông báo 
+                    }
+                })
+        })
+    })
+}
+// button Favorite playlist
 
 // close auth 
 const closeAlert=document.querySelector('[close-alert]')

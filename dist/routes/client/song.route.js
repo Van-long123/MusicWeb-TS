@@ -40,5 +40,7 @@ router.get('/upload', controller.upload);
 router.post('/create', upload.fields([{ name: 'avatar', maxCount: 1 }, { name: 'audio', maxCount: 1 }]), upload_validate_1.createPost, uploadCloud.uploadFields, controller.createPost);
 router.get('/', controller.index);
 router.get('/detail/:slugSong', controller.detail);
+router.patch('/listen/:idSong', controller.listen);
+router.patch('/like/:typeLike/:idSong', controller.like);
 router.patch('/fovarite/:typeFavorite/:idSong', controller.favorite);
 exports.songRouter = router;
