@@ -20,7 +20,7 @@ dotenv_1.default.config();
 passport_1.default.use(new passport_google_oauth20_1.Strategy({
     clientID: process.env.GOOGLE_CLIENT_ID,
     clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-    callbackURL: "http://localhost:3000/auth/google/callback"
+    callbackURL: "https://music-web-ts.vercel.app/auth/google/callback"
 }, (accessToken, refreshToken, profile, cb) => __awaiter(void 0, void 0, void 0, function* () {
     var _a;
     if (profile === null || profile === void 0 ? void 0 : profile.id) {
