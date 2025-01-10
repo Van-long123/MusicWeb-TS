@@ -90,6 +90,7 @@ const detail = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
             singers.push(singer.fullName);
         }
         res.render('client/pages/playlists/detail', {
+            title: slug,
             songs: songs,
             singers: singers
         });

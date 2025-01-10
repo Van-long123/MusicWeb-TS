@@ -80,6 +80,7 @@ export const detail=async (req: Request, res: Response)=>{
         }
         res.render('client/pages/playlists/detail',
             {
+                title:slug,
                 songs:songs,
                 singers:singers
             }
