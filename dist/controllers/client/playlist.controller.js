@@ -23,6 +23,7 @@ const index = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     let find = {
         status: 'active',
         deleted: false,
+        "createdBy.user_id": { $exists: false },
     };
     const countPlaylist = yield playlist_model_1.default.countDocuments(find);
     const objectPagination = (0, paginationHelper_1.default)(req.query, countPlaylist, {

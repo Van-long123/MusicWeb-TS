@@ -9,6 +9,7 @@ export const index=async (req: Request, res: Response)=>{
     let find={
         status:'active',
         deleted:false,
+        "createdBy.user_id": { $exists: false },
     }
     const countPlaylist=await Playlist.countDocuments(find)
     const objectPagination=pagination(req.query, countPlaylist, {
