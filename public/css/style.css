@@ -352,6 +352,50 @@ html {
   cursor: pointer;
 }
 
+.create-playlist {
+  background-color: #242424;
+  border-radius: 12px;
+  aspect-ratio: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  min-height: 200px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.create-playlist:hover {
+  background-color: #2a2a2a;
+}
+
+.create-playlist:hover .create-icon {
+  transform: scale(1.1);
+}
+
+.create-icon {
+  width: 50px;
+  height: 50px;
+  background-color: #333;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  margin-bottom: 16px;
+  color: #fff;
+  transition: all 0.3s ease;
+}
+
+.create-text {
+  color: #fff;
+  font-size: 0.9rem;
+  opacity: 0.9;
+}
+
 .playlist-image-container {
   position: relative;
   border-radius: 8px;
@@ -389,6 +433,18 @@ html {
   display: flex;
   gap: 15px;
   align-items: center;
+}
+
+.border-user-play {
+  border: 1px solid black;
+}
+
+.playlist-item .close-button {
+  color: white;
+  font-size: 37px;
+  font-weight: 200;
+  position: relative;
+  top: -3px;
 }
 
 .play-btn,
@@ -693,6 +749,199 @@ html {
   font-weight: bold;
   color: #333;
   margin-bottom: 15px;
+}
+/*  */
+.singer-detail #createModalPlaylist  .modal-content {
+  background: #2D1B69;
+  padding: 24px;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 400px;
+  position: relative;
+}
+
+.singer-detail #createModalPlaylist  .modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.singer-detail #createModalPlaylist  .modal-title-playlist {
+  color: white;
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+.singer-detail #createModalPlaylist  .close-button {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 0;
+}
+
+.singer-detail #createModalPlaylist .playlist-input {
+  width: 100%;
+  padding: 12px;
+  border-radius: 8px;
+  border: none;
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  margin-bottom: 20px;
+}
+
+.singer-detail #createModalPlaylist .playlist-input::placeholder {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.singer-detail #createModalPlaylist .create-btn {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  background: #8B5CF6;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 20px;
+}
+
+.singer-detail #createModalPlaylist .create-btn:hover {
+  background: #7C3AED;
+}
+
+.singer-detail #createModalPlaylist .error-playlist {
+  display: block;
+  width: 100%;
+  font-size: 100%;
+  color: #dc3545;
+}
+
+.singer-detail #createModalPlaylist .success-playlist {
+  display: block;
+  width: 100%;
+  font-size: 110%;
+  font-weight: 500;
+  color: #0e8275;
+}
+.singer-detail #createModalPlaylist{
+  display: none;
+  /* Ẩn ban đầu */
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1000;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.5);
+  width: 100%;
+  height: 100%;
+}
+.singer-detail #modal-list-playlist {
+  display: none;
+  /* Ẩn ban đầu */
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1000;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.5);
+  width: 100%;
+  height: 100%;
+}
+
+.singer-detail .playlist-modal {
+  background: #2D1B69;
+  width: 250px;
+  border-radius: 8px;
+  padding: 14px;
+  cursor: pointer;
+
+}
+
+.singer-detail .modal-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  margin-bottom: 8px;
+}
+
+.singer-detail .modal-header:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.singer-detail .plus-icon {
+  width: 24px;
+  height: 24px;
+  background: #8B5CF6;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 18px;
+}
+
+.singer-detail .modal-title {
+  color: white;
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.singer-detail .playlist-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.singer-detail .playlist-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 0;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.singer-detail .playlist-item i {
+  color: white;
+}
+
+.singer-detail .playlist-item:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+.icon-playlist {
+  line-height: 66%;
+  display: inline-block;
+}
+.playlist-item svg {
+  width: 30px;
+  height: 35px;
+  margin-bottom: 5px;
+}
+.playlist-item span {
+  color: hsla(0, 0%, 100%, 0.5);
+}
+.singer-detail .music-icon {
+  color: #8B5CF6;
+  font-size: 16px;
+}
+
+.singer-detail .playlist-name {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 0.9rem;
+}
+
+.singer-detail .music-note {
+  width: 16px;
+  opacity: 0.6;
 }
 
 /* Định kiểu cho các thông tin bài hát (Thời gian, ca sĩ, chủ đề) */
@@ -1237,6 +1486,7 @@ input:focus {
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
   font-size: 16px;
   transition: right 0.4s ease, transform 0.4s ease;
+  z-index: 100000;
 }
 
 #notification.hidden {
@@ -1249,3 +1499,172 @@ input:focus {
 }
 
 /* notification */
+/* model-playlist  */
+#createPlaylistModal {
+  display: none;
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+#createPlaylistModal .modal-content {
+  background: #2D1B69;
+  padding: 24px;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 400px;
+  position: relative;
+}
+
+#createPlaylistModal .modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+#createPlaylistModal .modal-title {
+  color: white;
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+#createPlaylistModal .close-button {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 0;
+}
+
+.playlist-input {
+  width: 100%;
+  padding: 12px;
+  border-radius: 8px;
+  border: none;
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  margin-bottom: 20px;
+}
+
+.playlist-input::placeholder {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.create-btn {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  background: #8B5CF6;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 20px;
+}
+
+.create-btn:hover {
+  background: #7C3AED;
+}
+
+.error-playlist {
+  display: block;
+  width: 100%;
+  font-size: 100%;
+  color: #dc3545;
+}
+
+.success-playlist {
+  display: block;
+  width: 100%;
+  font-size: 110%;
+  font-weight: 500;
+  color: #0e8275;
+}
+
+
+/*display: none;
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;  */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
+  z-index: 100000;
+}
+
+.modal-overlay .modal-content {
+  background-color: #342750;
+  padding: 24px;
+  border-radius: 8px;
+  width: 100%;
+  max-width: 500px;
+  color: white;
+  position: relative;
+  top: 40px;
+}
+
+.modal-overlay .modal-title {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.modal-overlay .modal-description {
+  color: #b8b8b8;
+  margin-bottom: 24px;
+  font-size: 14px;
+}
+
+.modal-overlay .modal-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+}
+
+.modal-overlay .button {
+  padding: 8px 24px;
+  border-radius: 999px;
+  border: none;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  font-size: 14px;
+}
+
+.modal-overlay .button-cancel {
+  background-color: #423460;
+  color: white;
+}
+
+.modal-overlay .button-cancel:hover {
+  background-color: #4b3c6d;
+}
+
+.modal-overlay .button-confirm {
+  background-color: #9b4de0;
+  color: white;
+}
+
+.modal-overlay .button-confirm:hover {
+  background-color: #8041bd;
+}
+
+/* model-playlist  */

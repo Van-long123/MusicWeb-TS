@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.favorite = exports.detail = exports.index = void 0;
+exports.addSongInPlaylist = exports.myPlaylist = exports.deleteItem = exports.createPost = exports.favorite = exports.detail = exports.index = void 0;
 const song_model_1 = __importDefault(require("../../models/song.model"));
 const singer_model_1 = __importDefault(require("../../models/singer.model"));
 const playlist_model_1 = __importDefault(require("../../models/playlist.model"));
@@ -66,20 +66,32 @@ exports.index = index;
 const detail = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const slug = req.params.slug;
+        let songs;
         const playlist = yield playlist_model_1.default.findOne({
             slug: slug,
-        }).select('topicId');
+        }).select('topicId title songs');
         if (!playlist) {
             res.redirect('/');
             return;
         }
-        const songs = yield song_model_1.default.find({
-            deleted: false,
-            status: "active",
-            topicId: playlist.topicId
-        }).sort({
-            listen: 'desc'
-        }).limit(100).select('title avatar description audio rawLyrics lyrics singerId');
+        if (playlist.topicId) {
+            songs = yield song_model_1.default.find({
+                deleted: false,
+                status: "active",
+                topicId: playlist.topicId
+            }).sort({
+                listen: 'desc'
+            }).limit(100).select('title avatar description audio rawLyrics lyrics singerId');
+        }
+        else {
+            songs = yield song_model_1.default.find({
+                _id: { $in: playlist.songs },
+                deleted: false,
+                status: "active",
+            }).sort({
+                listen: 'desc'
+            }).limit(100).select('title avatar description audio rawLyrics lyrics singerId');
+        }
         let singers = [];
         for (const song of songs) {
             const singer = yield singer_model_1.default.findOne({
@@ -91,6 +103,7 @@ const detail = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         }
         res.render('client/pages/playlists/detail', {
             title: slug,
+            namePlaylist: playlist.title,
             songs: songs,
             singers: singers
         });
@@ -153,3 +166,127 @@ const favorite = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     }
 });
 exports.favorite = favorite;
+const createPost = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        if (!res.locals.user) {
+            res.redirect('/user/login');
+            return;
+        }
+        const countPlaylist = yield playlist_model_1.default.countDocuments();
+        const dataPlaylist = {
+            title: req.body.title,
+            status: 'active',
+            position: countPlaylist,
+            avatar: 'http://res.cloudinary.com/dm5pbyp9g/image/upload/v1736554538/lmoeavv6zaewza4drjlx.png',
+            createdBy: {
+                user_id: res.locals.user.id,
+            }
+        };
+        const playlist = new playlist_model_1.default(dataPlaylist);
+        yield playlist.save();
+        res.json({
+            code: 200,
+            dataPlaylist: playlist,
+            message: "Thành công!",
+        });
+    }
+    catch (error) {
+        res.json({
+            code: 400,
+            message: "Lỗi!"
+        });
+    }
+});
+exports.createPost = createPost;
+const deleteItem = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        if (!res.locals.user) {
+            res.redirect('/user/login');
+            return;
+        }
+        yield playlist_model_1.default.deleteOne({
+            _id: req.body.id
+        });
+        res.json({
+            code: 200,
+            message: "Thành công!",
+        });
+    }
+    catch (error) {
+        res.json({
+            code: 400,
+            message: "Lỗi!"
+        });
+    }
+});
+exports.deleteItem = deleteItem;
+const myPlaylist = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        if (!res.locals.user) {
+            res.redirect('/user/login');
+            return;
+        }
+        const myPlaylist = yield playlist_model_1.default.find({
+            deleted: false,
+            status: 'active',
+            'createdBy.user_id': res.locals.user.id
+        }).sort({ 'createdBy.createdAt': 'desc' }).select('title');
+        res.json({
+            code: 200,
+            myPlaylist: myPlaylist,
+            message: "Thành công!",
+        });
+    }
+    catch (error) {
+        res.json({
+            code: 400,
+            message: "Lỗi!",
+        });
+    }
+});
+exports.myPlaylist = myPlaylist;
+const addSongInPlaylist = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        if (!res.locals.user) {
+            res.redirect('/user/login');
+            return;
+        }
+        const idPlaylist = req.params.idPlaylist;
+        const idSong = req.params.idSong;
+        const song = yield song_model_1.default.findOne({
+            _id: idSong,
+            deleted: false,
+            status: 'active'
+        }).select('title');
+        const playlist = yield playlist_model_1.default.findOne({
+            _id: idPlaylist,
+            deleted: false,
+            status: 'active',
+            songs: { $ne: idSong }
+        });
+        if (!song) {
+            res.status(200).json({
+                message: 'Không tìm thấy bài hát',
+            });
+            return;
+        }
+        if (!playlist) {
+            res.status(200).json({
+                message: 'Bài hát này đã có trong playlist',
+            });
+            return;
+        }
+        playlist.songs.push(idSong);
+        yield playlist.save();
+        res.status(200).json({
+            message: `Đã thêm bài hát “${song.title}” vào playlist thành công`,
+        });
+    }
+    catch (error) {
+        res.json({
+            code: 400,
+            message: "Lỗi!",
+        });
+    }
+});
+exports.addSongInPlaylist = addSongInPlaylist;

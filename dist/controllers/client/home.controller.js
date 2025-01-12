@@ -49,6 +49,7 @@ const index = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         item['infoSinger'] = infoSinger;
     }
     const playlists = yield playlist_model_1.default.find({
+        "createdBy.user_id": { $exists: false },
         status: 'active',
         deleted: false,
     });

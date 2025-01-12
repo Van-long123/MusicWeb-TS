@@ -224,6 +224,8 @@ if(buttonFavoritePlaylist){
         })
     })
 }
+
+
 // button Favorite playlist
 
 // close auth 
@@ -318,3 +320,4 @@ if(close_alert){
     })
 }
 // close show alert 
+

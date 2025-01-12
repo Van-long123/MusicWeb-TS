@@ -19,6 +19,10 @@ const favorite_playlist_model_1 = __importDefault(require("../../models/favorite
 const playlist_model_1 = __importDefault(require("../../models/playlist.model"));
 const topic_model_1 = __importDefault(require("../../models/topic.model"));
 const index = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    if (!res.locals.user) {
+        res.redirect('/user/login');
+        return;
+    }
     const userId = res.locals.user.id;
     const favoritePlaylists = yield favorite_playlist_model_1.default.find({
         userId: userId
@@ -58,9 +62,15 @@ const index = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         }).join(', ');
         playlist['nameSinger'] = nameSinger;
     }
+    const myPlaylist = yield playlist_model_1.default.find({
+        deleted: false,
+        status: 'active',
+        'createdBy.user_id': res.locals.user.id
+    });
     res.render('client/pages/favorite-playlists/index', {
-        title: 'Bài hát yêu thích',
-        favoritePlaylists: favoritePlaylists
+        title: 'Danh sách phát yêu thích',
+        favoritePlaylists: favoritePlaylists,
+        myPlaylist: myPlaylist
     });
 });
 exports.index = index;

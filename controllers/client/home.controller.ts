@@ -53,6 +53,7 @@ export const index=async (req:Request, res:Response) => {
 
 
     const playlists=await Playlist.find({
+        "createdBy.user_id": { $exists: false }, // Lọc những playlist không có user_id
         status:'active',
         deleted:false,
     })

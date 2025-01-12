@@ -18,6 +18,7 @@ const palylistSchema = new mongoose_1.default.Schema({
         slug: 'title',
         unique: true
     },
+    songs: [],
     deleted: {
         type: Boolean,
         default: false

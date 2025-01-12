@@ -5,18 +5,52 @@ block main
         .col-12
             .our-menu.mb-2
                 h2
-                    span Danh sách phát yêu thích
+                    span Danh sách phát
                 .inner-dir
       .row.mt-3
+        div(class="col-md-2 col-sm-3 col-12 mb-4")
+          div(class="create-playlist")
+              div(class="create-icon")  +
+              div(class="create-text") Tạo playlist mới
+        each playlist in myPlaylist
+          .col-md-2.col-sm-3.col-12.mb-4.playlist
+            .playlist-item
+              .playlist-image-container.border-user-play
+                img(src=playlist.avatar alt=playlist.title class="playlist-image")
+                .overlay
+                  .button-container
+                    span(class="btn-delete" title="Xóa" )
+                      span(class="close-button" button-delete-playlist=playlist.id) &times; 
+                    a(href=`/playlists/${playlist.slug}`) 
+                      button(class="play-btn" title="Top 100 Bài Hát Nhạc Trẻ Hay Nhất") <svg width="20" height="20" viewBox="0 0 24 24" fill="white" stroke="white"> <polygon points="7 4 19 12 7 20"></polygon> </svg>
+              .playlist-title #{playlist.title}
+              .playlist-artists #{user.fullName}
         each playlist in favoritePlaylists
-          .col-md-3.col-12.mb-4
+          .col-md-2.col-sm-3.col-12.mb-4.playlist
             .playlist-item
               .playlist-image-container
                 img(src=playlist.infoPlaylist.avatar alt=playlist.infoPlaylist.title class="playlist-image")
                 .overlay
                   .button-container
-                    span(class=`btn-heart active` title="Thêm vào thư viện" button-favorite-playlist=playlist.infoPlaylist.id) <i class="fa-regular fa-heart"></i>
+                    span(class=`btn-heart active` title="Thêm vào thư viện" button-playlist-favorite=playlist.infoPlaylist.id) <i class="fa-regular fa-heart"></i>
                     a(href=`/playlists/${playlist.infoPlaylist.slug}`) 
                       button(class="play-btn" title="Top 100 Bài Hát Nhạc Trẻ Hay Nhất") <svg width="20" height="20" viewBox="0 0 24 24" fill="white" stroke="white"> <polygon points="7 4 19 12 7 20"></polygon> </svg>
               .playlist-title #{playlist.infoPlaylist.title}
               .playlist-artists #{playlist.nameSinger}
+      div(class="modal" id="createPlaylistModal")
+        div(class="modal-content")
+          div(class="modal-header")
+            div(class="modal-title") Tạo playlist mới
+            button(class="close-button") &times;
+          input(type="text" class="playlist-input" placeholder="Nhập tên playlist")
+          lable(class="invalid-feedback")
+          button(class="create-btn") TẠO MỚI
+      div(class="modal-overlay") 
+        div(class="modal-content") 
+          div(class="modal-title") Xóa Playlist
+          div(class="modal-description")
+            |Playlist của bạn sẽ bị xóa khỏi thư viện cá nhân. Bạn có muốn xóa?
+          div(class="modal-buttons")
+            button(class="button button-cancel") KHÔNG
+            button(class="button button-confirm") CÓ
+      script(src="/js/favorite-playlist.js") 

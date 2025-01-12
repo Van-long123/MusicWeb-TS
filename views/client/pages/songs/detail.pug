@@ -28,6 +28,9 @@ block main
                         div(class=`inner-action inner-heart ${song.isFavoriteSong ? 'active' : ''}` button-favorite=song.id)
                             i(class="fa-regular fa-heart" ) 
                             |Bài hát yêu thích
+                        div(class=`inner-action inner-heart active}` button-playlist=song.id)
+                            i(class="bx bx-heart-circle" style="font-size: 18px;") 
+                            |Thêm vào playlist
                     .inner-play
                         .inner-avatar 
                             img(src=song.avatar alt=song.title)
@@ -42,6 +45,22 @@ block main
                     .inner-desc
                         .inner-label Lời bài hát
                         .inner-text !{song.rawLyrics} 
+        div(id="modal-list-playlist")
+            div(class="playlist-modal")
+                div( class="modal-header create-play")
+                    div(class="d-flex model-content") <span class="plus-icon">+</span>
+                        span(class="modal-title ms-2") Tạo playlist mới
+                ul(class="playlist-list")
+                        
+        
+        div(id="createModalPlaylist")
+            div(class="modal-content")
+                div(class="modal-header")
+                    div(class="modal-title-playlist") Tạo playlist mới
+                    button(class="close-button") &times;
+                input(type="text" class="playlist-input" placeholder="Nhập tên playlist")
+                lable(class="invalid-feedback")
+                button(class="create-btn") TẠO MỚI
     script(src="https://unpkg.com/aplayer/dist/APlayer.min.js")
     script(src="/js/detail.js") 
                                                 

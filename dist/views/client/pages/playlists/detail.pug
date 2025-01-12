@@ -1,10 +1,10 @@
 extends ../../layouts/default
 block main 
-    .singer-detail
+    .singer-detail.mt-5
         .container.my-3
             .row
                 .col-12
-                    .inner-title Top 100
+                    .inner-title #{namePlaylist}
                     .inner-play
                         .inner-audio
                             div(id="aplayer" data-song=songs  data-singer=singers)

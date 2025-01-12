@@ -8,6 +8,10 @@ import Topic from '../../models/topic.model';
 export const index=async  (req:Request, res:Response) => {
     
     // check là đăng nhập mới vào 
+    if(!res.locals.user){
+        res.redirect('/user/login')
+        return
+    }
     const userId=res.locals.user.id;
     const favoritePlaylists=await FavoritePlaylist.find({
         userId:userId
@@ -47,8 +51,15 @@ export const index=async  (req:Request, res:Response) => {
         }).join(', ')
         playlist['nameSinger']=nameSinger
     }
+
+    const myPlaylist=await Playlist.find({
+        deleted: false,
+        status:'active',
+        'createdBy.user_id':res.locals.user.id
+    })
     res.render('client/pages/favorite-playlists/index',{
-        title:'Bài hát yêu thích',
-        favoritePlaylists:favoritePlaylists
+        title:'Danh sách phát yêu thích',
+        favoritePlaylists:favoritePlaylists,
+        myPlaylist:myPlaylist
     })
 }

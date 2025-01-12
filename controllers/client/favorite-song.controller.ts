@@ -5,6 +5,10 @@ import Singer from '../../models/singer.model';
 export const index=async  (req:Request, res:Response) => {
     
     // check là đăng nhập mới vào 
+    if(!res.locals.user){
+        res.redirect('/user/login')
+        return
+    }
     const userId=res.locals.user.id;
     const favoriteSongs=await FavoriteSong.find({
         userId:userId

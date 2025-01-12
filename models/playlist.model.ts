@@ -13,6 +13,7 @@ const palylistSchema=new mongoose.Schema({
         slug:'title',
         unique:true
     },
+    songs:[],
     deleted:{
         type:Boolean,
         default:false
