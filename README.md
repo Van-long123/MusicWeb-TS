@@ -58,7 +58,7 @@ https://music-web-ts.vercel.app/
 # Clone repository
 https://github.com/Van-long123/MusicWeb-TS.git
 
-# Cài đặt backend
+# Cài đặt
 cd backend
 npm install
 npm run dev
